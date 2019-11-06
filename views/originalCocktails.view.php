@@ -8,7 +8,9 @@ require('partials/head.partials.php');
 require('partials/navigation.partials.php');
 ?>
 
-
+<?php
+echo $view;
+?>
 
 
 <?php

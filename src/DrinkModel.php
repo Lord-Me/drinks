@@ -47,8 +47,8 @@ class DrinkModel
      * return all IDs
      */
     function getIds():array{
-        $posts = $this->pdo->query('SELECT id FROM recipes');
-        return $posts->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Drink');//TODO fix this
+        $stmt = $this->pdo->query('SELECT id FROM recipes');
+        return $stmt->fetchAll(PDO::FETCH_ASSOC | PDO::FETCH_PROPS_LATE);
     }
 
     public function insert(Post $post):bool {

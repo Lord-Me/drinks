@@ -70,18 +70,19 @@ switch ($page) {
         require("src/DrinkModel.php");
         require("src/Drink.php");
         try {
-            //buscamos el id del segundo query del url. Si no enquentra nada, lanza una exception y va directo a la pagina 404
-            $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING) ?? NULL;
-            if($id==NULL || $id==0){ ///////THING TO ADD TODO make it check all the post IDs that exist
-                throw new ExceptionPageNotFound();
-            }
-
             //Connect to the database
             $connection = new DBConnect();
             $pdo = $connection->getConnection();
 
             //create new drink via the Model
             $drink = new DrinkModel($pdo);
+
+            //buscamos el id del segundo query del url. Si no enquentra nada, lanza una exception y va directo a la pagina 404
+            $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING) ?? NULL;
+
+            if($id==NULL || $id==0){ ///////THING TO ADD TODO make it check all the post IDs that exist
+                throw new ExceptionPageNotFound();
+            }
 
             //fetch the drink with the corresponding id
             $recipe = $drink->getById($id);

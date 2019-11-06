@@ -16,20 +16,6 @@ class Drink
     {
     }
 
-    /*
-    function __construct($id, $author_id, $category, $title, $ingredients, $content, $image, $published_at)
-    {
-        $this->id = $id;
-        $this->author_id = $author_id;
-        $this->category = $category;
-        $this->title = $title;
-        $this->ingredients = $ingredients;
-        $this->content = $content;
-        $this->image = $image;
-        $this->published_at = $published_at;
-    }
-    */
-
     //GETTERS
 
     function getId(){
@@ -105,7 +91,15 @@ class Drink
     public function render(){
         $html = '';
         $html .="<div>\n";
-        $html .="<p>". $this->getId() . ". "  . $this->gettitle() . "<br>" . $this->getImage() ."</p><a href=\"index.php?page=drink&id=".$this->getId()."\" class=\"btn btn-primary btn-xl rounded-pill mt-5\">Make Me</a>";
+        $html .=    "<div>
+                        <p>". $this->gettitle() . "</p>
+                     </div>
+                     <div>
+                        <img src=\"img/" . $this->getImage() .".jpg\" alt=\"" . $this->getImage() ."\" height=\"42\" width=\"42\">
+                     </div>
+                     <div>
+                        <a href=\"index.php?page=drink&id=".$this->getId()."\" class=\"btn btn-primary btn-xl rounded-pill mt-5\">Make Me</a>
+                     </div>";
         $html .="</div>\n";
         return $html;
     }
@@ -113,7 +107,7 @@ class Drink
     public function renderPage(){
         $html = '';
         $html .="<div>\n";
-        $html .="<h3>". $this->getId() . ". " . $this->getTitle() . "</h3><p>" . $this->getIngredients() . "</p><div>" . $this->getImage() . "</div><p>" . $this->getContent() . "</p><p>" . $this->getPublished_at() . "<br>" . $this->getAuthor_id() . "</p>";
+        $html .="<h3>". $this->getTitle() . "</h3><p>" . $this->getIngredients() . "</p><div>" . $this->getImage() . "</div><p>" . $this->getContent() . "</p><p>" . $this->getPublished_at() . "<br>" . $this->getAuthor_id() . "</p>";
         $html .="</div>\n";
         return $html;
     }
