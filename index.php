@@ -1,5 +1,6 @@
 <?php
-$page = $_GET['page']??"index";
+$page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING)??"index";
+class ExceptionPageNotFound extends Exception{};
 
 switch ($page) {
     case "index":
@@ -18,24 +19,41 @@ switch ($page) {
         break;
 
     case "professionalCocktails":
-        require("views/$page.view.php");
+    case "originalCocktails":
         require("src/RecipesControl.php");
         require("src/DBConnect.php");
+        require("src/DrinkModel.php");
+        require("src/Drink.php");
 
         try {
+            //Create a new object to contain all the drinks
             $recipeList = new RecipesControl();
 
-            $stmt = new DBConnect();
-            $stmt->connect();
-            $stmt->getByCategory(1,$pdo);
+            //Connect to the database
+            $connection = new DBConnect();
+            $pdo = $connection->getConnection();
 
-            foreach ($stmt as $drink) {
-                print_r($drink);
-                //$input = new Post($row["id"], $row["author_id"], $row["title"], $row["slug"], $row["summary"], $row["content"], $row["published_at"]);
-                //$recipeList->add($input);
+            //Using the Model for our drinks, I get all of the drinks with the same category
+            $drink = new DrinkModel($pdo);
+            //An if to determine if we're on profCocktails page or originalCocktails page so as not to duplicate code in the large switch case
+            if($page=="professionalCocktails"){
+                $type_id = 1;
+            }else{
+                $type_id = 2;
             }
 
-            //echo $recipeList ->render();
+            //Get all the drinks in the selected category
+            $drinks = $drink->getByCategory($type_id);
+
+            //Send each array entry to the object recipeList to be stored
+            foreach ($drinks as $drink) {
+                $recipeList->add($drink);
+            }
+
+            //Turn each array entry into a string and send it to the view
+            $view=$recipeList->render();
+            require("views/$page.view.php");
+
 
             #Per alliberar els recursos utilitzats en la consulta SELECT
             $stmt = null;
@@ -46,9 +64,35 @@ switch ($page) {
 
         break;
 
-    case "originalCocktails":
-        require("views/$page.view.php");
-        //.
+    case "drink":
+        require("src/RecipesControl.php");
+        require("src/DBConnect.php");
+        require("src/DrinkModel.php");
+        require("src/Drink.php");
+        try {
+            //buscamos el id del segundo query del url. Si no enquentra nada, lanza una exception y va directo a la pagina 404
+            $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING) ?? NULL;
+            if($id==NULL || $id==0){ ///////THING TO ADD TODO make it check all the post IDs that exist
+                throw new ExceptionPageNotFound();
+            }
+
+            //Connect to the database
+            $connection = new DBConnect();
+            $pdo = $connection->getConnection();
+
+            //create new drink via the Model
+            $drink = new DrinkModel($pdo);
+
+            //fetch the drink with the corresponding id
+            $recipe = $drink->getById($id);
+
+            //send it to the view
+            $view=$recipe->renderPage();
+            require("views/$page.view.php");
+
+        }catch (ExceptionPageNotFound $e){
+            require("views/error.view.php");
+        }
         break;
 
     case "login":

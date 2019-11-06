@@ -20,26 +20,9 @@ class recipesControl{
     /*
      * ADD A DRINK TO THE ARRAY OF DRINKS
      */
-    function add(drink $drink){
+    function add(Drink $drink){
         $this->drinks[] = $drink;
     }
 
-    public function deleteDrink(int $drinkNum){
-        unset($this->drinks[$drinkNum]);
-    }
-
-    public function getDrink(int $drinkNum){
-        return $this->drinks[$drinkNum];
-    }
-
-    public function findDrink(int $drinkId):drink{
-        $i=0;
-        foreach ($this->drinks as $drink){
-            if($drink->getId()==$drinkId){
-                return $this->drinks[$i];
-            }
-            $i++;
-        }
-    }
 
 }

@@ -22,6 +22,7 @@ require('partials/banner.partials.php');
           <div class="p-5">
             <h2 class="display-4">For those about to rock...</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
+              <a href="index.php?page=#" class="btn btn-primary btn-xl rounded-pill mt-5">Learn More</a>
           </div>
         </div>
       </div>

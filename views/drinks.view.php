@@ -17,6 +17,7 @@ require('partials/navigation.partials.php');
                 </div>
                 <div class="p-5">
                     <h2 class="display-4">Custom cocktails from movies and shows</h2>
+                    <a href="index.php?page=originalCocktails" class="btn btn-primary btn-xl rounded-pill mt-5">GO</a>
                 </div>
             </div>
             <div class="col-lg-6 order-lg-1">
@@ -25,6 +26,7 @@ require('partials/navigation.partials.php');
                 </div>
                 <div class="p-5">
                     <h2 class="display-4">Profesional cocktail recipies found at bars</h2>
+                    <a href="index.php?page=professionalCocktails" class="btn btn-primary btn-xl rounded-pill mt-5">GO</a>
                 </div>
             </div>
         </div>

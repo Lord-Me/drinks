@@ -12,17 +12,11 @@ class Drink
     private $image;
     private $published_at;
     
-    /*
-    id` int(11) NOT NULL,
-  `author_id` int(11) NOT NULL,
-  `category` int(11) NOT NULL,
-  `category` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
-  `ingredients` longtext COLLATE utf8_spanish2_ci NOT NULL,
-  `content` longtext COLLATE utf8_spanish2_ci NOT NULL,
-  `image` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
-  `published_at` 
-    */
+    function __construct()
+    {
+    }
 
+    /*
     function __construct($id, $author_id, $category, $title, $ingredients, $content, $image, $published_at)
     {
         $this->id = $id;
@@ -34,6 +28,7 @@ class Drink
         $this->image = $image;
         $this->published_at = $published_at;
     }
+    */
 
     //GETTERS
 
@@ -45,15 +40,15 @@ class Drink
         return $this->author_id;
     }
 
-    function getcategory(){
+    function getCategory(){
         return $this->category;
     }
 
-    function gettitle(){
+    function getTitle(){
         return $this->title;
     }
 
-    function getingredients(){
+    function getIngredients(){
         return $this->ingredients;
     }
 
@@ -79,15 +74,15 @@ class Drink
         $this->author_id = $author_id;
     }
 
-    function setcategory($category){
+    function setCategory($category){
         $this->category = $category;
     }
 
-    function settitle($title){
+    function setTitle($title){
         $this->title = $title;
     }
 
-    function setingredients($ingredients){
+    function setIngredients($ingredients){
         $this->ingredients = $ingredients;
     }
 
@@ -110,7 +105,7 @@ class Drink
     public function render(){
         $html = '';
         $html .="<div>\n";
-        $html .="<p>". $this->getId() . ". " . $this->getcategory() . "<br>" . $this->gettitle() . "<br>" . $this->getingredients() . "<br>" . $this->getAuthor_id() . "<br>" . $this->getPublished_at() ."</p><a href='SeeDrink.php?Drink=".$this->getId()."'>Ver entrada</a>";
+        $html .="<p>". $this->getId() . ". "  . $this->gettitle() . "<br>" . $this->getImage() ."</p><a href=\"index.php?page=drink&id=".$this->getId()."\" class=\"btn btn-primary btn-xl rounded-pill mt-5\">Make Me</a>";
         $html .="</div>\n";
         return $html;
     }
@@ -118,7 +113,7 @@ class Drink
     public function renderPage(){
         $html = '';
         $html .="<div>\n";
-        $html .="<h3>". $this->getId() . ". " . $this->getcategory() . "</h3><p>" . $this->getContent() . "</p><p>" . $this->getPublished_at() . "</p>";
+        $html .="<h3>". $this->getId() . ". " . $this->getTitle() . "</h3><p>" . $this->getIngredients() . "</p><div>" . $this->getImage() . "</div><p>" . $this->getContent() . "</p><p>" . $this->getPublished_at() . "<br>" . $this->getAuthor_id() . "</p>";
         $html .="</div>\n";
         return $html;
     }
