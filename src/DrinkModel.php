@@ -28,7 +28,11 @@ class DrinkModel
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Drink');
         $stmt->execute();
-        return $stmt->fetch();
+        $post = $stmt->fetch();
+        if ($post==false)
+            throw new ExceptionPageNotFound();
+        else
+            return $post;
     }
 
     /*
@@ -43,13 +47,6 @@ class DrinkModel
         return $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Drink');
     }
 
-    /*
-     * return all IDs
-     */
-    function getIds():array{
-        $stmt = $this->pdo->query('SELECT id FROM recipes');
-        return $stmt->fetchAll(PDO::FETCH_ASSOC | PDO::FETCH_PROPS_LATE);
-    }
 
     public function insert(Post $post):bool {
 

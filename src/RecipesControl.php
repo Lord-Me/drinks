@@ -9,9 +9,11 @@ class recipesControl{
      */
     public function render(): string {
         $html = "";
+        $side = 0;
 
         foreach ($this->drinks as $drink) {
-            $html.=$drink->render();
+            $html.=$drink->render($side);
+            $side++;
         }
         return $html;
 

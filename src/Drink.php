@@ -18,35 +18,35 @@ class Drink
 
     //GETTERS
 
-    function getId(){
+    function getId():int{
         return $this->id;
     }
 
-    function getAuthor_id(){
+    function getAuthor_id():int{
         return $this->author_id;
     }
 
-    function getCategory(){
+    function getCategory():int{
         return $this->category;
     }
 
-    function getTitle(){
+    function getTitle():String{
         return $this->title;
     }
 
-    function getIngredients(){
+    function getIngredients():String{
         return $this->ingredients;
     }
 
-    function getContent(){
+    function getContent():String{
         return $this->content;
     }
 
-    function getImage(){
+    function getImage():String{
         return $this->image;
     }
 
-    function getPublished_at(){
+    function getPublished_at():String{
         return $this->published_at;
     }
 
@@ -88,21 +88,44 @@ class Drink
      * RENDER
      */
 
-    public function render(){
+    public function render($sideNum){
+        require_once('UserModel.php');
+        //get the username of auther by their ID
+        $connection = new DBConnect();
+        $pdo = $connection->getConnection();
+        $model = new UserModel($pdo);
+        $username = $model->getUsernameById($this->getAuthor_id());
+        $username = $username["nickname"];
+
+        //make the html string
+        $side1 = "";
+        $side2 = "";
+        if($sideNum%2){
+            $side1 = "order-lg-2";
+            $side2 = "order-gl-1";
+        }
         $html = '';
-        $html .="<div>\n";
-        $html .=    "<div>
-                        <p>". $this->gettitle() . "</p>
-                     </div>
-                     <div>
-                        <img src=\"img/" . $this->getImage() .".jpg\" alt=\"" . $this->getImage() ."\" height=\"42\" width=\"42\">
-                     </div>
-                     <div>
-                        <a href=\"index.php?page=drink&id=".$this->getId()."\" class=\"btn btn-primary btn-xl rounded-pill mt-5\">Make Me</a>
-                     </div>";
-        $html .="</div>\n";
+        $html .="<section>
+                    <div class='container'>
+                        <div class='row align-items-center'>
+                            <div class='col-lg-6 ".$side1."'>
+                                <div class='p-5'>
+                                    <img class='img-fluid rounded-circle' src='img/".$this->getImage().".jpg' alt='".$this->getImage()."'>
+                                </div>
+                            </div>
+                            <div class='col-lg-6 ".$side2."'>
+                                <div class='p-5'>
+                                    <h2 class='display-4'>".$this->getTitle()."</h2>
+                                    <p>".$username."</p>
+                                    <a href='index.php?page=drink&id=".$this->getId()."' class='btn btn-primary btn-xl rounded-pill mt-5'>Make This Drink</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 </section>";
         return $html;
     }
+
 
     public function renderPage(){
         $html = '';

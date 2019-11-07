@@ -80,12 +80,13 @@ switch ($page) {
             //buscamos el id del segundo query del url. Si no enquentra nada, lanza una exception y va directo a la pagina 404
             $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING) ?? NULL;
 
-            if($id==NULL || $id==0){ ///////THING TO ADD TODO make it check all the post IDs that exist
+            if($id==NULL){
                 throw new ExceptionPageNotFound();
             }
 
             //fetch the drink with the corresponding id
             $recipe = $drink->getById($id);
+
 
             //send it to the view
             $view=$recipe->renderPage();
