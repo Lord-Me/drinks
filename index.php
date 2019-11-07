@@ -14,12 +14,6 @@ switch ($page) {
         break;
 
     case "drinks":
-        require("views/$page.view.php");
-        //.
-        break;
-
-    case "professionalCocktails":
-    case "originalCocktails":
         require("src/RecipesControl.php");
         require("src/DBConnect.php");
         require("src/DrinkModel.php");
@@ -35,15 +29,11 @@ switch ($page) {
 
             //Using the Model for our drinks, I get all of the drinks with the same category
             $drink = new DrinkModel($pdo);
-            //An if to determine if we're on profCocktails page or originalCocktails page so as not to duplicate code in the large switch case
-            if($page=="professionalCocktails"){
-                $type_id = 1;
-            }else{
-                $type_id = 2;
-            }
+
+            $drinks = $drink->getAll();
 
             //Get all the drinks in the selected category
-            $drinks = $drink->getByCategory($type_id);
+            //$drinks = $drink->getByCategory($type_id);
 
             //Send each array entry to the object recipeList to be stored
             foreach ($drinks as $drink) {

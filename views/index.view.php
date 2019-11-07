@@ -3,6 +3,7 @@
 <?php
 require('partials/head.partials.php');
 ?>
+</head>
 <body>
 <?php
 require('partials/navigation.partials.php');

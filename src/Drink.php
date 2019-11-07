@@ -98,14 +98,15 @@ class Drink
         $username = $username["nickname"];
 
         //make the html string
-        $side1 = "";
-        $side2 = "";
-        if($sideNum%2){
-            $side1 = "order-lg-2";
-            $side2 = "order-gl-1";
-        }
+            //Alternate between left and right
+            $side1 = "";
+            $side2 = "";
+            if($sideNum%2){
+                $side1 = "order-lg-2";
+                $side2 = "order-lg-1";
+            }
         $html = '';
-        $html .="<section>
+        $html .="<section class='scroll'>
                     <div class='container'>
                         <div class='row align-items-center'>
                             <div class='col-lg-6 ".$side1."'>
@@ -116,7 +117,7 @@ class Drink
                             <div class='col-lg-6 ".$side2."'>
                                 <div class='p-5'>
                                     <h2 class='display-4'>".$this->getTitle()."</h2>
-                                    <p>".$username."</p>
+                                    <p>Author: ".ucfirst($username)."</p>
                                     <a href='index.php?page=drink&id=".$this->getId()."' class='btn btn-primary btn-xl rounded-pill mt-5'>Make This Drink</a>
                                 </div>
                             </div>
@@ -128,10 +129,55 @@ class Drink
 
 
     public function renderPage(){
+        require_once('UserModel.php');
+        //get the username of author by their ID
+        $connection = new DBConnect();
+        $pdo = $connection->getConnection();
+        $model = new UserModel($pdo);
+        $username = $model->getUsernameById($this->getAuthor_id());
+        $username = $username["nickname"];
+
+        //Añadir saltos de linea <br> a en cada salto de linea que hay en el texto sacado del DB
+        $ingredients = $this->getIngredients();
+        $steps = $this->getContent();
+        $ingredients = str_replace("\n", '<br />', $ingredients);
+        $steps = str_replace("\n", '<br />', $steps);
+
         $html = '';
-        $html .="<div>\n";
-        $html .="<h3>". $this->getTitle() . "</h3><p>" . $this->getIngredients() . "</p><div>" . $this->getImage() . "</div><p>" . $this->getContent() . "</p><p>" . $this->getPublished_at() . "<br>" . $this->getAuthor_id() . "</p>";
-        $html .="</div>\n";
+        $html .="<section>
+                    <div class='container'>
+                        <div class='row align-items-center'>
+                            <div class='col-lg-6 order-lg-2'>
+                                <div class='p-5'>
+                                    <img class='img-fluid rounded-circle' src='img/".$this->getImage().".jpg' alt='".$this->getImage()."'>
+                                </div>
+                            </div>
+                            <div class='col-lg-6 order-lg-1'>
+                                <div class='p-5'>
+                                    <h1 class='display-4'>".$this->getTitle()."</h1>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='row align-items-center'>
+                            <div class='col-lg-6'>
+                                <p>Author: ".ucfirst($username)."<br>
+                                Posted at: ".$this->getPublished_at()."</p>
+                            </div>
+                        </div>
+                        <div class='row align-items-center'> 
+                            <div class='col-lg-6'>
+                                <h3>Ingredients</h3>
+                                <p>".$ingredients."</p>
+                            </div>
+                        </div>
+                        <div class='row align-items-center'>
+                            <div class='col-lg-6'>
+                                <h3>Steps</h3>
+                                <p>".$steps."</p>
+                            </div>
+                        </div>
+                    </div>
+                 </section>";
         return $html;
     }
 

@@ -3,37 +3,83 @@
 <?php
 require('partials/head.partials.php');
 ?>
+<!--<script>
+    //https://stackoverflow.com/questions/36217365/php-ajax-checkbox-filter-using-data-tag-attribute TODO figure this out with fernandez
+$(document).ready(function(){
+    $('.genre').on('change', function(){
+        var genreList = [];
+
+        $('#filterContainer :input:checked').each(function(){
+            var genre = $(this).val();
+            genreList.push(genre);
+        });
+
+        if(genreList.length == 0)
+        $('.blItem').fadeIn();
+        else {
+            $('.blItem').each(function(){
+                var item = $(this).attr('data-tag');
+                var items = item.split(',');
+
+                $(this).hide();
+                for (var i=0;i<items.length;i++) {
+                    if(jQuery.inArray(items[i],genreList) > -1)
+                    $(this).fadeIn('slow');
+                }
+            });
+        }
+    });
+});
+</script>-->
+
+
+</head>
 <body>
 <?php
 require('partials/navigation.partials.php');
 ?>
 
-<section>
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6 order-lg-2">
-                <div class="p-5">
-                    <img class="img-fluid rounded-circle" src="img/01.jpg" alt="">
-                </div>
-                <div class="p-5">
-                    <h2 class="display-4">Custom cocktails from movies and shows</h2>
-                    <a href="index.php?page=originalCocktails" class="btn btn-primary btn-xl rounded-pill mt-5">GO</a>
-                </div>
-            </div>
-            <div class="col-lg-6 order-lg-1">
-                <div class="p-5">
-                    <img class="img-fluid rounded-circle" src="img/01.jpg" alt="">
-                </div>
-                <div class="p-5">
-                    <h2 class="display-4">Profesional cocktail recipies found at bars</h2>
-                    <a href="index.php?page=professionalCocktails" class="btn btn-primary btn-xl rounded-pill mt-5">GO</a>
-                </div>
-            </div>
-        </div>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<br><br><br>
+<div id="filterContainer">
+    <div class="filter">
+        <input id="check1" type="checkbox" name="check" value="Novel" class="genre">
+        <label for="check1">Novel</label>
     </div>
-</section>
+
+    <div class="filter">
+        <input id="check2" type="checkbox" name="check" value="Fiction" class="genre">
+        <label for="check2">Fiction</label>
+    </div>
+
+    <div class="filter">
+        <input id="check3" type="checkbox" name="check" value="Non-Fiction" class="genre">
+        <label for="check3">Non-Fiction</label>
+    </div>
+</div>
+
+<div class="booksList in fade">
+    <div class="blItem" data-tag="X,Fiction">Item X and Fiction</div>
+    <div class="blItem" data-tag="Non-Fiction,Y">Item Y and Non-Fiction</div>
+    <div class="blItem" data-tag="Non-Fiction,Fiction">Item Fiction and Non-Fiction</div>
+</div>-->
+
+<?php
+echo $view;
+?>
+
 <?php
 require('partials/footer.partials.php');
 ?>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="js/scrollify-master/jquery.scrollify.js"></script>
+<script>
+    $(document).ready(function() {
+        $.scrollify({
+            section : ".scroll",
+        });
+    });
+</script>
 </body>
 </html>
