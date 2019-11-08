@@ -2,10 +2,6 @@
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING)??"index";
 class ExceptionPageNotFound extends Exception{};
 
-
-//TODO try and add     margin-top: 67px;    to the .row thing
-
-
 switch ($page) {
     case "index":
         require("views/$page.view.php");
@@ -48,9 +44,6 @@ switch ($page) {
             $view=$recipeList->render();
             require("views/$page.view.php");
 
-
-            #Per alliberar els recursos utilitzats en la consulta SELECT
-            $stmt = null;
         } Catch (PDOException $err) {
             // Mostrem un missatge genèric d'error.
             echo "Error: executant consulta SQL.";

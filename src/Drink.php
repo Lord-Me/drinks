@@ -107,18 +107,20 @@ class Drink
             }
         $html = '';
         $html .="<section class='scroll'>
-                    <div class='container'>
-                        <div class='row align-items-center'>
-                            <div class='col-lg-6 ".$side1."'>
-                                <div class='p-5'>
-                                    <img class='img-fluid rounded-circle' src='img/".$this->getImage().".jpg' alt='".$this->getImage()."'>
+                    <div class='mi-container-centered'>
+                        <div class='container'>
+                            <div class='row align-items-center'>
+                                <div class='col-lg-6 ".$side1."'>
+                                    <div class='p-5'>
+                                        <img class='img-fluid rounded-circle' src='img/".$this->getImage().".jpg' alt='".$this->getImage()."'>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class='col-lg-6 ".$side2."'>
-                                <div class='p-5'>
-                                    <h2 class='display-4'>".$this->getTitle()."</h2>
-                                    <p>Author: ".ucfirst($username)."</p>
-                                    <a href='index.php?page=drink&id=".$this->getId()."' class='btn btn-primary btn-xl rounded-pill mt-5'>Make This Drink</a>
+                                <div class='col-lg-6 ".$side2."'>
+                                    <div class='p-5'>
+                                        <h2 class='display-4'>".$this->getTitle()."</h2>
+                                        <p>Author: ".ucfirst($username)."</p>
+                                        <a href='index.php?page=drink&id=".$this->getId()."' class='btn btn-primary btn-xl rounded-pill mt-5'>Make This Drink</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -145,7 +147,7 @@ class Drink
 
         $html = '';
         $html .="<section>
-                    <div class='container'>
+                    <div class='container .mi-container-center'>
                         <div class='row align-items-center'>
                             <div class='col-lg-6 order-lg-2'>
                                 <div class='p-5'>
