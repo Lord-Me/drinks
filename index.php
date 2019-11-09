@@ -1,3 +1,5 @@
+//string password_hash( $password, PASSWORD_BCRYPT, $options )
+
 <?php
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING)??"index";
 class ExceptionPageNotFound extends Exception{};

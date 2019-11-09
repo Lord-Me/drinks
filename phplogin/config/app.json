@@ -1,0 +1,9 @@
+{
+  "adminConnect": {
+    "username": "admin",
+    "password": "admin",
+    "connection": "mysql: host=localhost;dbname=drinks;charset=utf8",
+    "options": {
+    }
+  }
+}

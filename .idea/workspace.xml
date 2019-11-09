@@ -2,15 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f1d7d45-6979-4b51-947e-e1af7268cef8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/vendor/bootstrap/css/myStyles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/drinks.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/drinks.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/deployment.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/phplogin/authenticate.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/phplogin/config/app.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/phplogin/home.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/phplogin/index.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/phplogin/logout.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/phplogin/profile.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/phplogin/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/partials/head.partials.php" beforeDir="false" afterPath="$PROJECT_DIR$/partials/head.partials.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Drink.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Drink.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/drinks.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/drinks.view.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -26,6 +27,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="HTML File" />
         <option value="CSS File" />
       </list>
     </option>
@@ -36,14 +38,16 @@
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="XAMPP" />
   <component name="ProjectId" id="1TFpqQ6DigoUQTYYggC2IOVip5b" />
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../databaseBlog/src" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/phplogin" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\drinks\phplogin" />
       <recent name="$PROJECT_DIR$/../databaseBlog/src" />
       <recent name="$PROJECT_DIR$/../databaseBlog" />
       <recent name="$PROJECT_DIR$/../connectClass/src" />
@@ -72,6 +76,7 @@
       <option name="presentableId" value="Default" />
       <updated>1573197402275</updated>
       <workItem from="1573197403777" duration="15299000" />
+      <workItem from="1573306920344" duration="7995000" />
     </task>
     <servers />
   </component>
@@ -83,7 +88,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
