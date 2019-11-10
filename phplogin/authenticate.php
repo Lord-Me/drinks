@@ -29,13 +29,11 @@ if ($stmt->rowCount() > 0) {
     if (password_verify($_POST['password'], $loginInfo["password"])) {
         // Verification success! User has loggedin!
         // Create sessions so we know the user is logged in, they basically act like cookies but remember the data on the server.
+        session_start();
         session_regenerate_id();
         $_SESSION['loggedin'] = TRUE;
         $_SESSION['name'] = $_POST['username'];
         $_SESSION['id'] = $loginInfo["id"];
-        echo $_SESSION['loggedin'];
-        echo $_SESSION['name'];
-        echo $_SESSION['id'];
         header('Location: home.php');
     } else {
         echo 'Incorrect password!';
