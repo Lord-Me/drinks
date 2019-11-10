@@ -1,4 +1,7 @@
 <?php
+//TODO finish the profile page.
+//TODO create login models to manage everything there
+
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING)??"index";
 class ExceptionPageNotFound extends Exception{};
 

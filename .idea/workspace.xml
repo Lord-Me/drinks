@@ -2,29 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6f1d7d45-6979-4b51-947e-e1af7268cef8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/partials/navigationLoggedIn.partials.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/phplogin/successfulRegister.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TODO.odt" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.odt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phplogin/authenticate.php" beforeDir="false" afterPath="$PROJECT_DIR$/phplogin/src/authenticate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phplogin/config/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/phplogin/src/config/app.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phplogin/home.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/phplogin/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/phplogin/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phplogin/logout.php" beforeDir="false" afterPath="$PROJECT_DIR$/phplogin/src/logout.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/phplogin/profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/phplogin/profile.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phplogin/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/phplogin/register.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phplogin/register.php" beforeDir="false" afterPath="$PROJECT_DIR$/phplogin/src/register.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phplogin/registerStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/phplogin/css/registerStyle.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phplogin/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/phplogin/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DBConnect.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DBConnect.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Drink.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Drink.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/drink.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/drink.view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/drinks.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/drinks.view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/error.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/error.view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/index.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/login.view.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/register.view.php" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -60,6 +42,7 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\drinks\img" />
       <recent name="C:\xampp\htdocs\drinks\phplogin\src" />
       <recent name="C:\xampp\htdocs\drinks\phplogin" />
       <recent name="C:\xampp\htdocs\drinks\phplogin\css" />
@@ -96,7 +79,7 @@
       <updated>1573197402275</updated>
       <workItem from="1573197403777" duration="15299000" />
       <workItem from="1573306920344" duration="8190000" />
-      <workItem from="1573391619644" duration="11802000" />
+      <workItem from="1573391619644" duration="12535000" />
     </task>
     <task id="LOCAL-00001" summary="password stuff">
       <created>1573337520745</created>
@@ -119,7 +102,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573398366128</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Finished login test">
+      <created>1573404879163</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1573404879163</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
