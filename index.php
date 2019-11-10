@@ -1,5 +1,3 @@
-//string password_hash( $password, PASSWORD_BCRYPT, $options )
-
 <?php
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING)??"index";
 class ExceptionPageNotFound extends Exception{};
@@ -8,7 +6,6 @@ switch ($page) {
     case "index":
         require("views/$page.view.php");
         break;
-
 
     case "posts":
         require("views/$page.view.php");
@@ -26,6 +23,7 @@ switch ($page) {
             $recipeList = new RecipesControl();
 
             //Connect to the database
+
             $connection = new DBConnect();
             $pdo = $connection->getConnection();
 
@@ -61,6 +59,7 @@ switch ($page) {
         try {
             //Connect to the database
             $connection = new DBConnect();
+
             $pdo = $connection->getConnection();
 
             //create new drink via the Model
@@ -87,15 +86,20 @@ switch ($page) {
         break;
 
     case "login":
-        require("views/$page.view.php");
-        ///
+        require("phplogin/index.html");
         break;
 
     case "register":
-        require("views/$page.view.php");
-        ////
+        require("phplogin/register.html");
         break;
 
+    case "successfulRegister":
+        require("phplogin/successfulRegister.php");
+        break;
+
+    case "user":
+        require("phplogin/profile.php");
+        break;
     default:
         {
           require("views/error.view.php");

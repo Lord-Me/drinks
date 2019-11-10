@@ -95,7 +95,7 @@ class Drink
         $pdo = $connection->getConnection();
         $model = new UserModel($pdo);
         $username = $model->getUsernameById($this->getAuthor_id());
-        $username = $username["nickname"];
+        $username = $username["username"];
 
         //make the html string
             //Alternate between left and right
@@ -137,7 +137,7 @@ class Drink
         $pdo = $connection->getConnection();
         $model = new UserModel($pdo);
         $username = $model->getUsernameById($this->getAuthor_id());
-        $username = $username["nickname"];
+        $username = $username["username"];
 
         //Añadir saltos de linea <br> a en cada salto de linea que hay en el texto sacado del DB
         $ingredients = $this->getIngredients();

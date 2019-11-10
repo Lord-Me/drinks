@@ -6,7 +6,7 @@
 	role	int(11)
 	avatar	varchar(40)
 */
-require("../src/DBConnect.php");
+require("../../src/DBConnect.php");
 
 $connection = new DBConnect();
 $pdo = $connection->getConnection();
@@ -34,7 +34,7 @@ if ($stmt->rowCount() > 0) {
         $_SESSION['loggedin'] = TRUE;
         $_SESSION['name'] = $_POST['username'];
         $_SESSION['id'] = $loginInfo["id"];
-        header('Location: home.php');
+        header('Location: ../../index.php?page=index');
     } else {
         echo 'Incorrect password!';
     }

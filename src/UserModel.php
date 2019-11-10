@@ -10,7 +10,7 @@ class UserModel{
     }
 
     function getUsernameById($user_id):Array{
-        $stmt = $this->pdo->prepare('SELECT nickname FROM users WHERE id = :user_id');
+        $stmt = $this->pdo->prepare('SELECT username FROM users WHERE id = :user_id');
         $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
         $stmt->setFetchMode(PDO::FETCH_ASSOC | PDO::FETCH_PROPS_LATE);
         $stmt->execute();

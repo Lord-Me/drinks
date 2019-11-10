@@ -1,5 +1,5 @@
 <?php
-require("../src/DBConnect.php");
+require("../../src/DBConnect.php");
 
 $connection = new DBConnect();
 $pdo = $connection->getConnection();
@@ -41,7 +41,8 @@ if ($stmt = $pdo->prepare('SELECT id, password FROM users WHERE username = :user
             $stmt->bindParam(":email", $_POST['email'], PDO::PARAM_STR);
             $stmt->bindParam(":password", $password, PDO::PARAM_STR);
             $stmt->execute();
-            echo 'You have successfully registered, you can now login!';
+
+            header('Location: ../../index.php?page=successfulRegister');
         } else {
             // Something is wrong with the sql statement, check to make sure accounts table exists with all 3 fields.
             echo 'Could not prepare statement!';

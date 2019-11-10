@@ -4,11 +4,11 @@
 session_start();
 // If the user is not logged in redirect to the login page...
 if (!isset($_SESSION['loggedin'])) {
-    header('Location: index.html');
+    header('Location: index.php?page=index');
     exit();
 }
 
-require("../src/DBConnect.php");
+require("src/DBConnect.php");
 
 $connection = new DBConnect();
 $pdo = $connection->getConnection();
@@ -28,21 +28,19 @@ catch(PDOException $err){
 ?>
 
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Profile Page</title>
-    <link href="style.css" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+<html lang="en">
+<?php
+require('partials/head.partials.php');
+?>
 </head>
-<body class="loggedin">
-<nav class="navtop">
-    <div>
-        <h1>Website Title</h1>
-        <a href="profile.php"><i class="fas fa-user-circle"></i>Profile</a>
-        <a href="logout.php"><i class="fas fa-sign-out-alt"></i>Logout</a>
-    </div>
-</nav>
+<body>
+<?php
+if (isset($_SESSION['loggedin'])) {
+    require('partials/navigationLoggedIn.partials.php');
+}else {
+    require('partials/navigation.partials.php');
+}
+?>
 <div class="content">
     <h2>Profile Page</h2>
     <div>
@@ -63,5 +61,8 @@ catch(PDOException $err){
         </table>
     </div>
 </div>
+<?php
+require('partials/footer.partials.php');
+?>
 </body>
 </html>

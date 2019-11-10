@@ -6,7 +6,12 @@ require('partials/head.partials.php');
 </head>
 <body>
 <?php
-require('partials/navigation.partials.php');
+session_start();
+if (isset($_SESSION['loggedin'])) {
+    require('partials/navigationLoggedIn.partials.php');
+}else {
+    require('partials/navigation.partials.php');
+}
 ?>
 <div class="container">
     <br><br><br><br><br><br><br>

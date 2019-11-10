@@ -24,7 +24,6 @@ class DBConnect
     function getConnection():PDO{
         try {
             $pdo = new PDO ("$this->connection", $this->username, $this->password);
-
             #Perquè generi excepcions a l'hora de reportar errors.
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
