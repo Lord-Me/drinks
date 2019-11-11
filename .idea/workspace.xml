@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6f1d7d45-6979-4b51-947e-e1af7268cef8" name="Default Changelist" comment="">
+    <list default="true" id="868f203f-77c9-441a-b2c5-0fb2b95adc51" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/TODO.odt" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.odt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phplogin/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/phplogin/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/phplogin/profile.php" beforeDir="false" afterPath="$PROJECT_DIR$/phplogin/profile.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/01.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/02.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/img/03.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/partials/banner.partials.php" beforeDir="false" afterPath="$PROJECT_DIR$/partials/banner.partials.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Drink.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Drink.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/bootstrap/css/myStyles.css" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/bootstrap/css/myStyles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/index.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.view.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -19,41 +23,14 @@
       <executable />
     </execution>
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="HTML File" />
-        <option value="CSS File" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="XAMPP" />
-  <component name="ProjectId" id="1TFpqQ6DigoUQTYYggC2IOVip5b" />
+  <component name="ProjectId" id="1TSb1KNFMEHjAFeV5oHTbkaSEXI" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
-    <property name="DefaultHtmlFileTemplate" value="HTML File" />
-    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/partials" />
-    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
-  </component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\drinks\img" />
-      <recent name="C:\xampp\htdocs\drinks\phplogin\src" />
-      <recent name="C:\xampp\htdocs\drinks\phplogin" />
-      <recent name="C:\xampp\htdocs\drinks\phplogin\css" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\drinks\partials" />
-      <recent name="C:\xampp\htdocs\drinks\phplogin" />
-      <recent name="$PROJECT_DIR$/../databaseBlog/src" />
-      <recent name="$PROJECT_DIR$/../databaseBlog" />
-      <recent name="$PROJECT_DIR$/../connectClass/src" />
-    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -72,44 +49,14 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="6f1d7d45-6979-4b51-947e-e1af7268cef8" name="Default Changelist" comment="" />
-      <created>1573197402275</created>
+      <changelist id="868f203f-77c9-441a-b2c5-0fb2b95adc51" name="Default Changelist" comment="" />
+      <created>1573456228878</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1573197402275</updated>
-      <workItem from="1573197403777" duration="15299000" />
-      <workItem from="1573306920344" duration="8190000" />
-      <workItem from="1573391619644" duration="12535000" />
+      <updated>1573456228878</updated>
+      <workItem from="1573456236929" duration="100000" />
+      <workItem from="1573456340742" duration="18083000" />
     </task>
-    <task id="LOCAL-00001" summary="password stuff">
-      <created>1573337520745</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1573337520745</updated>
-    </task>
-    <task id="LOCAL-00002" summary="added todo file">
-      <created>1573337607253</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1573337607253</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Finished login test">
-      <created>1573398366128</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1573398366128</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Finished login test">
-      <created>1573404879163</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1573404879163</updated>
-    </task>
-    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -120,18 +67,10 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="password stuff" />
-    <MESSAGE value="added todo file" />
-    <MESSAGE value="Finished login test" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finished login test" />
   </component>
 </project>

@@ -107,6 +107,7 @@ class Drink
             }
         $html = '';
         $html .="<section class='scroll'>
+                    <div class='fillerDiv'></div>
                     <div class='mi-container-centered'>
                         <div class='container'>
                             <div class='row align-items-center'>
@@ -147,6 +148,7 @@ class Drink
 
         $html = '';
         $html .="<section>
+                    <div class='fillerDiv'></div>
                     <div class='container .mi-container-center'>
                         <div class='row align-items-center'>
                             <div class='col-lg-6 order-lg-2'>
