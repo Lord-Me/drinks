@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Register</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
-    <link href="phplogin/css/registerStyle.css" rel="stylesheet" type="text/css">
+    <link href="css/registerStyle.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="register">

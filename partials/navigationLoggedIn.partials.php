@@ -15,7 +15,7 @@
                     <a class="nav-link" href="index.php?page=user"><?php echo $_SESSION['name'] ?> Profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="phplogin/src/logout.php">Log Out</a>
+                    <a class="nav-link" href="index.php?page=logout">Log Out</a>
                 </li>
             </ul>
         </div>

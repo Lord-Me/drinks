@@ -5,22 +5,28 @@
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING)??"index";
 class ExceptionPageNotFound extends Exception{};
 
+/*
+ * REQUIRES
+ */
+require("src/RecipesControl.php");
+require("src/DBConnect.php");
+require("src/DrinkModel.php");
+require("src/UserModel.php");
+require("src/Drink.php");
+require("src/User.php");
+
 switch ($page) {
+    /*
+     * INDEX
+     */
     case "index":
         require("views/$page.view.php");
         break;
 
-    case "posts":
-        require("views/$page.view.php");
-        //
-        break;
-
+    /*
+     * DRINKS
+     */
     case "drinks":
-        require("src/RecipesControl.php");
-        require("src/DBConnect.php");
-        require("src/DrinkModel.php");
-        require("src/Drink.php");
-
         try {
             //Create a new object to contain all the drinks
             $recipeList = new RecipesControl();
@@ -54,11 +60,10 @@ switch ($page) {
 
         break;
 
+    /*
+     * DRINK
+     */
     case "drink":
-        require("src/RecipesControl.php");
-        require("src/DBConnect.php");
-        require("src/DrinkModel.php");
-        require("src/Drink.php");
         try {
             //Connect to the database
             $connection = new DBConnect();
@@ -88,21 +93,200 @@ switch ($page) {
         }
         break;
 
+    /*
+     * LOGIN
+     */
     case "login":
-        require("phplogin/index.html");
+        if (isset($_SESSION['loggedin'])) {
+            header('Location: index.php?page=index');
+            exit();
+        }
+
+        /*
+         * AUTHENTTICATE LOGIN
+         */
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $connection = new DBConnect();
+            $pdo = $connection->getConnection();
+            $um = new UserModel($pdo);
+
+            // Now we check if the data from the login form was submitted, isset() will check if the data exists.
+            if (!isset($_POST['username'], $_POST['password'])) {
+                // Could not get the data that should have been sent.
+                die ('Please fill both the username and password field!');
+            }
+
+            $user = $um->getUserByName($_POST['username']);
+
+            if (!empty($user)) {
+                // Account exists, now we verify the password.
+                // Note: remember to use password_hash in your registration file to store the hashed passwords.
+                if (password_verify($_POST['password'], $user->getPassword())) {
+                    // Verification success! User has loggedin!
+                    // Create sessions so we know the user is logged in, they basically act like cookies but remember the data on the server.
+                    session_start();
+                    session_regenerate_id();
+                    $_SESSION['loggedin'] = TRUE;
+                    $_SESSION['name'] = $_POST['username'];
+                    $_SESSION['id'] = $user->getId();
+                    header('Location: index.php?page=index');
+                } else {
+                    echo 'Incorrect password!';
+                }
+            } else {
+                echo 'Incorrect username!';
+            }
+        }
+
+        require("views/login.view.html");
+
         break;
 
+    /*
+     * LOGOUT
+     */
+    case "logout":
+        session_start();
+        session_destroy();
+        // Redirect to the login page:
+        header('Location: index.php?page=index');
+        break;
+
+    /*
+     * REGISTER
+     */
     case "register":
-        require("phplogin/register.html");
+        if (isset($_SESSION['loggedin'])) {
+            header('Location: index.php?page=index');
+            exit();
+        }
+
+        class ExceptionEmptyForm extends Exception{};
+        class ExceptionUsernameExists extends Exception{};
+        class ExceptionInvalidInput extends Exception{};
+
+        /*
+         * AUTHENTICATE REGISTER
+         */
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $connection = new DBConnect();
+            $pdo = $connection->getConnection();
+            $um = new UserModel($pdo);
+
+            try {
+                //Check filled in
+                if (!isset($_POST['username'], $_POST['password'], $_POST['email'])) {
+                    // Could not get the data that should have been sent.
+                    throw new ExceptionEmptyForm();
+                }
+                // Make sure the submitted registration values are not empty.
+                if (empty($_POST['username']) || empty($_POST['password']) || empty($_POST['email'])) {
+                    // One or more values are empty.
+                    throw new ExceptionEmptyForm();
+                }
+
+                $newUser = new User();
+                $newUser->setUsername($_POST['username']);
+                $newUser->setEmail($_POST['email']);
+                $newUser->setPassword($_POST['password']);
+
+                // Check input validity
+                //TODO make getformdata and validate in models. Example in databaseBlog/postmodel
+                if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+                    throw new ExceptionInvalidInput('Email is not valid!');
+                }
+                if (preg_match('/[A-Za-z0-9]+/', $_POST['username']) == 0) {
+                    throw new ExceptionInvalidInput('Username is not valid!');
+                }
+                if (strlen($_POST['password']) > 20 || strlen($_POST['password']) < 6) {
+                    throw new ExceptionInvalidInput('Password must be between 6 and 20 characters long!');
+                }
+
+                // We need to check if the account with that username exists.
+                $user = $um->getUserByName($_POST['username']);
+
+                // Store the result so we can check if the account exists in the database.
+                if (!empty($user)) {
+                    // Username already exists
+                    throw new ExceptionUsernameExists();
+
+                } else {
+                    // Username doesnt exists, insert new account
+                    if ($um->insert($newUser)) {
+                        header('Location: index.php?page=successfulRegister');
+                    } else {
+                        // Something is wrong with the sql statement, check to make sure accounts table exists with all 3 fields.
+                        throw new PDOException('Could not prepare statement!');
+                    }
+                }
+            }
+            catch(ExceptionEmptyForm $e){
+                die('Please complete the registration form!');
+            }
+            catch(ExceptionInvalidInput $e){
+                die($e->getMessage());
+            }
+            catch(ExceptionUsernameExists $e){
+                die('Username exists, please choose another!');
+            }
+            catch(PDOException $e){
+                echo "Error: executant consulta SQL.";
+            }
+        }
+
+        require("views/register.view.html");
+
         break;
 
+    /*
+     * SUCCESSFUL REGISTER
+     */
     case "successfulRegister":
-        require("phplogin/successfulRegister.php");
+        if (isset($_SESSION['loggedin'])) {
+            header('Location: index.php?page=index');
+            exit();
+        }
+
+        require("views/successfulRegister.view.php");
         break;
 
+    /*
+     * USER PAGE
+     */
     case "user":
-        require("phplogin/profile.php");
+        // We need to use sessions, so you should always start sessions using the below code.
+        session_start();
+        // If the user is not logged in redirect to the login page...
+        if (!isset($_SESSION['loggedin'])) {
+            header('Location: index.php?page=login');
+            exit();
+        }
+
+
+        $connection = new DBConnect();
+        $pdo = $connection->getConnection();
+
+        $um = new UserModel($pdo);
+
+        try {
+            // We don't have the password or email info stored in sessions so instead we can get the results from the database.
+            $stmt = $pdo->prepare('SELECT password, email, role FROM users WHERE id = ?');
+            // In this case we can use the account ID to get the account info.
+            $stmt->bindparam(1, $_SESSION['id'], pdo::PARAM_INT);
+            $stmt->setFetchMode(PDO::FETCH_ASSOC | PDO::FETCH_PROPS_LATE);
+            $stmt->execute();
+            $userInfo = $stmt->fetch();
+            $stmt = null;
+        } catch (PDOException $err) {
+            echo "Error";
+        }
+
+        require("views/profile.view.php");
         break;
+
+    /*
+     * DEFAULT 404
+     */
     default:
         {
           require("views/error.view.php");

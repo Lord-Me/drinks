@@ -1,5 +1,5 @@
 <?php
-require("../../src/DBConnect.php");
+require("DBConnect.php");
 
 $connection = new DBConnect();
 $pdo = $connection->getConnection();
@@ -42,7 +42,7 @@ if ($stmt = $pdo->prepare('SELECT id, password FROM users WHERE username = :user
             $stmt->bindParam(":password", $password, PDO::PARAM_STR);
             $stmt->execute();
 
-            header('Location: ../../index.php?page=successfulRegister');
+            header('Location: index.php?page=successfulRegister');
         } else {
             // Something is wrong with the sql statement, check to make sure accounts table exists with all 3 fields.
             echo 'Could not prepare statement!';
