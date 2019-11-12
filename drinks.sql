@@ -2,8 +2,8 @@
 -- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Nov 07, 2019 at 02:10 PM
+-- Host: 127.0.0.1
+-- Generation Time: Nov 13, 2019 at 12:01 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -55,7 +55,7 @@ CREATE TABLE `recipes` (
   `title` varchar(50) COLLATE utf8_spanish2_ci NOT NULL,
   `ingredients` longtext COLLATE utf8_spanish2_ci NOT NULL,
   `content` longtext COLLATE utf8_spanish2_ci NOT NULL,
-  `image` varchar(25) COLLATE utf8_spanish2_ci NOT NULL,
+  `image` varchar(25) COLLATE utf8_spanish2_ci NOT NULL DEFAULT 'defaultDrinkImage',
   `published_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
@@ -81,22 +81,44 @@ INSERT INTO `recipes` (`id`, `author_id`, `category`, `title`, `ingredients`, `c
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` int(11) NOT NULL,
+  `role` varchar(20) COLLATE utf8_spanish2_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `role`) VALUES
+(1, 'admin'),
+(2, 'user');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `nickname` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
+  `username` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
   `email` varchar(40) COLLATE utf8_spanish2_ci NOT NULL,
-  `password` varchar(100) COLLATE utf8_spanish2_ci NOT NULL
+  `password` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
+  `avatar` varchar(50) COLLATE utf8_spanish2_ci NOT NULL DEFAULT 'defaultAvatar',
+  `role` int(11) NOT NULL DEFAULT 2
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `nickname`, `email`, `password`) VALUES
-(1, 'admin', 'admin@drinks.com', 'admin');
+INSERT INTO `users` (`id`, `username`, `email`, `password`, `avatar`, `role`) VALUES
+(1, 'admin', 'admin@drinks.com', '$2y$12$4N4d.gZ6LhVxRJKDMbxNS.zqOhA6cC9dLMxybLWuqAIM3V0epS0mG', 'defaultAvatar', 1),
+(2, 'rerewqrewqr', 'das@fas.xsa', '$2y$10$RycY2yLABLDz7gOTTErcdOM0I27H/5hVkGuaG1QXLworDtTABGrqK', 'defaultAvatar', 2);
 
 --
 -- Indexes for dumped tables
@@ -117,10 +139,39 @@ ALTER TABLE `recipes`
   ADD KEY `category-category_id` (`category`);
 
 --
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `FK_role` (`role`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `recipes`
+--
+ALTER TABLE `recipes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -132,6 +183,12 @@ ALTER TABLE `users`
 ALTER TABLE `recipes`
   ADD CONSTRAINT `author_id-user_id` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `category-category_id` FOREIGN KEY (`category`) REFERENCES `categories` (`id`);
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `FK_role` FOREIGN KEY (`role`) REFERENCES `roles` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
