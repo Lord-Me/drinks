@@ -71,7 +71,7 @@ switch ($page) {
             $pdo = $connection->getConnection();
 
             //create new drink via the Model
-            $drink = new DrinkModel($pdo);
+            $dm = new DrinkModel($pdo);
 
             //buscamos el id del segundo query del url. Si no enquentra nada, lanza una exception y va directo a la pagina 404
             $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING) ?? NULL;
@@ -81,7 +81,7 @@ switch ($page) {
             }
 
             //fetch the drink with the corresponding id
-            $recipe = $drink->getById($id);
+            $recipe = $dm->getById($id);
 
 
             //send it to the view
@@ -203,14 +203,12 @@ switch ($page) {
                 }
 
                 // We need to check if the account with that username exists.
-                $user = $um->getUserByName($_POST['username']);
-
-                // Store the result so we can check if the account exists in the database.
-                if (!empty($user)) {
-                    // Username already exists
+                try {
+                    $user = $um->getUserByName($_POST['username']);
+                    // Username already exists as it didn't throw an empty error
                     throw new ExceptionUsernameExists();
-
-                } else {
+                }
+                catch(PDOException $e){//TODO ODD WAT TO DO THIS
                     // Username doesnt exists, insert new account
                     if ($um->insert($newUser)) {
                         header('Location: index.php?page=successfulRegister');
@@ -230,7 +228,7 @@ switch ($page) {
                 die('Username exists, please choose another!');
             }
             catch(PDOException $e){
-                echo "Error: executant consulta SQL.";
+                echo $e->getMessage();
             }
         }
 
@@ -248,6 +246,22 @@ switch ($page) {
         }
 
         require("views/successfulRegister.view.php");
+        break;
+
+    /*
+     * CHANGE PASSWORD
+     */
+    case "changepassword":
+        // We need to use sessions, so you should always start sessions using the below code.
+        session_start();
+        // If the user is not logged in redirect to the login page...
+        if (!isset($_SESSION['loggedin'])) {
+            header('Location: index.php?page=login');
+            exit();
+        }
+
+
+        require("views/profile.view.php");
         break;
 
     /*
@@ -269,15 +283,13 @@ switch ($page) {
         $um = new UserModel($pdo);
 
         try {
-            // We don't have the password or email info stored in sessions so instead we can get the results from the database.
-            $stmt = $pdo->prepare('SELECT password, email, role FROM users WHERE id = ?');
-            // In this case we can use the account ID to get the account info.
-            $stmt->bindparam(1, $_SESSION['id'], pdo::PARAM_INT);
-            $stmt->setFetchMode(PDO::FETCH_ASSOC | PDO::FETCH_PROPS_LATE);
-            $stmt->execute();
-            $userInfo = $stmt->fetch();
-            $stmt = null;
-        } catch (PDOException $err) {
+            $connection = new DBConnect();
+            $pdo = $connection->getConnection();
+            $um = new UserModel($pdo);
+
+            $userInfo = $um->getUserById($_SESSION['id']);
+        }
+        catch (PDOException $err) {
             echo "Error";
         }
 

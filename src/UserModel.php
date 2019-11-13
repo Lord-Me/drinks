@@ -43,7 +43,6 @@ class UserModel{
             $stmt->bindParam(":email", $email, PDO::PARAM_STR);
             $stmt->bindParam(":password", $password, PDO::PARAM_STR);
             $stmt->execute();
-
             return true;
         }
         catch (PDOException $err) {

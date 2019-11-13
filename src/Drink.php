@@ -94,8 +94,7 @@ class Drink
         $connection = new DBConnect();
         $pdo = $connection->getConnection();
         $model = new UserModel($pdo);
-        $username = $model->getUsernameById($this->getAuthor_id());
-        $username = $username["username"];
+        $username = $model->getUserById($this->getAuthor_id())->getUsername();
 
         //make the html string
             //Alternate between left and right
@@ -106,9 +105,11 @@ class Drink
                 $side2 = "order-lg-1";
             }
         $html = '';
-        $html .="<section class='scroll'>
-                    <div class='fillerDiv'></div>
-                    <div class='mi-container-centered'>
+        $html .="<section class='scroll'>";
+        if($sideNum!=0) {
+            $html .="<div class='fillerDiv'></div>";
+        }
+        $html.=     "<div class='mi-container-centered'>
                         <div class='container'>
                             <div class='row align-items-center'>
                                 <div class='col-lg-6 ".$side1."'>
@@ -137,8 +138,7 @@ class Drink
         $connection = new DBConnect();
         $pdo = $connection->getConnection();
         $model = new UserModel($pdo);
-        $username = $model->getUsernameById($this->getAuthor_id());
-        $username = $username["username"];
+        $username = $model->getUserById($this->getAuthor_id())->getUsername();
 
         //Añadir saltos de linea <br> a en cada salto de linea que hay en el texto sacado del DB
         $ingredients = $this->getIngredients();
@@ -148,7 +148,7 @@ class Drink
 
         $html = '';
         $html .="<section>
-                    <div class='fillerDiv'></div>
+                    <div style='height: 59px;'></div>
                     <div class='container .mi-container-center'>
                         <div class='row align-items-center'>
                             <div class='col-lg-6 order-lg-2'>
