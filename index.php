@@ -188,44 +188,33 @@ switch ($page) {
                     throw new ExceptionEmptyForm();
                 }
 
-                $newUser = new User();
-                $newUser->setUsername($_POST['username']);
-                $newUser->setEmail($_POST['email']);
-                $newUser->setPassword($_POST['password']);
-
-                // Check input validity
-                //TODO make getformdata and validate in models. Example in databaseBlog/postmodel
-                if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
-                    throw new ExceptionInvalidInput('Email is not valid!');
-                }
-                if (preg_match('/[A-Za-z0-9]+/', $_POST['username']) == 0) {
-                    throw new ExceptionInvalidInput('Username is not valid!');
-                }
-                if (strlen($_POST['password']) > 20 || strlen($_POST['password']) < 6) {
-                    throw new ExceptionInvalidInput('Password must be between 6 and 20 characters long!');
-                }
-
-                // We need to check if the account with that username exists.
-                try {
-                    $user = $um->getUserByName($_POST['username']);
-                    // Username already exists as it didn't throw an empty error
-                    throw new ExceptionUsernameExists();
-                }
-                catch(PDOException $e){//TODO ODD WAY TO DO THIS
-                    // Username doesnt exists, insert new account
-                    if ($um->insert($newUser)) {
-                        header('Location: index.php?page=successfulRegister');
-                    } else {
-                        // Something is wrong with the sql statement, check to make sure accounts table exists with all 3 fields.
-                        throw new PDOException('Could not prepare statement!');
+                $newUser = $um->getInsertFormData();
+                $errors = $um->validate($newUser);
+                if (empty($errors)) {
+                    // We need to check if the account with that username exists.
+                    try {
+                        $user = $um->getUserByName($_POST['username']);
+                        // Username already exists as it didn't throw an empty error
+                        throw new ExceptionUsernameExists();
                     }
+                    catch(PDOException $e){//TODO ODD WAY TO DO THIS
+                        // Username doesnt exists, insert new account
+                        if ($um->insert($newUser)) {
+                            header('Location: index.php?page=successfulRegister');
+                        } else {
+                            // Something is wrong with the sql statement, check to make sure accounts table exists with all 3 fields.
+                            throw new PDOException('Could not prepare statement!');
+                        }
+                    }
+                } else {
+                        throw new ExceptionInvalidData(implode("<br>", $errors));
                 }
+            }
+            catch (ExceptionInvalidData $e) {
+                die ($e->getMessage());
             }
             catch(ExceptionEmptyForm $e){
                 die('Please complete the registration form!');
-            }
-            catch(ExceptionInvalidInput $e){
-                die($e->getMessage());
             }
             catch(ExceptionUsernameExists $e){
                 die('Username exists, please choose another!');
@@ -313,6 +302,50 @@ switch ($page) {
         session_destroy();
 
         require("views/successfulPasswordChange.view.php");
+        break;
+
+    /*
+     * Change Avatar
+     */
+    case "changeAvatar":
+        // We need to use sessions, so you should always start sessions using the below code.
+        session_start();
+        // If the user is not logged in redirect to the login page...
+        if (!isset($_SESSION['loggedin'])) {
+            header('Location: index.php?page=login');
+            exit();
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            try {
+                $connection = new DBConnect();
+                $pdo = $connection->getConnection();
+                $um = new UserModel($pdo);
+
+                $user = $um->getUserByName($_SESSION['name']);
+
+
+                $newUser = $um->getUpdateFormData($user);
+                $errors = $um->validate($newUser);
+                if (empty($errors)) {
+                    $userToEdit = $user->getId();
+                    if ($um->update($newUser, $userToEdit)) {
+                        header("Location: index.php?page=user");
+                    } else {
+                        echo("Failed to update password<br>");
+                    }
+                } else {
+                    throw new ExceptionInvalidData(implode("<br>", $errors));
+                }
+
+            } catch (ExceptionInvalidInput $e) {
+                die ($e->getMessage());
+            } catch (ExceptionInvalidData $e) {
+                die ($e->getMessage());
+            }
+        }
+
+        require("views/$page.view.html");
         break;
 
     /*

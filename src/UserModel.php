@@ -30,6 +30,20 @@ class UserModel{
         }
     }
 
+    public function getInsertFormData():User{
+        $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
+        $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_SPECIAL_CHARS);
+        $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
+        $avatar = "defaultAvatar.jpg";
+
+        $newUser = new User();
+        $newUser->setUsername($username);
+        $newUser->setEmail($email);
+        $newUser->setPassword($password);
+        $newUser->setAvatar($avatar);
+        return $newUser;
+    }
+
     public function getUpdateFormData(User $user):User{
         if(!empty($_POST["username"])) {
             $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);

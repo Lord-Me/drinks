@@ -1,0 +1,15 @@
+.fillerDiv {
+    height: 10%;
+}
+.myBackgroundImage {
+    position: relative;
+    overflow: hidden;
+    padding-top: calc(7rem + 72px);
+    padding-bottom: 7rem;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: scroll;
+    background-size: cover;
+    height: 100%;
+    background-image: url("img/BackgroundImage1.png");
+}
