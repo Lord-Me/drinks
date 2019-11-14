@@ -4,6 +4,8 @@
 
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING)??"index";
 class ExceptionPageNotFound extends Exception{};
+class ExceptionInvalidData extends Exception{};
+class ExceptionInvalidInput extends Exception{};
 
 /*
  * REQUIRES
@@ -97,6 +99,7 @@ switch ($page) {
      * LOGIN
      */
     case "login":
+        session_start();
         if (isset($_SESSION['loggedin'])) {
             header('Location: index.php?page=index');
             exit();
@@ -156,6 +159,7 @@ switch ($page) {
      * REGISTER
      */
     case "register":
+        session_start();
         if (isset($_SESSION['loggedin'])) {
             header('Location: index.php?page=index');
             exit();
@@ -163,7 +167,6 @@ switch ($page) {
 
         class ExceptionEmptyForm extends Exception{};
         class ExceptionUsernameExists extends Exception{};
-        class ExceptionInvalidInput extends Exception{};
 
         /*
          * AUTHENTICATE REGISTER
@@ -208,7 +211,7 @@ switch ($page) {
                     // Username already exists as it didn't throw an empty error
                     throw new ExceptionUsernameExists();
                 }
-                catch(PDOException $e){//TODO ODD WAT TO DO THIS
+                catch(PDOException $e){//TODO ODD WAY TO DO THIS
                     // Username doesnt exists, insert new account
                     if ($um->insert($newUser)) {
                         header('Location: index.php?page=successfulRegister');
@@ -240,6 +243,7 @@ switch ($page) {
      * SUCCESSFUL REGISTER
      */
     case "successfulRegister":
+        session_start();
         if (isset($_SESSION['loggedin'])) {
             header('Location: index.php?page=index');
             exit();
@@ -251,7 +255,7 @@ switch ($page) {
     /*
      * CHANGE PASSWORD
      */
-    case "changepassword":
+    case "changePassword":
         // We need to use sessions, so you should always start sessions using the below code.
         session_start();
         // If the user is not logged in redirect to the login page...
@@ -260,8 +264,55 @@ switch ($page) {
             exit();
         }
 
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            try {
+                $connection = new DBConnect();
+                $pdo = $connection->getConnection();
+                $um = new UserModel($pdo);
 
-        require("views/profile.view.php");
+                $user = $um->getUserByName($_SESSION['name']);
+
+                //See if the password is the correct one
+                if (!password_verify($_POST['currentPassword'], $user->getPassword())) {
+                    throw new ExceptionInvalidInput('Current password is incorrect');
+                }
+
+                //Check the new password isn't the same //TODO this password comparison
+                //if (!password_verify($_POST['password'], $user->getPassword())) {
+                //    throw new ExceptionInvalidInput('You must use a new password');
+                //}
+
+                $newUser = $um->getUpdateFormData($user);
+                $errors = $um->validate($newUser);
+                if (empty($errors)) {
+                    $userToEdit = $user->getId();
+                    if ($um->update($newUser, $userToEdit)) {
+                        header("Location: index.php?page=successfulPasswordChange");
+                    } else {
+                        echo("Failed to update password<br>");
+                    }
+                } else {
+                    throw new ExceptionInvalidData(implode("<br>", $errors));
+                }
+
+            } catch (ExceptionInvalidInput $e) {
+                die ($e->getMessage());
+            } catch (ExceptionInvalidData $e) {
+                die ($e->getMessage());
+            }
+        }
+
+        require("views/$page.view.html");
+        break;
+
+    /*
+     * successfulPasswordChange
+     */
+    case "successfulPasswordChange":
+        session_start();
+        session_destroy();
+
+        require("views/successfulPasswordChange.view.php");
         break;
 
     /*

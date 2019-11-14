@@ -5,7 +5,6 @@
       <paths name="Xampp">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$/.." web="/" />
             <mapping local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>

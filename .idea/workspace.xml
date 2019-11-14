@@ -1,15 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="868f203f-77c9-441a-b2c5-0fb2b95adc51" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/views/changePassword.view.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Drink.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Drink.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/register.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/profile.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/profile.view.php" afterDir="false" />
-    </list>
+    <list default="true" id="23c4d5b8-9c93-4bf0-a230-ff61289df2da" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,17 +16,17 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectId" id="1TSb1KNFMEHjAFeV5oHTbkaSEXI" />
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="XAMPP" />
+  <component name="ProjectId" id="1TZc9HfpcUsxa78hhnxC9tJbrGR" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
-    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/views" />
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/views" />
-      <recent name="$PROJECT_DIR$/../databaseBlog/src" />
+      <recent name="C:\xampp\htdocs\drinks\views" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -54,48 +46,16 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="868f203f-77c9-441a-b2c5-0fb2b95adc51" name="Default Changelist" comment="" />
-      <created>1573456228878</created>
+      <changelist id="23c4d5b8-9c93-4bf0-a230-ff61289df2da" name="Default Changelist" comment="" />
+      <created>1573670913806</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1573456228878</updated>
-      <workItem from="1573456236929" duration="100000" />
-      <workItem from="1573456340742" duration="18152000" />
-      <workItem from="1573545833069" duration="322000" />
-      <workItem from="1573550747006" duration="1888000" />
-      <workItem from="1573554542908" duration="3089000" />
-      <workItem from="1573559714451" duration="930000" />
-      <workItem from="1573632511028" duration="5745000" />
-      <workItem from="1573645419808" duration="4965000" />
+      <updated>1573670913806</updated>
+      <workItem from="1573670949785" duration="10920000" />
     </task>
-    <task id="LOCAL-00001" summary="stuff">
-      <created>1573477757194</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1573477757194</updated>
-    </task>
-    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="stuff" />
-    <option name="LAST_COMMIT_MESSAGE" value="stuff" />
   </component>
 </project>
