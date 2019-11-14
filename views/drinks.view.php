@@ -17,17 +17,20 @@ if (isset($_SESSION['loggedin'])) {
 <section>
     <div class="container">
         <div  class="row align-items-center">
-            <form id="filterContainer">
+            <form action="index.php?page=drinks" method="post" id="filterContainer">
                 <div class="row">
-                    Search: <input type="text" name="search" value="Search..."><br>
+                    Search: <input type="text" name="search" placeholder="Search..."><br>
                 </div>
                 <div class="row">
                     <div class="col-lg-6">
-                        <input id="check1" type="checkbox" name="check" value="0" class="filter">
-                        <label for="check1">Professional Drinks</label>
-                        <br>
-                        <input id="check2" type="checkbox" name="check" value="1" class="filter">
-                        <label for="check2">Original Drinks</label>
+                        <input id="filterAll" type="radio" name="categoryFilter" value="all" checked="checked" class="filter">
+                        <label for="filterAll">All Drinks</label>
+
+                        <input id="filterProf" type="radio" name="categoryFilter" value="pro" class="filter">
+                        <label for="filterProf">Professional Drinks</label>
+
+                        <input id="filterOri" type="radio" name="categoryFilter" value="ori" class="filter">
+                        <label for="filterOri">Original Drinks</label>
                     </div>
                     <div class="col-lg-6">
                         Search between times

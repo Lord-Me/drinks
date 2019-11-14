@@ -35,6 +35,12 @@ class DrinkModel
             return $post;
     }
 
+    public function getAllByAuthorId(int $author_id):array {
+        $stmt = $this->pdo->prepare('SELECT * FROM recipes WHERE author_id = :author_id');
+        $stmt->bindParam(':author_id', $author_id, PDO::PARAM_INT);
+        return $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Drink');
+    }
+
     /*
      * RETURN BY SENT CATEGORY ID
      * 1 => professional drinks

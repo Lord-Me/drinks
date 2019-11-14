@@ -37,13 +37,31 @@ if (isset($_SESSION['loggedin'])) {
                         <tr>
                             <td><a href="index.php?page=changePassword" >Change Password</a></td>
                         </tr>
-
                     </table>
+                    <a href="#" onclick="showForm()">Change language</a>
+                    <form id="hiddenForm" method="post" action="#">
+                        <select name="language">     <!--TODO this okay?-->
+                            <option value="english">English</option>
+                            <option value="spanish">Español</option>
+                            <option value="valencian">Valencià/Català</option>
+                        </select>
+                        <input type="submit" value="Canviar Idioma">
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<script>
+    window.onload = function() {
+        document.getElementById("hiddenForm").style.display = "none";
+    };
+
+    function showForm(){
+        document.getElementById("hiddenForm").style.display = "block";
+    }
+</script>
 <?php
 require('partials/footer.partials.php');
 ?>

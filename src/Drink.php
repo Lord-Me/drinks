@@ -93,8 +93,8 @@ class Drink
         //get the username of auther by their ID
         $connection = new DBConnect();
         $pdo = $connection->getConnection();
-        $model = new UserModel($pdo);
-        $username = $model->getUserById($this->getAuthor_id())->getUsername();
+        $um = new UserModel($pdo);
+        $username = $um->getUserById($this->getAuthor_id())->getUsername();
 
         //make the html string
             //Alternate between left and right
@@ -137,8 +137,9 @@ class Drink
         //get the username of author by their ID
         $connection = new DBConnect();
         $pdo = $connection->getConnection();
-        $model = new UserModel($pdo);
-        $username = $model->getUserById($this->getAuthor_id())->getUsername();
+        $um = new UserModel($pdo);
+        $username = $um->getUserById($this->getAuthor_id())->getUsername();
+        $userAvatar = $um->getUserById($this->getAuthor_id())->getAvatar();
 
         //Añadir saltos de linea <br> a en cada salto de linea que hay en el texto sacado del DB
         $ingredients = $this->getIngredients();
@@ -164,8 +165,16 @@ class Drink
                         </div>
                         <div class='row align-items-center'>
                             <div class='col-lg-6'>
-                                <p>Author: ".ucfirst($username)."<br>
-                                Posted at: ".$this->getPublished_at()."</p>
+                                <table>
+                                    <a>
+                                        <td>Author: <a href='index.php?page=drinks&author=".$this->getAuthor_id()."'>
+                                                        ".ucfirst($username)." <img src='img/avatars/".$userAvatar."' alt='userImage' width='30' height='30' class='rounded-circle'></td>
+                                                    </a>
+                                    </tr>
+                                    <tr>
+                                        <td>Posted at: ".$this->getPublished_at()."</td>
+                                    </tr>
+                                </table>
                             </div>
                         </div>
                         <div class='row align-items-center'> 

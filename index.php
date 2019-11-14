@@ -39,12 +39,12 @@ switch ($page) {
             $pdo = $connection->getConnection();
 
             //Using the Model for our drinks, I get all of the drinks with the same category
-            $drink = new DrinkModel($pdo);
+            $dm = new DrinkModel($pdo);
 
-            $drinks = $drink->getAll();
-
-            //Get all the drinks in the selected category
-            //$drinks = $drink->getByCategory($type_id);
+        /*
+         * FILTERS
+         */
+            require('src/Filter.php');
 
             //Send each array entry to the object recipeList to be stored
             foreach ($drinks as $drink) {
