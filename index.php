@@ -187,6 +187,9 @@ switch ($page) {
                     // One or more values are empty.
                     throw new ExceptionEmptyForm();
                 }
+                if(strlen($_POST["password"]) > 20 || strlen($_POST["password"]) < 5){
+                    throw new ExceptionInvalidInput('Password must be between 5 and 20 characters long!');
+                }
 
                 $newUser = $um->getInsertFormData();
                 $errors = $um->validate($newUser);
@@ -241,6 +244,39 @@ switch ($page) {
         require("views/successfulRegister.view.php");
         break;
 
+
+    /*
+     * USER PAGE
+     */
+    case "user":
+        // We need to use sessions, so you should always start sessions using the below code.
+        session_start();
+        // If the user is not logged in redirect to the login page...
+        if (!isset($_SESSION['loggedin'])) {
+            header('Location: index.php?page=login');
+            exit();
+        }
+
+
+        $connection = new DBConnect();
+        $pdo = $connection->getConnection();
+
+        $um = new UserModel($pdo);
+
+        try {
+            $connection = new DBConnect();
+            $pdo = $connection->getConnection();
+            $um = new UserModel($pdo);
+
+            $userInfo = $um->getUserById($_SESSION['id']);
+        }
+        catch (PDOException $err) {
+            echo "Error";
+        }
+
+        require("views/profile.view.php");
+        break;
+
     /*
      * CHANGE PASSWORD
      */
@@ -266,10 +302,13 @@ switch ($page) {
                     throw new ExceptionInvalidInput('Current password is incorrect');
                 }
 
-                //Check the new password isn't the same //TODO this password comparison
-                //if (!password_verify($_POST['password'], $user->getPassword())) {
-                //    throw new ExceptionInvalidInput('You must use a new password');
-                //}
+                if(strlen($_POST["password"]) > 20 || strlen($_POST["password"]) < 5){
+                    throw new ExceptionInvalidInput('Password must be between 5 and 20 characters long!');
+                }
+
+                if (password_verify($_POST['password'], $user->getPassword())) {
+                    throw new ExceptionInvalidInput('You must use a new password');
+                }
 
                 $newUser = $um->getUpdateFormData($user);
                 $errors = $um->validate($newUser);
@@ -316,7 +355,51 @@ switch ($page) {
             exit();
         }
 
+
+        // Check if image file is a actual image or fake image
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $target_dir = "img/avatars/";
+            $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+            $uploadOk = 1;
+            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+
+            $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+            if($check !== false) {
+                echo "File is an image - " . $check["mime"] . ".";
+                $uploadOk = true;
+            } else {
+                echo "File is not an image.";
+                $uploadOk = false;
+            }
+
+            // Check if file already exists
+            if (file_exists($target_file)) {
+                echo "Sorry, file already exists.";
+                $uploadOk = false;
+            }
+            // Check file size is less than 10KB
+            if ($_FILES["fileToUpload"]["size"] > 50000) {
+                echo "Sorry, your file is too large.";
+                $uploadOk = false;
+            }
+            // Allow certain file formats
+            if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+                echo "Sorry, only JPG, JPEG & PNG files are allowed.";
+                $uploadOk = false;
+            }
+            // Check if $uploadOk is set to 0 by an error
+            if ($uploadOk == false) {
+                echo "Sorry, your file was not uploaded.";
+                // if everything is ok, try to upload file
+            } else {
+                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                    echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+                } else {
+                    echo "Sorry, there was an error uploading your file.";
+                }
+            }
+
             try {
                 $connection = new DBConnect();
                 $pdo = $connection->getConnection();
@@ -343,41 +426,10 @@ switch ($page) {
             } catch (ExceptionInvalidData $e) {
                 die ($e->getMessage());
             }
+
         }
 
         require("views/$page.view.html");
-        break;
-
-    /*
-     * USER PAGE
-     */
-    case "user":
-        // We need to use sessions, so you should always start sessions using the below code.
-        session_start();
-        // If the user is not logged in redirect to the login page...
-        if (!isset($_SESSION['loggedin'])) {
-            header('Location: index.php?page=login');
-            exit();
-        }
-
-
-        $connection = new DBConnect();
-        $pdo = $connection->getConnection();
-
-        $um = new UserModel($pdo);
-
-        try {
-            $connection = new DBConnect();
-            $pdo = $connection->getConnection();
-            $um = new UserModel($pdo);
-
-            $userInfo = $um->getUserById($_SESSION['id']);
-        }
-        catch (PDOException $err) {
-            echo "Error";
-        }
-
-        require("views/profile.view.php");
         break;
 
     /*

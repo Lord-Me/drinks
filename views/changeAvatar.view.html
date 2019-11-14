@@ -9,11 +9,11 @@
 <body>
 <div class="login">
     <h1>Change Avatar</h1>
-    <form action="index.php?page=changeAvatar" method="post">
+    <form action="index.php?page=changeAvatar" method="post" enctype="multipart/form-data">
         <label for="fileToUpload">
-            <i class="fas fa-chevron-circle-up"></i><!--TODO find the fontawsome image upload thingy-->
+            <i class="fas fa-chevron-circle-up"></i>
         </label>
-        <input type="file" name="newAvatar" placeholder="New Avatar" id="fileToUpload" required>
+        <input type="file" name="fileToUpload" placeholder="New Avatar" id="fileToUpload" required>
         <input type="submit" value="Change Password">
     </form>
 </div>

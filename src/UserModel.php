@@ -60,8 +60,9 @@ class UserModel{
         }else{
             $password = $user->getPassword();
         }
-        if(!empty($_POST["avatar"])) {
-            $avatar = filter_input(INPUT_POST, "avatar", FILTER_SANITIZE_SPECIAL_CHARS);
+        if(!empty($_FILES["fileToUpload"])) {
+            $avatar = basename( $_FILES["fileToUpload"]["name"]);
+            $avatar = filter_var($avatar, FILTER_SANITIZE_SPECIAL_CHARS);
         }else{
             $avatar = $user->getAvatar();
         }
@@ -134,9 +135,6 @@ class UserModel{
         }
         if(!is_string($password) || $password == NULL){
             array_push($errors, "Password es invalido");
-        }
-        if(strlen($password) > 20 || strlen($password) < 6){
-            array_push($errors, "Password must be between 6 and 20 characters long!");
         }
         if(!is_string($avatar) || $avatar == NULL){
             array_push($errors, "Avatar es invalido");

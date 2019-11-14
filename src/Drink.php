@@ -114,7 +114,7 @@ class Drink
                             <div class='row align-items-center'>
                                 <div class='col-lg-6 ".$side1."'>
                                     <div class='p-5'>
-                                        <img class='img-fluid rounded-circle' src='img/".$this->getImage().".jpg' alt='".$this->getImage()."'>
+                                        <img class='img-fluid rounded-circle' src='img/".$this->getImage()."' alt='".$this->getImage()."'>
                                     </div>
                                 </div>
                                 <div class='col-lg-6 ".$side2."'>
@@ -153,7 +153,7 @@ class Drink
                         <div class='row align-items-center'>
                             <div class='col-lg-6 order-lg-2'>
                                 <div class='p-5'>
-                                    <img class='img-fluid rounded-circle' src='img/".$this->getImage().".jpg' alt='".$this->getImage()."'>
+                                    <img class='img-fluid rounded-circle' src='img/".$this->getImage()."' alt='".$this->getImage()."'>
                                 </div>
                             </div>
                             <div class='col-lg-6 order-lg-1'>

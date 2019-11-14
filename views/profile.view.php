@@ -18,7 +18,7 @@ if (isset($_SESSION['loggedin'])) {
         <div class="row align-items-center">
             <div class="col-lg-4 order-lg-2">
                 <div class="p-5">
-                    <a href="index.php?page=changeAvatar"><img class="img-fluid rounded-circle" src="img/avatars/<?=$userInfo->getAvatar() ;?>.jpg" alt="userAvatar"></a>
+                    <a href="index.php?page=changeAvatar"><img class="img-fluid rounded-circle" src="img/avatars/<?=$userInfo->getAvatar() ;?>" alt="userAvatar"></a>
                 </div>
             </div>
             <div class="col-lg-8 order-lg-1">
