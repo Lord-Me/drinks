@@ -1,6 +1,4 @@
 <?php
-//TODO finish the profile page.
-//TODO create login models to manage everything there
 
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING)??"index";
 class ExceptionPageNotFound extends Exception{};
@@ -379,7 +377,7 @@ switch ($page) {
                 $uploadOk = false;
             }
             // Check file size is less than 10KB
-            if ($_FILES["fileToUpload"]["size"] > 50000) {
+            if ($_FILES["fileToUpload"]["size"] > 50000) {// TODO test this works
                 echo "Sorry, your file is too large.";
                 $uploadOk = false;
             }
