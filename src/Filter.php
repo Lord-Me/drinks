@@ -10,10 +10,14 @@ $drinks = [];
 
 
 //Check which filters are in use
-if(!empty($authorId)){                          //Filter by author TODO try and get it to still search by author after adding another filter
+if(!empty($authorId)){                          //Filter by author
+    $authorUrl = "&author=".$authorId;
     $author = true;
+}else{
+    $authorUrl="";
 }
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
     $filterRadio = $_POST["categoryFilter"];
 
     if ($filterRadio == "pro") {                //Filter by pro

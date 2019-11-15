@@ -17,7 +17,7 @@ if (isset($_SESSION['loggedin'])) {
 <section>
     <div class="container">
         <div  class="row align-items-center">
-            <form action="index.php?page=drinks" method="post" id="filterContainer">
+            <form action="index.php?page=drinks<?php echo $authorUrl ?>" method="post" id="filterContainer">
                 <div class="row">
                     Search: <input type="text" name="search" placeholder="Search..."><br>
                 </div>

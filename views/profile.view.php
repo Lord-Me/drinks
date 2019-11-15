@@ -40,7 +40,7 @@ if (isset($_SESSION['loggedin'])) {
                     </table>
                     <a href="#" onclick="showForm()">Change language</a>
                     <form id="hiddenForm" method="post" action="#">
-                        <select name="language">     <!--TODO this okay?-->
+                        <select name="language">
                             <option value="english">English</option>
                             <option value="spanish">Español</option>
                             <option value="valencian">Valencià/Català</option>

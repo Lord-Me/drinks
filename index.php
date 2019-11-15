@@ -198,7 +198,7 @@ switch ($page) {
                         // Username already exists as it didn't throw an empty error
                         throw new ExceptionUsernameExists();
                     }
-                    catch(PDOException $e){//TODO ODD WAY TO DO THIS
+                    catch(PDOException $e){
                         // Username doesnt exists, insert new account
                         if ($um->insert($newUser)) {
                             header('Location: index.php?page=successfulRegister');
@@ -377,7 +377,7 @@ switch ($page) {
                 $uploadOk = false;
             }
             // Check file size is less than 10KB
-            if ($_FILES["fileToUpload"]["size"] > 50000) {// TODO test this works
+            if ($_FILES["fileToUpload"]["size"] > 50000) {
                 echo "Sorry, your file is too large.";
                 $uploadOk = false;
             }
@@ -399,24 +399,26 @@ switch ($page) {
             }
 
             try {
-                $connection = new DBConnect();
-                $pdo = $connection->getConnection();
-                $um = new UserModel($pdo);
+                if($uploadOk == true) {
+                    $connection = new DBConnect();
+                    $pdo = $connection->getConnection();
+                    $um = new UserModel($pdo);
 
-                $user = $um->getUserByName($_SESSION['name']);
+                    $user = $um->getUserByName($_SESSION['name']);
 
 
-                $newUser = $um->getUpdateFormData($user);
-                $errors = $um->validate($newUser);
-                if (empty($errors)) {
-                    $userToEdit = $user->getId();
-                    if ($um->update($newUser, $userToEdit)) {
-                        header("Location: index.php?page=user");
+                    $newUser = $um->getUpdateFormData($user);
+                    $errors = $um->validate($newUser);
+                    if (empty($errors)) {
+                        $userToEdit = $user->getId();
+                        if ($um->update($newUser, $userToEdit)) {
+                            header("Location: index.php?page=user");
+                        } else {
+                            echo("Failed to update password<br>");
+                        }
                     } else {
-                        echo("Failed to update password<br>");
+                        throw new ExceptionInvalidData(implode("<br>", $errors));
                     }
-                } else {
-                    throw new ExceptionInvalidData(implode("<br>", $errors));
                 }
 
             } catch (ExceptionInvalidInput $e) {
