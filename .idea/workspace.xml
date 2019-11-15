@@ -1,17 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="23c4d5b8-9c93-4bf0-a230-ff61289df2da" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Filter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TODO.odt" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.odt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/drinks.sql" beforeDir="false" afterPath="$PROJECT_DIR$/drinks.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Drink.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Drink.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DrinkModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DrinkModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/drinks.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/drinks.view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/profile.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/profile.view.php" afterDir="false" />
-    </list>
+    <list default="true" id="23c4d5b8-9c93-4bf0-a230-ff61289df2da" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +74,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573727220764</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Done drinks filters&#10;Added user filter link to drink page">
+      <created>1573772421287</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1573772421287</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -105,7 +102,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Change password" />
-    <option name="LAST_COMMIT_MESSAGE" value="Change password" />
+    <MESSAGE value="Done drinks filters&#10;Added user filter link to drink page" />
+    <option name="LAST_COMMIT_MESSAGE" value="Done drinks filters&#10;Added user filter link to drink page" />
   </component>
   <component name="XPathView.XPathProjectComponent">
     <history />
