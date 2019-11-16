@@ -49,8 +49,23 @@ switch ($page) {
                 $recipeList->add($drink);
             }
 
-            //Turn each array entry into a string and send it to the view
-            $view=$recipeList->render();
+            //Get the current pagination page number for the back and forward buttons
+            $currentPagi = filter_input(INPUT_GET, 'pagi', FILTER_SANITIZE_STRING)??0;
+            if(!is_numeric($currentPagi) || $currentPagi<0){
+                header("Location: index.php?page=drinks&pagi=0");
+            }
+
+            //Turn each array entry into an array of all the pages(pagination) with html sting
+            $pages = $recipeList->render($currentPagi);
+
+            //Check if currentPagi is over the number of pages. If so, set is as last page
+            if($currentPagi > count($pages)-1){
+                $lastPagi = count($pages)-1;
+                header("Location: index.php?page=drinks&pagi=".$lastPagi);
+            }
+            $thisPage = $pages[$currentPagi];
+
+            $view = implode("", $thisPage);
             require("views/$page.view.php");
 
         } Catch (PDOException $err) {
