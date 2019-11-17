@@ -19,3 +19,11 @@
     margin: -1px 5px;
     color: #212529;
 }
+
+.myDrinksTable {
+    width: 100%;
+}
+
+.myDrinksButtonsDelete{
+    color: red;
+}

@@ -7,20 +7,20 @@ class recipesControl{
     /*
      * RENDER EACH DRINK ON LIST PAGE
      */
-    public function render(int $currentPagi):array {
+    public function render(int $currentPagi, int $drinksPerPage, string $filterLocation):array {
         $html = [];
         $side = 0;
         $pages = [];
 
         foreach ($this->drinks as $drink) {
-            array_push($html, $drink->render($side));
+            array_push($html, $drink->render($side, $filterLocation));
             $side++;
-            if(count($html) == 7){
+            if(count($html) == $drinksPerPage){
                 array_push($pages, $html);
                 $html=[];
             }
         }
-        //create a final page with left over drinks if there are any
+        //create a final page with left over drinks if there are any due to pagination
         if(!empty($html)){
             array_push($pages, $html);
         }
@@ -39,8 +39,29 @@ class recipesControl{
             array_push($pages, $html);
         }
 
+        if ($filterLocation=="myDrinks"){
+            $start = "<section>
+                        <div class='mi-container-centered'>
+                            <div class='container'>
+                                <div class='row align-items-center'>
+                                    <div class='col-lg-12'>
+                                        <div class='p-5'>
+                                            <table class='myDrinksTable'>";
+            $end =                         "</table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>";//TODO this wont add
+            for($i=0; $i<count($pages); $i++) {
+                array_unshift($pages[$i], $start);
+                array_push($pages[$i], $end);
+            }
+        }
+
         //paginate everything
-        $finalArray = $this->paginate($pages, $currentPagi);
+        $finalArray = $this->paginate($pages, $currentPagi, $filterLocation);
         return $finalArray;
 
     }
@@ -48,12 +69,12 @@ class recipesControl{
     /*
      * Add pagination buttons to end
      */
-    function paginate(array $pages, int $currentPagi):array{
+    function paginate(array $pages, int $currentPagi, string $filterLocation):array{
         $backOne=$currentPagi-1;
         $forwardOne=$currentPagi+1;
-        $buttons = $this->createButtons(count($pages));
-        $forward = "<a href='index.php?page=drinks&pagi=".$forwardOne."' class='pagiButton pagiForward'><i class='fas fa-arrow-right'></i></a>";
-        $back = "<a href='index.php?page=drinks&pagi=".$backOne."' class='pagiButton pagiBack'><i class='fas fa-arrow-left'></i></a>";
+        $buttons = $this->createButtons(count($pages), $filterLocation);
+        $forward = "<a href='index.php?page=".$filterLocation."&pagi=".$forwardOne."' class='pagiButton pagiForward'><i class='fas fa-arrow-right'></i></a>";
+        $back = "<a href='index.php?page=".$filterLocation."&pagi=".$backOne."' class='pagiButton pagiBack'><i class='fas fa-arrow-left'></i></a>";
         $pagiButtons="";
         for($i=0; $i<count($pages); $i++) {
             $pagiButtons .= "<section>
@@ -89,10 +110,10 @@ class recipesControl{
     /*
      * Generate the bottom buttons
      */
-    function createButtons(int $amount):string{
+    function createButtons(int $amount, string $filterLocation):string{
         $buttons="";
         for($i=0; $i<$amount; $i++){
-            $buttons .= "<a href='index.php?page=drinks&pagi=".$i."' class='pagiButton'>".$i."</a>";
+            $buttons .= "<a href='index.php?page=".$filterLocation."&pagi=".$i."' class='pagiButton'>".$i."</a>";
         }
         return $buttons;
     }

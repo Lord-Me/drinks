@@ -14,6 +14,7 @@ require("src/DrinkModel.php");
 require("src/UserModel.php");
 require("src/Drink.php");
 require("src/User.php");
+require("src/Filter.php");
 
 switch ($page) {
     /*
@@ -39,10 +40,30 @@ switch ($page) {
             //Using the Model for our drinks, I get all of the drinks with the same category
             $dm = new DrinkModel($pdo);
 
-        /*
-         * FILTERS
-         */
-            require('src/Filter.php');
+            /*
+             * FILTERS
+             */
+                $filter = new Filter(null);
+
+                //Check which filters are in use
+                $authorUrl = $filter->checkAuthorId();
+                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                    $filter->checkFilterRadio();
+                    $filter->checkSearchValue();
+                    $filter->checkDate();
+                }else{
+                    $filter->setAll();  //if no filters are in use, set filter to all
+                }
+
+                //Run filters
+                $filter->runFilter($dm);
+                $filter->runSort();
+
+                //retrieve the filtered drinks
+                $drinks = $filter->getDrinks();
+            /*
+             * /FILTERS
+             */
 
             //Send each array entry to the object recipeList to be stored
             foreach ($drinks as $drink) {
@@ -55,8 +76,8 @@ switch ($page) {
                 header("Location: index.php?page=drinks&pagi=0");
             }
 
-            //Turn each array entry into an array of all the pages(pagination) with html sting
-            $pages = $recipeList->render($currentPagi);
+            //Turn each array entry into an array of all the pages(pagination) with html sting. FilterLocation is the page the filter form is on
+            $pages = $recipeList->render($currentPagi, 5, "drinks");
 
             //Check if currentPagi is over the number of pages. If so, set is as last page
             if($currentPagi > count($pages)-1){
@@ -109,6 +130,23 @@ switch ($page) {
         break;
 
     /*
+     * GESTION DE USUARIOS
+     */
+    case "users":
+        session_start();
+        if (!isset($_SESSION['loggedin'])) {
+            header('Location: index.php?page=login');
+            exit();
+        }
+        if ($_SESSION['role'] != 1) {
+            header('Location: index.php?page=index');
+            exit();
+        }
+        $view="<br><br><br>Coming soon...";
+        require("views/$page.view.php");
+        break;
+
+    /*
      * LOGIN
      */
     case "login":
@@ -145,6 +183,7 @@ switch ($page) {
                     $_SESSION['loggedin'] = TRUE;
                     $_SESSION['name'] = $_POST['username'];
                     $_SESSION['id'] = $user->getId();
+                    $_SESSION['role'] = $user->getRole();
                     header('Location: index.php?page=index');
                 } else {
                     echo 'Incorrect password!';
@@ -445,6 +484,81 @@ switch ($page) {
         }
 
         require("views/$page.view.html");
+        break;
+
+    /*
+     * My Drinks
+     */
+    case "myDrinks"://TODO fix error which ocures when returning to the myDrinks page from the view drink page when there's a filter on (resubmit form error)
+        // We need to use sessions, so you should always start sessions using the below code.
+        session_start();
+        // If the user is not logged in redirect to the login page...
+        if (!isset($_SESSION['loggedin'])) {
+            header('Location: index.php?page=login');
+            exit();
+        }
+
+        try{
+            //Create a new object to contain all the drinks
+            $recipeList = new RecipesControl();
+
+            //Connect to the database
+
+            $connection = new DBConnect();
+            $pdo = $connection->getConnection();
+
+            //Using the Model for our drinks, I get all of the drinks with the same category
+            $dm = new DrinkModel($pdo);
+
+
+            /*
+             * FILTER
+             */
+            $filter = new Filter($_SESSION['id']);
+
+            //Check which filters are in use
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $filter->checkFilterRadio();
+                $filter->checkTitleSearchValue();
+                $filter->checkDate();
+            }else{
+                $filter->setAll();  //if no filters are in use, set filter to all
+            }
+
+            //Run filters
+            $filter->runFilter($dm);
+            $filter->runSort();
+            $drinks = $filter->getDrinks();
+
+
+            foreach ($drinks as $drink) {
+                $recipeList->add($drink);
+            }
+
+            //Get the current pagination page number for the back and forward buttons
+            $currentPagi = filter_input(INPUT_GET, 'pagi', FILTER_SANITIZE_STRING)??0;
+            if(!is_numeric($currentPagi) || $currentPagi<0){
+                header("Location: index.php?page=myDrinks&pagi=0");
+            }
+
+            //Turn each array entry into an array of all the pages(pagination) with html sting
+            $pages = $recipeList->render($currentPagi, 10, "myDrinks");
+
+            //Check if currentPagi is over the number of pages. If so, set is as last page
+            if($currentPagi > count($pages)-1){
+                $lastPagi = count($pages)-1;
+                header("Location: index.php?page=myDrinks&pagi=".$lastPagi);
+            }
+            $thisPage = $pages[$currentPagi];
+
+            $view = implode("", $thisPage);
+            require("views/$page.view.php");
+
+        } Catch (PDOException $err) {
+            // Mostrem un missatge genèric d'error.
+            echo "Error: executant consulta SQL.";
+        }
+
         break;
 
     /*

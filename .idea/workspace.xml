@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="23c4d5b8-9c93-4bf0-a230-ff61289df2da" name="Default Changelist" comment="">
+    <list default="true" id="23c4d5b8-9c93-4bf0-a230-ff61289df2da" name="Default Changelist" comment="Did pagination">
+      <change afterPath="$PROJECT_DIR$/views/myDrinks.view.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/views/users.view.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TODO.odt" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.odt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/css/myStyles.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/myStyles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/partials/footer.partials.php" beforeDir="false" afterPath="$PROJECT_DIR$/partials/footer.partials.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/partials/head.partials.php" beforeDir="false" afterPath="$PROJECT_DIR$/partials/head.partials.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/partials/navigationLoggedIn.partials.php" beforeDir="false" afterPath="$PROJECT_DIR$/partials/navigationLoggedIn.partials.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Drink.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Drink.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Filter.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Filter.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RecipesControl.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/RecipesControl.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,13 +36,13 @@
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\xampp\htdocs\drinks\views" />
+      <recent name="$PROJECT_DIR$/views" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/css" />
       <recent name="$PROJECT_DIR$/vendor/bootstrap/css/img" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/views" />
-      <recent name="C:\xampp\htdocs\drinks\views" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -68,7 +72,9 @@
       <workItem from="1573730970997" duration="5272000" />
       <workItem from="1573803370171" duration="288000" />
       <workItem from="1573903057242" duration="173000" />
-      <workItem from="1573903247801" duration="12604000" />
+      <workItem from="1573903247801" duration="12769000" />
+      <workItem from="1573927490053" duration="275000" />
+      <workItem from="1574015278270" duration="14716000" />
     </task>
     <task id="LOCAL-00001" summary="Change password">
       <created>1573716999809</created>
@@ -98,7 +104,14 @@
       <option name="project" value="LOCAL" />
       <updated>1573803462877</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Did pagination">
+      <created>1573917053772</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1573917053772</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -120,7 +133,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Change password" />
     <MESSAGE value="Done drinks filters&#10;Added user filter link to drink page" />
-    <option name="LAST_COMMIT_MESSAGE" value="Done drinks filters&#10;Added user filter link to drink page" />
+    <MESSAGE value="Did pagination" />
+    <option name="LAST_COMMIT_MESSAGE" value="Did pagination" />
   </component>
   <component name="XPathView.XPathProjectComponent">
     <history />

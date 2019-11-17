@@ -88,46 +88,66 @@ class Drink
      * RENDER
      */
 
-    public function render($sideNum){
+    public function render($sideNum, string $filterLocation){
         require_once('UserModel.php');
+        require_once('DrinkModel.php');
         //get the username of auther by their ID
         $connection = new DBConnect();
         $pdo = $connection->getConnection();
         $um = new UserModel($pdo);
+        $dm = new DrinkModel($pdo);
         $username = $um->getUserById($this->getAuthor_id())->getUsername();
 
-        //make the html string
+        $category="";
+        if($dm->getById($this->getId())->getCategory() == 1){
+            $category = "Professional";
+        }elseif ($dm->getById($this->getId())->getCategory() == 2){
+            $category = "Original";
+        }
+
+        if($filterLocation == "drinks") {               //RUN THE RENDER FOR THE MAIN DRINKS PAGE
+            //make the html string
             //Alternate between left and right
             $side1 = "";
             $side2 = "";
-            if($sideNum%2){
+            if ($sideNum % 2) {
                 $side1 = "order-lg-2";
                 $side2 = "order-lg-1";
             }
-        $html = '';
-        $html .="<section class='scroll'>";
-        if($sideNum!=0) {
-            $html .="<div class='fillerDiv'></div>";
-        }
-        $html.=     "<div class='mi-container-centered'>
+            $html = '';
+            $html .= "<section class='scroll'>";
+            if ($sideNum != 0) {
+                $html .= "<div class='fillerDiv'></div>";
+            }
+            $html .= "<div class='mi-container-centered'>
                         <div class='container'>
                             <div class='row align-items-center'>
-                                <div class='col-lg-6 ".$side1."'>
+                                <div class='col-lg-6 " . $side1 . "'>
                                     <div class='p-5'>
-                                        <img class='img-fluid rounded-circle' src='img/".$this->getImage()."' alt='".$this->getImage()."'>
+                                        <img class='img-fluid rounded-circle' src='img/" . $this->getImage() . "' alt='" . $this->getImage() . "'>
                                     </div>
                                 </div>
-                                <div class='col-lg-6 ".$side2."'>
+                                <div class='col-lg-6 " . $side2 . "'>
                                     <div class='p-5'>
-                                        <h2 class='display-4'>".$this->getTitle()."</h2>
-                                        <p>Author: ".ucfirst($username)."</p>
-                                        <a href='index.php?page=drink&id=".$this->getId()."' class='btn btn-primary btn-xl rounded-pill mt-5'>Make This Drink</a>
+                                        <h2 class='display-4'>" . $this->getTitle() . "</h2>
+                                        <p>Author: " . ucfirst($username) . "</p>
+                                        <a href='index.php?page=drink&id=" . $this->getId() . "' class='btn btn-primary btn-xl rounded-pill mt-5'>Make This Drink</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                  </section>";
+        }else{                                      //RUN THE RENDER FOR THE MYDRINKS PAGE WHER ITS ONLY A LIST
+            $html = '';
+            $html .="<tr>
+                        <td><a href='index.php?page=drink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsTitle'>".$this->getTitle()."</a></td>
+                        <td>".$category."</td>
+                        <td>".$this->getPublished_at()."</td>
+                        <td><a href='index.php?page=editPost&post=".$this->getId()."' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a></td>
+                        <td><a href='index.php?page=deletePost&post=".$this->getId()."' class='myDrinksButtons myDrinksButtonsDelete'>Delete</a></td>
+                    </tr>";
+        }
         return $html;
     }
 
