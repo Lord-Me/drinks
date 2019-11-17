@@ -53,7 +53,7 @@ class recipesControl{
                                 </div>
                             </div>
                         </div>
-                    </section>";//TODO this wont add
+                    </section>";
             for($i=0; $i<count($pages); $i++) {
                 array_unshift($pages[$i], $start);
                 array_push($pages[$i], $end);
