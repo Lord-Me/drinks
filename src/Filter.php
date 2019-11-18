@@ -26,11 +26,11 @@ class Filter
         }else{
             $this->authorId = $author_id;
         }
-        $this->searchValue = filter_input(INPUT_POST, 'search', FILTER_SANITIZE_SPECIAL_CHARS);
-        $this->titleSearchValue = filter_input(INPUT_POST, 'titleSearch', FILTER_SANITIZE_SPECIAL_CHARS);
-        $this->filterRadio = filter_input(INPUT_POST, 'categoryFilter', FILTER_SANITIZE_SPECIAL_CHARS);
-        $this->time1 = filter_input(INPUT_POST, 'time1', FILTER_SANITIZE_SPECIAL_CHARS);
-        $this->time2 = filter_input(INPUT_POST, 'time2', FILTER_SANITIZE_SPECIAL_CHARS);
+        $this->searchValue = filter_input(INPUT_GET, 'search', FILTER_SANITIZE_SPECIAL_CHARS);
+        $this->titleSearchValue = filter_input(INPUT_GET, 'titleSearch', FILTER_SANITIZE_SPECIAL_CHARS);
+        $this->filterRadio = filter_input(INPUT_GET, 'categoryFilter', FILTER_SANITIZE_SPECIAL_CHARS);
+        $this->time1 = filter_input(INPUT_GET, 'time1', FILTER_SANITIZE_SPECIAL_CHARS);
+        $this->time2 = filter_input(INPUT_GET, 'time2', FILTER_SANITIZE_SPECIAL_CHARS);
     }
 
     /*

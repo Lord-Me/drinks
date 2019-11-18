@@ -27,3 +27,41 @@
 .myDrinksButtonsDelete{
     color: red;
 }
+
+
+/*FILTER FORM*/
+
+.filterFormSearch input {
+    width: 200px;
+}
+.filterFormSearch label {
+    font-size: 1.2em;
+    margin: 0;
+    margin-right: 5px;
+}
+.filterFormSearch {
+    margin: 0;
+    margin-left: 3em;
+}
+
+.filterFormRadio {
+    margin: 0;
+    margin-left: 3em;
+}
+
+.filterFormRadio label {
+    margin: auto 1em auto 0.2em;
+}
+.filterFormRadio input {
+    margin: auto 0;
+}
+
+.filterFormRight p {
+    margin: 0;
+    font-size: 1.2em;
+}
+
+.filterFormSubmit input {
+    margin: 0 auto;
+    min-width: 5em;
+}

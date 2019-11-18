@@ -69,12 +69,15 @@ class recipesControl{
     /*
      * Add pagination buttons to end
      */
-    function paginate(array $pages, int $currentPagi, string $filterLocation):array{
+    function paginate(array $pages, int $currentPagi, string $filterLocation):array{//TODO have the &pagi=0 be default or add it with an if
         $backOne=$currentPagi-1;
         $forwardOne=$currentPagi+1;
-        $buttons = $this->createButtons(count($pages), $filterLocation);
-        $forward = "<a href='index.php?page=".$filterLocation."&pagi=".$forwardOne."' class='pagiButton pagiForward'><i class='fas fa-arrow-right'></i></a>";
-        $back = "<a href='index.php?page=".$filterLocation."&pagi=".$backOne."' class='pagiButton pagiBack'><i class='fas fa-arrow-left'></i></a>";
+        $forwardUrl = str_replace("pagi=".$currentPagi, "pagi=".$forwardOne ,$_SERVER['QUERY_STRING']);
+        $backUrl = str_replace("pagi=".$currentPagi, "pagi=".$backOne ,$_SERVER['QUERY_STRING']);
+
+        $buttons = $this->createButtons(count($pages), $currentPagi);
+        $forward = "<a href='index.php?".$forwardUrl."' class='pagiButton pagiForward'><i class='fas fa-arrow-right'></i></a>";
+        $back = "<a href='index.php?".$backUrl."' class='pagiButton pagiBack'><i class='fas fa-arrow-left'></i></a>";
         $pagiButtons="";
         for($i=0; $i<count($pages); $i++) {
             $pagiButtons .= "<section>
@@ -110,10 +113,12 @@ class recipesControl{
     /*
      * Generate the bottom buttons
      */
-    function createButtons(int $amount, string $filterLocation):string{
+    function createButtons(int $amount, int $currentPagi):string{
+        $currentUrl = substr($_SERVER['QUERY_STRING'], 0, -1);
         $buttons="";
         for($i=0; $i<$amount; $i++){
-            $buttons .= "<a href='index.php?page=".$filterLocation."&pagi=".$i."' class='pagiButton'>".$i."</a>";
+            $url = str_replace("pagi=".$currentPagi, "pagi=".$i ,$_SERVER['QUERY_STRING']);
+            $buttons .= "<a href='index.php?".$url."' class='pagiButton'>".$i."</a>";
         }
         return $buttons;
     }

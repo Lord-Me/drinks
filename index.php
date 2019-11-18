@@ -430,7 +430,7 @@ switch ($page) {
                 echo "Sorry, file already exists.";
                 $uploadOk = false;
             }
-            // Check file size is less than 10KB
+            // Check file size is less than 50KB
             if ($_FILES["fileToUpload"]["size"] > 50000) {
                 echo "Sorry, your file is too large.";
                 $uploadOk = false;
@@ -450,7 +450,7 @@ switch ($page) {
                 } else {
                     echo "Sorry, there was an error uploading your file.";
                 }
-            }
+            }//TODO delete old image after changing
 
             try {
                 if($uploadOk == true) {
@@ -517,7 +517,7 @@ switch ($page) {
             $filter = new Filter($_SESSION['id']);
 
             //Check which filters are in use
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
                 $filter->checkFilterRadio();
                 $filter->checkTitleSearchValue();
                 $filter->checkDate();
@@ -542,7 +542,7 @@ switch ($page) {
             }
 
             //Turn each array entry into an array of all the pages(pagination) with html sting
-            $pages = $recipeList->render($currentPagi, 10, "myDrinks");
+            $pages = $recipeList->render($currentPagi, 5, "myDrinks");
 
             //Check if currentPagi is over the number of pages. If so, set is as last page
             if($currentPagi > count($pages)-1){
@@ -559,6 +559,110 @@ switch ($page) {
             echo "Error: executant consulta SQL.";
         }
 
+        break;
+
+
+
+    /*
+     * ADD NEW DRINK
+     */
+
+
+    case "addDrink":
+        require("views/$page.view.php");
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            /*
+             * CHECK author_id validity
+             */
+            try {
+                $connection = new DBConnection();
+                $pdo = $connection->getConnection();
+
+                $um = new UserModel($pdo);
+                $dm = new DrinkModel($pdo);
+
+
+                $newDrink = $dm->getFormData();
+                $errors = $dm->validate($newDrink);
+                if (empty($errors)) {
+                    if ($dm->insert($newDrink)) {
+                        echo("Created new post successfully<br>");
+                    } else {
+                        echo("Failed to create new post<br>");
+                    }
+                } else {
+                    throw new ExceptionInvalidData(implode("<br>", $errors));
+                }
+
+            } catch (ExceptionInvalidData $e) {
+                echo '<br>Caught exception: ', $e->getMessage(), '!!<br>';
+                die();
+            }
+        }
+        break;
+
+    case "editDrink":
+        try {
+            $connection = new DBConnection();
+            $pdo = $connection->getConnection();
+
+            $um = new UserModel($pdo);
+            $dm = new DrinkModel($pdo);
+
+            $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT );
+
+
+
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $newDrink = new Post();
+                $newDrink->setAuthor_id($_SESSION["id"]);
+                $newDrink->setTitle($_POST["title"]);
+                $newDrink->setSlug($_POST["slug"]);
+                $newDrink->setSummary($_POST["summary"]);
+                $newDrink->setContent($_POST["content"]);
+                date_default_timezone_set('Europe/Madrid');
+                $date = date('Y-m-d');
+                $newDrink->setPublished_at($date);
+
+                $dm->update($newDrink);
+
+                echo "<script>alert(\"Updated content successfully\");</script>";
+            }
+            $drink = $dm->getById($id);
+            require("views/$page.view.php");
+        }
+        catch (ExceptionPageNotFound $e) {
+            echo '<br>Caught exception: ', $e->getMessage(), '!!<br>';
+            die();
+        }
+        catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+
+        break;
+
+    case "deleteDrink":
+        try {
+            $connection = new DBConnection();
+            $pdo = $connection->getConnection();
+            $dm = new DrinkModel($pdo);
+
+            $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT );
+
+            if ($dm->idExist($id)) {
+                $newDrink = $dm->getFormData();
+                $errors = $dm->validate($newDrink);
+                $pm->delete($id);
+            } else {
+                throw new ExceptionInvalidID('El ID introducido no es valido');
+            }
+        } catch (ExceptionInvalidID $e) {
+            echo '<br>Caught exception: ', $e->getMessage(), '!!<br>';
+            die();
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
         break;
 
     /*
