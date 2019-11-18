@@ -409,7 +409,7 @@ switch ($page) {
 
 
         // Check if image file is a actual image or fake image
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {//TODO turn this into a UserModel function
             $target_dir = "img/avatars/";
             $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
             $uploadOk = 1;
@@ -568,15 +568,21 @@ switch ($page) {
      */
 
 
-    case "addDrink":
-        require("views/$page.view.php");
+    case "newDrink":
+        // We need to use sessions, so you should always start sessions using the below code.
+        session_start();
+        // If the user is not logged in redirect to the login page...
+        if (!isset($_SESSION['loggedin'])) {
+            header('Location: index.php?page=login');
+            exit();
+        }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             /*
              * CHECK author_id validity
              */
             try {
-                $connection = new DBConnection();
+                $connection = new DBConnect();
                 $pdo = $connection->getConnection();
 
                 $um = new UserModel($pdo);
@@ -585,8 +591,12 @@ switch ($page) {
 
                 $newDrink = $dm->getFormData();
                 $errors = $dm->validate($newDrink);
+                $imageErrors = $dm->validateImage($newDrink);
+                foreach($imageErrors as $error){
+                    array_push($errors, $error);
+                }
                 if (empty($errors)) {
-                    if ($dm->insert($newDrink)) {
+                    if ($dm->insert($newDrink) && $dm->uploadImage($newDrink)) {
                         echo("Created new post successfully<br>");
                     } else {
                         echo("Failed to create new post<br>");
@@ -600,6 +610,8 @@ switch ($page) {
                 die();
             }
         }
+
+        require("views/$page.view.php");
         break;
 
     case "editDrink":
@@ -653,7 +665,7 @@ switch ($page) {
             if ($dm->idExist($id)) {
                 $newDrink = $dm->getFormData();
                 $errors = $dm->validate($newDrink);
-                $pm->delete($id);
+                $dm->delete($id);
             } else {
                 throw new ExceptionInvalidID('El ID introducido no es valido');
             }

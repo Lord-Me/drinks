@@ -39,12 +39,7 @@
     margin: 0;
     margin-right: 5px;
 }
-.filterFormSearch {
-    margin: 0;
-    margin-left: 3em;
-}
-
-.filterFormRadio {
+.filterFormSearch, .filterFormRadio {
     margin: 0;
     margin-left: 3em;
 }
@@ -64,4 +59,20 @@
 .filterFormSubmit input {
     margin: 0 auto;
     min-width: 5em;
+}
+
+
+/*ADD AND EDIT FORM*/
+.addFormCategory, .addFormTitle, .addFormIngredients, .addFormContent, .addFormImage {
+    margin: 0;
+    margin-left: 3em;
+    width: 100%;
+}
+
+.addForm {
+    margin-top: 10px;
+    margin-bottom: 13px;
+    border: solid 2px black;
+    padding-bottom: 1em;
+    padding-top: 1em;
 }

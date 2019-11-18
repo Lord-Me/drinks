@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 14, 2019 at 11:56 PM
+-- Generation Time: Nov 18, 2019 at 09:39 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -56,7 +56,7 @@ CREATE TABLE `recipes` (
   `ingredients` longtext COLLATE utf8_spanish2_ci NOT NULL,
   `content` longtext COLLATE utf8_spanish2_ci NOT NULL,
   `image` varchar(25) COLLATE utf8_spanish2_ci NOT NULL DEFAULT 'defaultDrinkImage.jpg',
-  `published_at` date NOT NULL
+  `published_at` date NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
@@ -117,7 +117,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `avatar`, `role`) VALUES
-(1, 'admin', 'admin@drinks.com', '$2y$12$Nfofn4KaJZ4kLAw8JcA5eePtM0JhEbV/jri/ChZb.DwVLPZQPhFai', 'defaultAvatar.jpg', 1),
+(1, 'admin', 'admin@drinks.com', '$2y$12$w5C5oe4k/vif9zUn8nbB5ekPL2HFkUJbw0GJWRhtnPIU2gklRAbsa', 'SmileFace.png', 1),
 (6, 'dwes', 'dwes@drinks.com', '$2y$10$yLIiWMGaa4y/Md.7hSBzHe7tMzBcHcb2IZG.17KB/jTNMPmT6nn4W', 'defaultAvatar.jpg', 2);
 
 --

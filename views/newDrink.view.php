@@ -17,21 +17,31 @@ if (isset($_SESSION['loggedin'])) {
     <div class="container">
         <div  class="row align-items-center text-center">
             <div class='col-lg-12'>
-                <form action="index.php?page=newDrink" method="post" class="addForm">
+                <form action="index.php?page=newDrink" method="post"  enctype="multipart/form-data" class="addForm">
                     <div class="row">
-                        <div class="addFormCategory">
-                            <input id="pro" type="radio" name="categoryRadio" value="pro" class="category">
-                            <label for="pro">Professional Drinks</label>
 
-                            <input id="ori" type="radio" name="categoryRadio" value="ori" class="category">
-                            <label for="ori">Original Drinks</label>
-                        </div>
                         <div class="addFormTitle">
                             <label for="title">Title</label>
-                            <input id="title" type="text" name="text">
+                            <input id="title" type="text" name="title">
                         </div>
-                        <div class="addTitleIngredients">
+                        <div class="addFormIngredients">
+                            <label for="ingredients">Ingredients</label>
+                            <textarea id="ingredients" rows="4" cols="50" name="ingredients"></textarea>
+                        </div>
+                        <div class="addFormContent">
+                            <label for="content">Instructions</label>
+                            <textarea id="content" rows="4" cols="50" name="content"></textarea>
+                        </div>
+                        <div class="addFormCategory">
+                            <input id="pro" type="radio" name="category" value=1 class="category">
+                            <label for="pro">Professional Drinks</label>
 
+                            <input id="ori" type="radio" name="category" value=2 class="category">
+                            <label for="ori">Original Drinks</label>
+                        </div>
+                        <div class="addFormImage">
+                            <label for="fileToUpload"><i class="fas fa-chevron-circle-up"></i></label>
+                            <input type="file" name="fileToUpload" placeholder="Preview Image" id="fileToUpload">
                         </div>
                     </div>
                     <div class="row filterFormSubmit">
@@ -45,21 +55,7 @@ if (isset($_SESSION['loggedin'])) {
 
 
 <?php
-echo $view;
-?>
-
-<?php
 require('partials/footer.partials.php');
 ?>
-
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="js/scrollify-master/jquery.scrollify.js"></script>
-<script>
-    $(document).ready(function() {
-        $.scrollify({
-            section : ".scroll",
-        });
-    });
-</script>
 </body>
 </html>
