@@ -63,16 +63,7 @@
 
 
 /*ADD AND EDIT FORM*/
-.addFormCategory, .addFormTitle, .addFormIngredients, .addFormContent, .addFormImage {
-    margin: 0;
-    margin-left: 3em;
-    width: 100%;
-}
 
-.addForm {
-    margin-top: 10px;
-    margin-bottom: 13px;
-    border: solid 2px black;
-    padding-bottom: 1em;
-    padding-top: 1em;
+.addFormTitle h1 textarea{
+    width: 100%;
 }

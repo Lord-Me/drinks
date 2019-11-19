@@ -43,24 +43,24 @@ switch ($page) {
             /*
              * FILTERS
              */
-                $filter = new Filter(null);
+            $filter = new Filter(null);
 
-                //Check which filters are in use
-                $authorUrl = $filter->checkAuthorId();
-                if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                    $filter->checkFilterRadio();
-                    $filter->checkSearchValue();
-                    $filter->checkDate();
-                }else{
-                    $filter->setAll();  //if no filters are in use, set filter to all
-                }
+            //Check which filters are in use
+            $authorUrl = $filter->checkAuthorId();
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $filter->checkFilterRadio();
+                $filter->checkSearchValue();
+                $filter->checkDate();
+            } else {
+                $filter->setAll();  //if no filters are in use, set filter to all
+            }
 
-                //Run filters
-                $filter->runFilter($dm);
-                $filter->runSort();
+            //Run filters
+            $filter->runFilter($dm);
+            $filter->runSort();
 
-                //retrieve the filtered drinks
-                $drinks = $filter->getDrinks();
+            //retrieve the filtered drinks
+            $drinks = $filter->getDrinks();
             /*
              * /FILTERS
              */
@@ -71,8 +71,8 @@ switch ($page) {
             }
 
             //Get the current pagination page number for the back and forward buttons
-            $currentPagi = filter_input(INPUT_GET, 'pagi', FILTER_SANITIZE_STRING)??0;
-            if(!is_numeric($currentPagi) || $currentPagi<0){
+            $currentPagi = filter_input(INPUT_GET, 'pagi', FILTER_SANITIZE_STRING) ?? 0;
+            if (!is_numeric($currentPagi) || $currentPagi < 0) {
                 header("Location: index.php?page=drinks&pagi=0");
             }
 
@@ -80,9 +80,9 @@ switch ($page) {
             $pages = $recipeList->render($currentPagi, 5, "drinks");
 
             //Check if currentPagi is over the number of pages. If so, set is as last page
-            if($currentPagi > count($pages)-1){
-                $lastPagi = count($pages)-1;
-                header("Location: index.php?page=drinks&pagi=".$lastPagi);
+            if ($currentPagi > count($pages) - 1) {
+                $lastPagi = count($pages) - 1;
+                header("Location: index.php?page=drinks&pagi=" . $lastPagi);
             }
             $thisPage = $pages[$currentPagi];
 
@@ -112,7 +112,7 @@ switch ($page) {
             //buscamos el id del segundo query del url. Si no enquentra nada, lanza una exception y va directo a la pagina 404
             $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING) ?? NULL;
 
-            if($id==NULL){
+            if ($id == NULL) {
                 throw new ExceptionPageNotFound();
             }
 
@@ -121,10 +121,10 @@ switch ($page) {
 
 
             //send it to the view
-            $view=$recipe->renderPage();
+            $view = $recipe->renderPage();
             require("views/$page.view.php");
 
-        }catch (ExceptionPageNotFound $e){
+        } catch (ExceptionPageNotFound $e) {
             require("views/error.view.php");
         }
         break;
@@ -142,7 +142,7 @@ switch ($page) {
             header('Location: index.php?page=index');
             exit();
         }
-        $view="<br><br><br>Coming soon...";
+        $view = "<br><br><br>Coming soon...";
         require("views/$page.view.php");
         break;
 
@@ -217,8 +217,17 @@ switch ($page) {
             exit();
         }
 
-        class ExceptionEmptyForm extends Exception{};
-        class ExceptionUsernameExists extends Exception{};
+        class ExceptionEmptyForm extends Exception
+        {
+        }
+
+        ;
+
+        class ExceptionUsernameExists extends Exception
+        {
+        }
+
+        ;
 
         /*
          * AUTHENTICATE REGISTER
@@ -239,7 +248,7 @@ switch ($page) {
                     // One or more values are empty.
                     throw new ExceptionEmptyForm();
                 }
-                if(strlen($_POST["password"]) > 20 || strlen($_POST["password"]) < 5){
+                if (strlen($_POST["password"]) > 20 || strlen($_POST["password"]) < 5) {
                     throw new ExceptionInvalidInput('Password must be between 5 and 20 characters long!');
                 }
 
@@ -251,8 +260,7 @@ switch ($page) {
                         $user = $um->getUserByName($_POST['username']);
                         // Username already exists as it didn't throw an empty error
                         throw new ExceptionUsernameExists();
-                    }
-                    catch(PDOException $e){
+                    } catch (PDOException $e) {
                         // Username doesnt exists, insert new account
                         if ($um->insert($newUser)) {
                             header('Location: index.php?page=successfulRegister');
@@ -262,19 +270,15 @@ switch ($page) {
                         }
                     }
                 } else {
-                        throw new ExceptionInvalidData(implode("<br>", $errors));
+                    throw new ExceptionInvalidData(implode("<br>", $errors));
                 }
-            }
-            catch (ExceptionInvalidData $e) {
+            } catch (ExceptionInvalidData $e) {
                 die ($e->getMessage());
-            }
-            catch(ExceptionEmptyForm $e){
+            } catch (ExceptionEmptyForm $e) {
                 die('Please complete the registration form!');
-            }
-            catch(ExceptionUsernameExists $e){
+            } catch (ExceptionUsernameExists $e) {
                 die('Username exists, please choose another!');
-            }
-            catch(PDOException $e){
+            } catch (PDOException $e) {
                 echo $e->getMessage();
             }
         }
@@ -321,8 +325,7 @@ switch ($page) {
             $um = new UserModel($pdo);
 
             $userInfo = $um->getUserById($_SESSION['id']);
-        }
-        catch (PDOException $err) {
+        } catch (PDOException $err) {
             echo "Error";
         }
 
@@ -354,7 +357,7 @@ switch ($page) {
                     throw new ExceptionInvalidInput('Current password is incorrect');
                 }
 
-                if(strlen($_POST["password"]) > 20 || strlen($_POST["password"]) < 5){
+                if (strlen($_POST["password"]) > 20 || strlen($_POST["password"]) < 5) {
                     throw new ExceptionInvalidInput('Password must be between 5 and 20 characters long!');
                 }
 
@@ -407,27 +410,24 @@ switch ($page) {
             exit();
         }
 
+        $connection = new DBConnect();
+        $pdo = $connection->getConnection();
+        $um = new UserModel($pdo);
 
         // Check if image file is a actual image or fake image
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {//TODO turn this into a UserModel function
             $target_dir = "img/avatars/";
             $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
             $uploadOk = 1;
-            $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
 
 
             $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-            if($check !== false) {
+            if ($check !== false) {
                 echo "File is an image - " . $check["mime"] . ".";
                 $uploadOk = true;
             } else {
                 echo "File is not an image.";
-                $uploadOk = false;
-            }
-
-            // Check if file already exists
-            if (file_exists($target_file)) {
-                echo "Sorry, file already exists.";
                 $uploadOk = false;
             }
             // Check file size is less than 50KB
@@ -436,7 +436,7 @@ switch ($page) {
                 $uploadOk = false;
             }
             // Allow certain file formats
-            if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
                 echo "Sorry, only JPG, JPEG & PNG files are allowed.";
                 $uploadOk = false;
             }
@@ -445,21 +445,30 @@ switch ($page) {
                 echo "Sorry, your file was not uploaded.";
                 // if everything is ok, try to upload file
             } else {
-                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-                    echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
+                // Check if file already exists and delete it
+                if (file_exists($target_file)) {
+                    if (file_exists("img/avatars/defaultAvatar.jpg")) {
+                        echo "Sorry, file already exists.";
+                        $uploadOk = false;
+                    } else {
+                        unlink($target_file);
+                    }
+                }
+                if ($uploadOk == true) {
+                    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                        echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded.";
+                        unlink("img/avatars/" . $um->getUserById($_SESSION['id'])->getAvatar());
+                    } else {
+                        echo "Sorry, there was an error uploading your file.";
+                    }
                 } else {
                     echo "Sorry, there was an error uploading your file.";
                 }
-            }//TODO delete old image after changing
+            }
 
             try {
-                if($uploadOk == true) {
-                    $connection = new DBConnect();
-                    $pdo = $connection->getConnection();
-                    $um = new UserModel($pdo);
-
+                if ($uploadOk == true) {
                     $user = $um->getUserByName($_SESSION['name']);
-
 
                     $newUser = $um->getUpdateFormData($user);
                     $errors = $um->validate($newUser);
@@ -489,7 +498,7 @@ switch ($page) {
     /*
      * My Drinks
      */
-    case "myDrinks"://TODO fix error which ocures when returning to the myDrinks page from the view drink page when there's a filter on (resubmit form error)
+    case "myDrinks":
         // We need to use sessions, so you should always start sessions using the below code.
         session_start();
         // If the user is not logged in redirect to the login page...
@@ -498,7 +507,7 @@ switch ($page) {
             exit();
         }
 
-        try{
+        try {
             //Create a new object to contain all the drinks
             $recipeList = new RecipesControl();
 
@@ -518,11 +527,13 @@ switch ($page) {
 
             //Check which filters are in use
             if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+                echo "formWorks";
                 $filter->checkFilterRadio();
                 $filter->checkTitleSearchValue();
                 $filter->checkDate();
-            }else{
-                $filter->setAll();  //if no filters are in use, set filter to all
+            } else {
+                echo "formNotCalled";
+                $filter->setAll();  //if no filters are in use, set filter to all//TODO this no work
             }
 
             //Run filters
@@ -536,8 +547,8 @@ switch ($page) {
             }
 
             //Get the current pagination page number for the back and forward buttons
-            $currentPagi = filter_input(INPUT_GET, 'pagi', FILTER_SANITIZE_STRING)??0;
-            if(!is_numeric($currentPagi) || $currentPagi<0){
+            $currentPagi = filter_input(INPUT_GET, 'pagi', FILTER_SANITIZE_STRING) ?? 0;
+            if (!is_numeric($currentPagi) || $currentPagi < 0) {
                 header("Location: index.php?page=myDrinks&pagi=0");
             }
 
@@ -545,9 +556,9 @@ switch ($page) {
             $pages = $recipeList->render($currentPagi, 5, "myDrinks");
 
             //Check if currentPagi is over the number of pages. If so, set is as last page
-            if($currentPagi > count($pages)-1){
-                $lastPagi = count($pages)-1;
-                header("Location: index.php?page=myDrinks&pagi=".$lastPagi);
+            if ($currentPagi > count($pages) - 1) {
+                $lastPagi = count($pages) - 1;
+                header("Location: index.php?page=myDrinks&pagi=" . $lastPagi);
             }
             $thisPage = $pages[$currentPagi];
 
@@ -560,7 +571,6 @@ switch ($page) {
         }
 
         break;
-
 
 
     /*
@@ -588,19 +598,24 @@ switch ($page) {
                 $um = new UserModel($pdo);
                 $dm = new DrinkModel($pdo);
 
-
-                $newDrink = $dm->getFormData();
+                $newDrink = $dm->getInsertFormData();
                 $errors = $dm->validate($newDrink);
                 $imageErrors = $dm->validateImage($newDrink);
-                foreach($imageErrors as $error){
+                foreach ($imageErrors as $error) {
                     array_push($errors, $error);
                 }
                 if (empty($errors)) {
-                    if ($dm->insert($newDrink) && $dm->uploadImage($newDrink)) {
+                    if ($dm->insert($newDrink)) {
                         echo("Created new post successfully<br>");
                     } else {
                         echo("Failed to create new post<br>");
                     }
+                    if ($dm->uploadImage($newDrink)) {
+                        echo("Uploaded image successfully<br>");
+                    } else {
+                        echo("Failed to upload image<br>");
+                    }
+
                 } else {
                     throw new ExceptionInvalidData(implode("<br>", $errors));
                 }
@@ -615,42 +630,66 @@ switch ($page) {
         break;
 
     case "editDrink":
-        try {
-            $connection = new DBConnection();
-            $pdo = $connection->getConnection();
+        // We need to use sessions, so you should always start sessions using the below code.
+        session_start();
+        // If the user is not logged in redirect to the login page...
+        if (!isset($_SESSION['loggedin'])) {
+            header('Location: index.php?page=login');
+            exit();
+        }
 
-            $um = new UserModel($pdo);
-            $dm = new DrinkModel($pdo);
+        $connection = new DBConnect();
+        $pdo = $connection->getConnection();
 
-            $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT );
+        $um = new UserModel($pdo);
+        $dm = new DrinkModel($pdo);
 
+        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);//TODO check for nulls
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            try {
+                $drink = $dm->getById($id);
 
-
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $newDrink = new Post();
-                $newDrink->setAuthor_id($_SESSION["id"]);
-                $newDrink->setTitle($_POST["title"]);
-                $newDrink->setSlug($_POST["slug"]);
-                $newDrink->setSummary($_POST["summary"]);
-                $newDrink->setContent($_POST["content"]);
-                date_default_timezone_set('Europe/Madrid');
-                $date = date('Y-m-d');
-                $newDrink->setPublished_at($date);
-
-                $dm->update($newDrink);
-
+                $newDrink = $dm->getUpdateFormData($drink);
+                $errors = $dm->validate($newDrink);
+                $imageErrors = $dm->validateImage($newDrink);
+                foreach ($imageErrors as $error) {
+                    array_push($errors, $error);
+                }
+                if (empty($errors)) {
+                    if ($dm->update($newDrink)) {
+                        echo("Updated post successfully<br>");
+                    } else {
+                        echo("Failed to update post<br>");
+                    }
+                    if ($dm->uploadImage($newDrink)) {
+                        echo("Uploaded image successfully<br>");
+                    } else {
+                        echo("Failed to upload image<br>");
+                    }
+                } else {
+                    throw new ExceptionInvalidData(implode("<br>", $errors));
+                }
                 echo "<script>alert(\"Updated content successfully\");</script>";
             }
+            catch (ExceptionPageNotFound $e) {
+                    echo '<br>Caught exception: ', $e->getMessage(), '!!<br>';
+                    die();
+            }
+            catch (PDOException $e) {
+                echo 'Error: ' . $e->getMessage();
+            }
+        }
+
+
+        try {
             $drink = $dm->getById($id);
-            require("views/$page.view.php");
-        }
-        catch (ExceptionPageNotFound $e) {
-            echo '<br>Caught exception: ', $e->getMessage(), '!!<br>';
-            die();
-        }
-        catch (PDOException $e) {
+        }catch (ExceptionPageNotFound $e) {
             echo 'Error: ' . $e->getMessage();
         }
+
+        $user = $um->getUserById($_SESSION["id"]);
+        require("views/$page.view.php");
+
 
         break;
 

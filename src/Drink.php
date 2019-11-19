@@ -144,8 +144,8 @@ class Drink
                         <td><a href='index.php?page=drink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsTitle'>".$this->getTitle()."</a></td>
                         <td>".$category."</td>
                         <td>".$this->getPublished_at()."</td>
-                        <td><a href='index.php?page=editPost&post=".$this->getId()."' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a></td>
-                        <td><a href='index.php?page=deletePost&post=".$this->getId()."' class='myDrinksButtons myDrinksButtonsDelete'>Delete</a></td>
+                        <td><a href='index.php?page=editDrink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a></td>
+                        <td><a href='index.php?page=deleteDrink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsDelete'>Delete</a></td>
                     </tr>";
         }
         return $html;
@@ -187,7 +187,7 @@ class Drink
                             <div class='col-lg-6'>
                                 <table>
                                     <a>
-                                        <td>Author: <a href='index.php?page=drinks&author=".$this->getAuthor_id()."'>
+                                        <td>Author: <a href='index.php?page=drinks&author=".$this->getAuthor_id()."&pagi=0'>
                                                         ".ucfirst($username)." <img src='img/avatars/".$userAvatar."' alt='userImage' width='30' height='30' class='rounded-circle'></td>
                                                     </a>
                                     </tr>

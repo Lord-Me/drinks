@@ -69,7 +69,7 @@ class recipesControl{
     /*
      * Add pagination buttons to end
      */
-    function paginate(array $pages, int $currentPagi, string $filterLocation):array{//TODO have the &pagi=0 be default or add it with an if
+    function paginate(array $pages, int $currentPagi, string $filterLocation):array{
         $backOne=$currentPagi-1;
         $forwardOne=$currentPagi+1;
         $forwardUrl = str_replace("pagi=".$currentPagi, "pagi=".$forwardOne ,$_SERVER['QUERY_STRING']);
@@ -114,7 +114,6 @@ class recipesControl{
      * Generate the bottom buttons
      */
     function createButtons(int $amount, int $currentPagi):string{
-        $currentUrl = substr($_SERVER['QUERY_STRING'], 0, -1);
         $buttons="";
         for($i=0; $i<$amount; $i++){
             $url = str_replace("pagi=".$currentPagi, "pagi=".$i ,$_SERVER['QUERY_STRING']);
