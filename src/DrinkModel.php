@@ -182,7 +182,7 @@ class DrinkModel
     /*
      * MARCAR DE BAJA
      */
-    public function markAsDeleted(int $id):void{//TODO add view to the database and all it's checks in the corresponduing places
+    public function markAsDeleted(int $id):void{
         $stmt = $this->pdo->prepare('UPDATE recipes SET view = 0 where id = :id');
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
@@ -264,12 +264,16 @@ class DrinkModel
     // Rep un objecte Post i comprova que les propietats siguen vàlides.
     public function validate(Drink $drink):array {
         $errors = [];
+        $id = $drink->getId();
         $author_id = $drink->getAuthor_id();
         $category = $drink->getCategory();
         $title = $drink->getTitle();
         $ingredients = $drink->getIngredients();
         $content = $drink->getContent();
 
+        if(!is_numeric($id) || $id == NULL){
+            array_push($errors, "ID es invalido");
+        }
         if(!is_numeric($author_id) || $author_id == NULL){
             array_push($errors, "Author ID es invalido");
         }

@@ -6,7 +6,6 @@ require('partials/head.partials.php');
 </head>
 <body>
 <?php
-session_start();
 if (isset($_SESSION['loggedin'])) {
     require('partials/navigationLoggedIn.partials.php');
 }else {

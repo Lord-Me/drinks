@@ -14,6 +14,10 @@ class recipesControl{
 
         foreach ($this->drinks as $drink) {
             array_push($html, $drink->render($side, $filterLocation));
+            //Remove all NULL fields which are the ones where view == 0
+            if($html[count($html)-1] == NULL){
+                array_pop($html);
+            }
             $side++;
             if(count($html) == $drinksPerPage){
                 array_push($pages, $html);

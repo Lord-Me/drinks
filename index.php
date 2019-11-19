@@ -29,6 +29,7 @@ switch ($page) {
      */
     case "drinks":
         try {
+            session_start();
             //Create a new object to contain all the drinks
             $recipeList = new RecipesControl();
 
@@ -101,6 +102,7 @@ switch ($page) {
      */
     case "drink":
         try {
+            session_start();
             //Connect to the database
             $connection = new DBConnect();
 
@@ -217,17 +219,9 @@ switch ($page) {
             exit();
         }
 
-        class ExceptionEmptyForm extends Exception
-        {
-        }
+        class ExceptionEmptyForm extends Exception{};
 
-        ;
-
-        class ExceptionUsernameExists extends Exception
-        {
-        }
-
-        ;
+        class ExceptionUsernameExists extends Exception{};
 
         /*
          * AUTHENTICATE REGISTER
@@ -498,7 +492,7 @@ switch ($page) {
     /*
      * My Drinks
      */
-    case "myDrinks":
+    case "myDrinks": //TODO set so admin can view all, basic user can only see their own. Add author to admin's table view
         // We need to use sessions, so you should always start sessions using the below code.
         session_start();
         // If the user is not logged in redirect to the login page...
@@ -644,7 +638,21 @@ switch ($page) {
         $um = new UserModel($pdo);
         $dm = new DrinkModel($pdo);
 
-        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);//TODO check for nulls
+        $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT)??NULL;
+        if ($id == NULL) {
+            header("Location: views/error.view.php");
+        }
+
+        //Get all drink IDs and test the given post ID to see if it exists
+        $allDrinks = $dm->getAll();
+        $allIds =[];
+        foreach ($allDrinks as $drink){
+            array_push($allIds, $drink->getId());
+        }
+        if (!in_array($id, $allIds)) {
+            header("Location: views/error.view.php");
+        }
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             try {
                 $drink = $dm->getById($id);
@@ -671,7 +679,7 @@ switch ($page) {
                 }
                 echo "<script>alert(\"Updated content successfully\");</script>";
             }
-            catch (ExceptionPageNotFound $e) {
+            catch (ExceptionInvalidData $e) {
                     echo '<br>Caught exception: ', $e->getMessage(), '!!<br>';
                     die();
             }
@@ -693,24 +701,36 @@ switch ($page) {
 
         break;
 
-    case "deleteDrink":
+    case "deleteDrink": case "undeleteDrink":
         try {
-            $connection = new DBConnection();
+            $connection = new DBConnect();
             $pdo = $connection->getConnection();
             $dm = new DrinkModel($pdo);
 
-            $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT );
+            $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT )??NULL;
 
-            if ($dm->idExist($id)) {
-                $newDrink = $dm->getFormData();
-                $errors = $dm->validate($newDrink);
-                $dm->delete($id);
-            } else {
-                throw new ExceptionInvalidID('El ID introducido no es valido');
+            if ($id == NULL) {
+                header("Location: views/error.view.php");
             }
-        } catch (ExceptionInvalidID $e) {
-            echo '<br>Caught exception: ', $e->getMessage(), '!!<br>';
-            die();
+
+            //Get all drink IDs and test the given post ID to see if it exists
+            $allDrinks = $dm->getAll();
+            $allIds =[];
+            foreach ($allDrinks as $drink){
+                array_push($allIds, $drink->getId());
+            }
+            if (!in_array($id, $allIds)) {
+                header("Location: index.php?page=myDrinks");
+                break;
+            }
+            if($page == "deleteDrink") {
+                $dm->markAsDeleted($id);
+            }
+            if($page == "undeleteDrink") {
+                $dm->markAsUndeleted($id);
+            }
+            header("Location: index.php?page=myDrinks");
+
         } catch (PDOException $e) {
             echo 'Error: ' . $e->getMessage();
         }

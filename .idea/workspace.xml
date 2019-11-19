@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="23c4d5b8-9c93-4bf0-a230-ff61289df2da" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/views/editDrink.view.php" afterDir="false" />
+    <list default="true" id="082eb490-b085-4fd0-98b3-9e9bf71085fc" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/drinks.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/drinks.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TODO.odt" beforeDir="false" afterPath="$PROJECT_DIR$/TODO.odt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/css/myStyles.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/myStyles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/avatars/SmileFace.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/drinks.sql" beforeDir="false" afterPath="$PROJECT_DIR$/drinks.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/partials/navigation.partials.php" beforeDir="false" afterPath="$PROJECT_DIR$/partials/navigation.partials.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/partials/navigationLoggedIn.partials.php" beforeDir="false" afterPath="$PROJECT_DIR$/partials/navigationLoggedIn.partials.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Drink.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Drink.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DrinkModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DrinkModel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RecipesControl.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/RecipesControl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/changeAvatar.view.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/changeAvatar.view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/drink.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/drink.view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/drinks.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/drinks.view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/error.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/error.view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/myDrinks.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/myDrinks.view.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -29,22 +32,12 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="PhpWorkspaceProjectConfiguration" interpreter_name="XAMPP" />
-  <component name="ProjectId" id="1TZc9HfpcUsxa78hhnxC9tJbrGR" />
+  <component name="ProjectId" id="1TqVE30I05i8t555hCk6RgwpYuQ" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/views" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../databaseBlog" />
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
-  </component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/views" />
-      <recent name="C:\xampp\htdocs\drinks\views" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/css" />
-      <recent name="$PROJECT_DIR$/vendor/bootstrap/css/img" />
-    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -63,66 +56,14 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="23c4d5b8-9c93-4bf0-a230-ff61289df2da" name="Default Changelist" comment="" />
-      <created>1573670913806</created>
+      <changelist id="082eb490-b085-4fd0-98b3-9e9bf71085fc" name="Default Changelist" comment="" />
+      <created>1574187504838</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1573670913806</updated>
-      <workItem from="1573670949785" duration="10920000" />
-      <workItem from="1573716638486" duration="9284000" />
-      <workItem from="1573730970997" duration="5272000" />
-      <workItem from="1573803370171" duration="288000" />
-      <workItem from="1573903057242" duration="173000" />
-      <workItem from="1573903247801" duration="12769000" />
-      <workItem from="1573927490053" duration="275000" />
-      <workItem from="1574015278270" duration="14716000" />
-      <workItem from="1574061681010" duration="16201000" />
-      <workItem from="1574147454885" duration="59000" />
-      <workItem from="1574147515956" duration="16809000" />
+      <updated>1574187504838</updated>
+      <workItem from="1574187521161" duration="98000" />
+      <workItem from="1574187631128" duration="9659000" />
     </task>
-    <task id="LOCAL-00001" summary="Change password">
-      <created>1573716999809</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1573716999810</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Change password">
-      <created>1573727220764</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1573727220764</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Done drinks filters&#10;Added user filter link to drink page">
-      <created>1573772421287</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1573772421287</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Done drinks filters&#10;Added user filter link to drink page">
-      <created>1573803462877</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1573803462877</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Did pagination">
-      <created>1573917053772</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1573917053772</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Stuff in class">
-      <created>1574082755431</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1574082755431</updated>
-    </task>
-    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -133,25 +74,10 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Change password" />
-    <MESSAGE value="Done drinks filters&#10;Added user filter link to drink page" />
-    <MESSAGE value="Did pagination" />
-    <MESSAGE value="Stuff in class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Stuff in class" />
-  </component>
-  <component name="XPathView.XPathProjectComponent">
-    <history />
-    <find-history>
-      <element expression="background-image" />
-    </find-history>
   </component>
 </project>

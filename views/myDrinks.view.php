@@ -51,6 +51,18 @@ if (isset($_SESSION['loggedin'])) {
     </div>
 </section>
 
+<section>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-12">
+                <div class="p-5 text-center">
+                    <a class="newDrinkButton" href="index.php?page=newDrink">Create New Drink</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 
 <?php
 echo $view;

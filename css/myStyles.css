@@ -24,8 +24,16 @@
     width: 100%;
 }
 
-.myDrinksButtonsDelete{
+.myDrinksButtonsDelete, .myDrinksButtonsDelete:hover{
     color: red;
+}
+
+.myDrinksButtonsRed, .myDrinksButtonsRed:hover {
+    color: red;
+}
+
+.myDrinksButtonsUndelete, .myDrinksButtonsUndelete:hover{
+    color: green;
 }
 
 
@@ -60,7 +68,6 @@
     margin: 0 auto;
     min-width: 5em;
 }
-
 
 /*ADD AND EDIT FORM*/
 

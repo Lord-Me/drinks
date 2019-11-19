@@ -11,6 +11,7 @@ class Drink
     private $content;
     private $image;
     private $published_at;
+    private $view;
     
     function __construct()
     {
@@ -50,6 +51,10 @@ class Drink
         return $this->published_at;
     }
 
+    function getView():int{
+        return $this->view;
+    }
+
     //SETTERS
 
     function setId($id){
@@ -84,6 +89,10 @@ class Drink
         $this->published_at = $published_at;
     }
 
+    function setView($view){
+        $this->view = $view;
+    }
+
     /*
      * RENDER
      */
@@ -97,6 +106,12 @@ class Drink
         $um = new UserModel($pdo);
         $dm = new DrinkModel($pdo);
         $username = $um->getUserById($this->getAuthor_id())->getUsername();
+
+        //See if user is logged in and if so, add the edit button
+        $edit="";
+        if($this->getAuthor_id() == $_SESSION['id']){
+            $edit = " <a href='index.php?page=editDrink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a>";
+        }
 
         $category="";
         if($dm->getById($this->getId())->getCategory() == 1){
@@ -114,12 +129,13 @@ class Drink
                 $side1 = "order-lg-2";
                 $side2 = "order-lg-1";
             }
-            $html = '';
-            $html .= "<section class='scroll'>";
-            if ($sideNum != 0) {
-                $html .= "<div class='fillerDiv'></div>";
-            }
-            $html .= "<div class='mi-container-centered'>
+            if($this->view == 1) {
+                $html = '';
+                $html .= "<section class='scroll'>";
+                if ($sideNum != 0) {
+                    $html .= "<div class='fillerDiv'></div>";
+                }
+                $html .= "<div class='mi-container-centered'>
                         <div class='container'>
                             <div class='row align-items-center'>
                                 <div class='col-lg-6 " . $side1 . "'>
@@ -130,7 +146,7 @@ class Drink
                                 <div class='col-lg-6 " . $side2 . "'>
                                     <div class='p-5'>
                                         <h2 class='display-4'>" . $this->getTitle() . "</h2>
-                                        <p>Author: " . ucfirst($username) . "</p>
+                                        <p>Author: " . ucfirst($username) . $edit ."</p>
                                         <a href='index.php?page=drink&id=" . $this->getId() . "' class='btn btn-primary btn-xl rounded-pill mt-5'>Make This Drink</a>
                                     </div>
                                 </div>
@@ -138,15 +154,27 @@ class Drink
                         </div>
                     </div>
                  </section>";
-        }else{                                      //RUN THE RENDER FOR THE MYDRINKS PAGE WHER ITS ONLY A LIST
+            }else{return null;}
+        }else{                                      //RUN THE RENDER FOR THE MYDRINKS PAGE WHERE ITS ONLY A LIST
             $html = '';
-            $html .="<tr>
-                        <td><a href='index.php?page=drink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsTitle'>".$this->getTitle()."</a></td>
-                        <td>".$category."</td>
-                        <td>".$this->getPublished_at()."</td>
-                        <td><a href='index.php?page=editDrink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a></td>
-                        <td><a href='index.php?page=deleteDrink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsDelete'>Delete</a></td>
-                    </tr>";
+            if($this->view == 1){
+                $html .="<tr>
+                    <td><a href='index.php?page=drink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsTitle'>".$this->getTitle()."</a></td>
+                    <td>".$category."</td>
+                    <td>".$this->getPublished_at()."</td>
+                    <td><a href='index.php?page=editDrink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a></td>
+                    <td><a href='index.php?page=deleteDrink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsDelete'>Delete</a></td>
+                </tr>";
+            }
+            if($this->view == 0){
+                $html .="<tr>
+                    <td><a href='index.php?page=drink&id=".$this->getId()."' class='myDrinksButtonsRed myDrinksButtonsTitle'>".$this->getTitle()."</a></td>
+                    <td class='myDrinksButtonsRed'>".$category."</td>
+                    <td class='myDrinksButtonsRed'>".$this->getPublished_at()."</td>
+                    <td><a href='index.php?page=editDrink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a></td>
+                    <td><a href='index.php?page=undeleteDrink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsUndelete'>Undelete</a></td>
+                </tr>";
+            }
         }
         return $html;
     }
@@ -160,6 +188,12 @@ class Drink
         $um = new UserModel($pdo);
         $username = $um->getUserById($this->getAuthor_id())->getUsername();
         $userAvatar = $um->getUserById($this->getAuthor_id())->getAvatar();
+
+        //See if user is logged in and if so, add the edit button
+        $edit="";
+        if($this->getAuthor_id() == $_SESSION['id']){
+            $edit = " <a href='index.php?page=editDrink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a>";
+        }
 
         //Añadir saltos de linea <br> a en cada salto de linea que hay en el texto sacado del DB
         $ingredients = $this->getIngredients();
@@ -186,10 +220,10 @@ class Drink
                         <div class='row align-items-center'>
                             <div class='col-lg-6'>
                                 <table>
-                                    <a>
-                                        <td>Author: <a href='index.php?page=drinks&author=".$this->getAuthor_id()."&pagi=0'>
-                                                        ".ucfirst($username)." <img src='img/avatars/".$userAvatar."' alt='userImage' width='30' height='30' class='rounded-circle'></td>
-                                                    </a>
+                                    <tr>
+                                        <a href='index.php?page=drinks&author=".$this->getAuthor_id()."&pagi=0'>
+                                            Author: ".ucfirst($username)."<img src='img/avatars/".$userAvatar."' alt='userImage' width='30' height='30' class='rounded-circle'>
+                                        </a> - ".$edit."
                                     </tr>
                                     <tr>
                                         <td>Posted at: ".$this->getPublished_at()."</td>
