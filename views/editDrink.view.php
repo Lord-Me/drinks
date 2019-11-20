@@ -17,7 +17,7 @@ require('partials/head.partials.php');
     }
     function init () {
         var text = document.getElementsByClassName('text');
-        text.forEach(myFunction);//TODO this foreach not working
+        text.forEach(myFunction);//TODO this foreach not working. ask fernandez
         function myFunction(text){
             function resize() {
                 text.style.height = 'auto';

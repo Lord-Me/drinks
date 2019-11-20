@@ -157,18 +157,20 @@ class Drink
             }else{return null;}
         }else{                                      //RUN THE RENDER FOR THE MYDRINKS PAGE WHERE ITS ONLY A LIST
             $html = '';
-            if($this->view == 1){
+            if($this->view == 1){ //If set to normal
                 $html .="<tr>
                     <td><a href='index.php?page=drink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsTitle'>".$this->getTitle()."</a></td>
+                    <td>".ucfirst($username)."</td>
                     <td>".$category."</td>
                     <td>".$this->getPublished_at()."</td>
                     <td><a href='index.php?page=editDrink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a></td>
                     <td><a href='index.php?page=deleteDrink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsDelete'>Delete</a></td>
                 </tr>";
             }
-            if($this->view == 0){
+            if($this->view == 0){ //if set as deleted
                 $html .="<tr>
                     <td><a href='index.php?page=drink&id=".$this->getId()."' class='myDrinksButtonsRed myDrinksButtonsTitle'>".$this->getTitle()."</a></td>
+                    <td class='myDrinksButtonsRed'>".ucfirst($username)."</td>
                     <td class='myDrinksButtonsRed'>".$category."</td>
                     <td class='myDrinksButtonsRed'>".$this->getPublished_at()."</td>
                     <td><a href='index.php?page=editDrink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a></td>
@@ -222,7 +224,7 @@ class Drink
                                 <table>
                                     <tr>
                                         <a href='index.php?page=drinks&author=".$this->getAuthor_id()."&pagi=0'>
-                                            Author: ".ucfirst($username)."<img src='img/avatars/".$userAvatar."' alt='userImage' width='30' height='30' class='rounded-circle'>
+                                            Author: ".ucfirst($username)."<img src='img/avatars/".$userAvatar."' alt='userImage' height='30' width='30' class='rounded-circle'>
                                         </a> - ".$edit."
                                     </tr>
                                     <tr>

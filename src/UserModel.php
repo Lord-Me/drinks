@@ -9,6 +9,14 @@ class UserModel{
         $this->pdo = $pdo;
     }
 
+    /*
+     * RETURN ALL
+     */
+    function getAll():array{
+        $posts = $this->pdo->query('SELECT * FROM users');
+        return $posts->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'User');
+    }
+
     function getUserById(int $id):User{
         $stmt = $this->pdo->prepare('SELECT * FROM users WHERE id = :id');
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);

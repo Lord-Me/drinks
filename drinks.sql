@@ -2,8 +2,8 @@
 -- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Nov 19, 2019 at 10:34 PM
+-- Host: localhost
+-- Generation Time: Nov 20, 2019 at 12:10 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -77,7 +77,9 @@ INSERT INTO `recipes` (`id`, `author_id`, `category`, `title`, `ingredients`, `c
 (10, 1, 2, 'The Iron Price - Game Of Thrones', '8 oz or 240 ml Traditional Ale\r\n1 Whole Egg\r\n1 oz or 30 ml Demerara Sryup\r\n1 oz or 30 ml Jamaican Rum\r\n1 oz or 30 ml Peaty Scotch\r\nGarnish: Nutmeg and salt', '1. Pour your ale, egg and demerara syrup into your shaker.\r\n2. Next, pour your Jamaican rum and your peaty scotch of choice into your glass.\r\n3. Next, pierce your yoke then roll by pouring from shaker to shaker.\r\n4. Now comes the dangerous part. Take a raw iron poker and heat it until it\'s red hot then lower it into the drink in your glass.\r\n5. Holding the poker in place, pour in the mixture from your shaker and allow it to heat up with the poker for a short moment before removing.\r\n6. Garnish with freshly grated nutmeg and a pinch of salt.', 'The-Iron-Price.jpg', '2019-11-06', 1),
 (11, 6, 2, 'Shade Of The Evening - Game Of Thrones', '5 Sage Leaves\r\nSome Dried Butterfly Pea Blossoms\r\nA Little Liquid Nitrogen\r\n2 oz or 60 ml Batavia Arrack\r\n.5 oz or 15 ml Maurin Quina\r\n.5 oz or 15 ml Demerara Syrup\r\n.5 oz or 15 ml Gum Syrup', '1. Drop your sage leaves and your dried butterfly pea blossoms into your shaker.\r\n\r\n2. WARNING: Liquid nitrogen can be dangerous. Research safety precautions before use.\r\nNext, CAREFULLY pour a dash of liquid nitrogen into your shaker and muddle into a powder.\r\n3. Next, pour in your batavia arrack, maurin quina, demerara syrup and gum syrup for thickness.\r\n4. (optional) Pour a little amount of absince into your glass. Just enough for a rinse. Then pour a little liqid nitrogen into your glass to chill and show off some more.\r\n5. Add ice to your shaker (one whole and one cracked) and shake well.\r\n6. Double strain your drink into your glass and float a single spanked sage leaf to garnish.', 'Shade-Of-The-Evening.jpg', '2019-11-06', 1),
 (12, 6, 2, 'Arbor Gold - Game Of Thrones', 'St. Germaine to rinse\r\n.5 oz. -or- 15ml. simple syrup\r\n2 barspoons benedictine\r\n1.5 oz. -or- 45 ml. Cognac\r\nGarnish: Rosemary', '1. Pour a small amount of St. Germanie into your glass and swirl it around to coat the sides before disposing of.\r\n2. To start the mix, pour your simple syrup, benedictine and cognac to a container.\r\n3. Add cracked ice to your container and stir.\r\n4. Pour the drink into your glass and garnish with a stick of rosemary.', 'Arbor-Gold.jpg', '2019-11-06', 1),
-(13, 6, 2, 'Milk Of The Poppy - Game Of Thrones', 'POPPY SEED ORGEAT\r\n• 200 grams of Poppy Seed\r\n• 200 Grams of Sugar\r\n• 200 Grams of Water\r\n\r\nMILK OF THE POPPY\r\n• .75 oz. -or- 22 ml. Poppy Orgeat\r\n• .5 oz. -or- 15 ml. Dry Curaçao\r\n• 2 oz. -or- 60 ml. Cognac\r\n• Rinse Glass in Absinthe\r\n• Shake over ice and double strain', '0. Before you begin, make yourself a batch of poppy seed orgeat: Add 200 grams of poppy seeds, 200 grams of sugar and 200 grams of water into your blender and pulverise. Let it sit for an hour. If the sugar has not completely dissolved, transfer it to a pan and simmer until it has dissolved. Lastly, strain and bottle your orgeat.\r\n\r\n1. Pour your poppy orgeat, dry curaçao and cognac into your shaker.\r\n2. (Optional) Rince your glass with a dash of absinthe.\r\n3. Add ice and shake well.\r\n4. Pour into your glass and enjoy.', 'Milk-Of-The-Poppy.jpg', '2019-11-06', 1);
+(13, 6, 2, 'Milk Of The Poppy - Game Of Thrones', 'POPPY SEED ORGEAT\r\n• 200 grams of Poppy Seed\r\n• 200 Grams of Sugar\r\n• 200 Grams of Water\r\n\r\nMILK OF THE POPPY\r\n• .75 oz. -or- 22 ml. Poppy Orgeat\r\n• .5 oz. -or- 15 ml. Dry Curaçao\r\n• 2 oz. -or- 60 ml. Cognac\r\n• Rinse Glass in Absinthe\r\n• Shake over ice and double strain', '0. Before you begin, make yourself a batch of poppy seed orgeat: Add 200 grams of poppy seeds, 200 grams of sugar and 200 grams of water into your blender and pulverise. Let it sit for an hour. If the sugar has not completely dissolved, transfer it to a pan and simmer until it has dissolved. Lastly, strain and bottle your orgeat.\r\n\r\n1. Pour your poppy orgeat, dry curaçao and cognac into your shaker.\r\n2. (Optional) Rince your glass with a dash of absinthe.\r\n3. Add ice and shake well.\r\n4. Pour into your glass and enjoy.', 'Milk-Of-The-Poppy.jpg', '2019-11-06', 1),
+(14, 6, 2, 'Title', 'this ifds somfdsa&#13;&#10;fdsafds&#13;&#10;sdafdsa&#13;&#10;fdsafds&#13;&#10;afdsafdsafds', 'fdsfdsafdsa&#13;&#10;dfsd&#13;&#10;fsd&#13;&#10;afdsaf&#13;&#10;&#13;&#10;dsaf&#13;&#10;dsafdsa&#13;&#10;sda', 'SmileFace.png', '2019-11-20', 0),
+(15, 6, 2, 'Title', 'this ifds somfdsa&#13;&#10;fdsafds&#13;&#10;sdafdsa&#13;&#10;fdsafds&#13;&#10;afdsafdsafds', 'fdsfdsafdsa&#13;&#10;dfsd&#13;&#10;fsd&#13;&#10;afdsaf&#13;&#10;&#13;&#10;dsaf&#13;&#10;dsafdsa&#13;&#10;sda', 'SmileFace.png', '2019-11-20', 0);
 
 -- --------------------------------------------------------
 
@@ -109,7 +111,7 @@ CREATE TABLE `users` (
   `username` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
   `email` varchar(40) COLLATE utf8_spanish2_ci NOT NULL,
   `password` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
-  `avatar` varchar(50) COLLATE utf8_spanish2_ci NOT NULL DEFAULT 'defaultAvatar.jpg',
+  `avatar` varchar(50) COLLATE utf8_spanish2_ci NOT NULL DEFAULT 'defaultAvatar.png',
   `role` int(11) NOT NULL DEFAULT 2
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
@@ -118,8 +120,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `avatar`, `role`) VALUES
-(1, 'admin', 'admin@drinks.com', '$2y$12$w5C5oe4k/vif9zUn8nbB5ekPL2HFkUJbw0GJWRhtnPIU2gklRAbsa', 'SmileFace.png', 1),
-(6, 'dwes', 'dwes@drinks.com', '$2y$10$yLIiWMGaa4y/Md.7hSBzHe7tMzBcHcb2IZG.17KB/jTNMPmT6nn4W', 'defaultAvatar.jpg', 2);
+(1, 'admin', 'admin@drinks.com', '$2y$10$jKDnHS.yYfyy8cCMc7xxsOuuREM7ggRTNrUAKNMlPxxCvJe4WScza', 'defaultAvatar.png', 1),
+(6, 'dwes', 'dwes@drinks.com', '$2y$10$k50HnBUqE3ySDqfQ//2wX.rCuprx4w2LDsulqhaCC.CYES9CRzPzO', 'SmileFace.png', 2);
 
 --
 -- Indexes for dumped tables
@@ -160,7 +162,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `recipes`
 --
 ALTER TABLE `recipes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `roles`

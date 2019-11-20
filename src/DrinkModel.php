@@ -58,6 +58,7 @@ class DrinkModel
      */
 
     public function getInsertFormData():Drink{
+        $id = -1; //just fill in. It isn't used in the insert
         $author_id = $_SESSION["id"];
         $category = filter_input(INPUT_POST, "category", FILTER_SANITIZE_SPECIAL_CHARS);
         $title = filter_input(INPUT_POST, "title", FILTER_SANITIZE_SPECIAL_CHARS);
@@ -68,6 +69,7 @@ class DrinkModel
 
 
         $newDrink = new Drink();
+        $newDrink->setId($id);
         $newDrink->setAuthor_id($author_id);
         $newDrink->setCategory($category);
         $newDrink->setTitle($title);
@@ -199,7 +201,7 @@ class DrinkModel
     /*
      * UPLOAD IMAGE TO FILES
      */
-    function uploadImage(Drink $drink):bool{
+    function uploadImage(Drink $drink):bool{//TODO change image name
         $target_dir = "img/";
         $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 
@@ -215,11 +217,11 @@ class DrinkModel
         return true;
     }
 
-    function validateImage(Drink $drink):array{ //TODO something wrong with the avatar uploading
+    function validateImage(Drink $drink):array{
         $errors = [];
 
         $target_dir = "img/";
-        $target_file = $target_dir . $target_dir . basename($_FILES["fileToUpload"]["name"]);
+        $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 
@@ -251,7 +253,7 @@ class DrinkModel
                 // Check if file already exists and delete it
                 if (file_exists($target_file)) {
                     if ($target_file == "img/avatars/defaultAvatar.jpg") {
-                        array_push($errors, "Sorry, file already exists.");
+                        array_push($errors, "Sorry, you can not upload a file with that name.");
                     } else {
                         unlink($target_file);
                     }

@@ -71,19 +71,25 @@ switch ($page) {
                 $recipeList->add($drink);
             }
 
-            //Get the current pagination page number for the back and forward buttons
-            $currentPagi = filter_input(INPUT_GET, 'pagi', FILTER_SANITIZE_STRING) ?? 0;
-            if (!is_numeric($currentPagi) || $currentPagi < 0) {
-                header("Location: index.php?page=drinks&pagi=0");
-            }
+            //get the url and make a query string and remove pagi
+            $queryArray=[];
+            parse_str($_SERVER['QUERY_STRING'], $queryArray);//TODO needs sorting out
+            echo $_SERVER['QUERY_STRING'];
+            die(implode(" ", $queryArray));
+
+            //Get the current pagination page number
+            if (!is_numeric($queryArray["pagi"]) || $queryArray["pagi"] < 1 || $queryArray["pagi"] == NULL) {
+                $currentPagi=1;
+            }else {
+                $currentPagi = $queryArray["pagi"];
+                }
 
             //Turn each array entry into an array of all the pages(pagination) with html sting. FilterLocation is the page the filter form is on
-            $pages = $recipeList->render($currentPagi, 5, "drinks");
+            $pages = $recipeList->render($currentPagi, 5, "drinks", $queryArray);
 
             //Check if currentPagi is over the number of pages. If so, set is as last page
-            if ($currentPagi > count($pages) - 1) {
-                $lastPagi = count($pages) - 1;
-                header("Location: index.php?page=drinks&pagi=" . $lastPagi);
+            if ($queryArray["pagi"] > count($pages)) {
+                $currentPagi = count($pages);
             }
             $thisPage = $pages[$currentPagi];
 
@@ -441,17 +447,15 @@ switch ($page) {
             } else {
                 // Check if file already exists and delete it
                 if (file_exists($target_file)) {
-                    if (file_exists("img/avatars/defaultAvatar.jpg")) {
-                        echo "Sorry, file already exists.";
-                        $uploadOk = false;
-                    } else {
-                        unlink($target_file);
-                    }
+                    unlink($target_file);
                 }
                 if ($uploadOk == true) {
-                    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+                    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {//TODO change image name
                         echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded.";
-                        unlink("img/avatars/" . $um->getUserById($_SESSION['id'])->getAvatar());
+                        //Delete previous image unless its the defaultAvatar one or used by another user.
+                        if($um->getUserById($_SESSION['id'])->getAvatar() != "defaultAvatar.png") {
+                            unlink("img/avatars/" . $um->getUserById($_SESSION['id'])->getAvatar());
+                        }
                     } else {
                         echo "Sorry, there was an error uploading your file.";
                     }
@@ -492,7 +496,7 @@ switch ($page) {
     /*
      * My Drinks
      */
-    case "myDrinks": //TODO set so admin can view all, basic user can only see their own. Add author to admin's table view
+    case "myDrinks":
         // We need to use sessions, so you should always start sessions using the below code.
         session_start();
         // If the user is not logged in redirect to the login page...
@@ -519,15 +523,22 @@ switch ($page) {
              */
             $filter = new Filter($_SESSION['id']);
 
+
+
+            //Get the current pagination page number for the back and forward buttons
+            $currentPagi = filter_input(INPUT_GET, 'pagi', FILTER_SANITIZE_NUMBER_INT) ?? 0;
+            if (!is_numeric($currentPagi) || $currentPagi < 0) {
+               header("Location: index.php?page=myDrinks&pagi=0");
+            }
+
+
             //Check which filters are in use
-            if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-                echo "formWorks";
+            if (isset($_GET["filterFormSubmit"]) && $_SERVER['REQUEST_METHOD'] == 'GET') {
                 $filter->checkFilterRadio();
                 $filter->checkTitleSearchValue();
                 $filter->checkDate();
             } else {
-                echo "formNotCalled";
-                $filter->setAll();  //if no filters are in use, set filter to all//TODO this no work
+                $filter->setAll();  //if no filters are in use, set filter to all
             }
 
             //Run filters
@@ -535,15 +546,8 @@ switch ($page) {
             $filter->runSort();
             $drinks = $filter->getDrinks();
 
-
             foreach ($drinks as $drink) {
                 $recipeList->add($drink);
-            }
-
-            //Get the current pagination page number for the back and forward buttons
-            $currentPagi = filter_input(INPUT_GET, 'pagi', FILTER_SANITIZE_STRING) ?? 0;
-            if (!is_numeric($currentPagi) || $currentPagi < 0) {
-                header("Location: index.php?page=myDrinks&pagi=0");
             }
 
             //Turn each array entry into an array of all the pages(pagination) with html sting

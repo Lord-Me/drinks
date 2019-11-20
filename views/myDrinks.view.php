@@ -43,7 +43,7 @@ if (isset($_SESSION['loggedin'])) {
                         </div>
                     </div>
                     <div class="row filterFormSubmit">
-                        <input type="submit" value="Submit">
+                        <input type="submit" name="filterFormSubmit" value="Submit">
                     </div>
                 </form>
             </div>

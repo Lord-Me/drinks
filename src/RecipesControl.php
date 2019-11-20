@@ -7,21 +7,32 @@ class recipesControl{
     /*
      * RENDER EACH DRINK ON LIST PAGE
      */
-    public function render(int $currentPagi, int $drinksPerPage, string $filterLocation):array {
+    public function render(int $currentPagi, int $drinksPerPage, string $filterLocation, array $queryArray):array {
         $html = [];
         $side = 0;
         $pages = [];
 
         foreach ($this->drinks as $drink) {
-            array_push($html, $drink->render($side, $filterLocation));
-            //Remove all NULL fields which are the ones where view == 0
-            if($html[count($html)-1] == NULL){
-                array_pop($html);
+            //Remove all posts not belonging to you in the case of the session not being the admin (1)
+            if($_SESSION["id"] != 1) {
+                if($drink->getAuthor_Id() == $_SESSION["id"]) { //Only add those which have the same ID as the current session
+                    array_push($html, $drink->render($side, $filterLocation));
+                }
+            }else{
+                array_push($html, $drink->render($side, $filterLocation));  //Add them all
             }
-            $side++;
-            if(count($html) == $drinksPerPage){
-                array_push($pages, $html);
-                $html=[];
+            if(count($html) != 0){
+                //Remove all NULL fields which are the ones where view == 0
+                if ($html[count($html) - 1] == NULL) {
+                    array_pop($html);
+                }
+                $side++;
+
+                //create a page every 10 html posts
+                if (count($html) == $drinksPerPage) {
+                    array_push($pages, $html);
+                    $html = [];
+                }
             }
         }
         //create a final page with left over drinks if there are any due to pagination
@@ -65,7 +76,7 @@ class recipesControl{
         }
 
         //paginate everything
-        $finalArray = $this->paginate($pages, $currentPagi, $filterLocation);
+        $finalArray = $this->paginate($pages, $currentPagi, $queryArray);
         return $finalArray;
 
     }
@@ -73,13 +84,13 @@ class recipesControl{
     /*
      * Add pagination buttons to end
      */
-    function paginate(array $pages, int $currentPagi, string $filterLocation):array{
-        $backOne=$currentPagi-1;
-        $forwardOne=$currentPagi+1;
-        $forwardUrl = str_replace("pagi=".$currentPagi, "pagi=".$forwardOne ,$_SERVER['QUERY_STRING']);
-        $backUrl = str_replace("pagi=".$currentPagi, "pagi=".$backOne ,$_SERVER['QUERY_STRING']);
+    function paginate(array $pages, int $currentPagi, array $queryArray):array{//TODO get queries outside the function and add each one manually
+        if (($key = array_search('pagi', $queryArray)) !== false) {unset($queryArray[$key]);}
+        $url = implode($queryArray);
+        $forwardUrl = $url."&pagi=".($currentPagi+1);
+        $backUrl = $url."&pagi=".($currentPagi-1);
 
-        $buttons = $this->createButtons(count($pages), $currentPagi);
+        $buttons = $this->createButtons(count($pages), $currentPagi, $queryArray);
         $forward = "<a href='index.php?".$forwardUrl."' class='pagiButton pagiForward'><i class='fas fa-arrow-right'></i></a>";
         $back = "<a href='index.php?".$backUrl."' class='pagiButton pagiBack'><i class='fas fa-arrow-left'></i></a>";
         $pagiButtons="";
@@ -117,11 +128,12 @@ class recipesControl{
     /*
      * Generate the bottom buttons
      */
-    function createButtons(int $amount, int $currentPagi):string{
+    function createButtons(int $amount, int $currentPagi, array $queryArray):string{
         $buttons="";
+        $url = implode($queryArray);
+
         for($i=0; $i<$amount; $i++){
-            $url = str_replace("pagi=".$currentPagi, "pagi=".$i ,$_SERVER['QUERY_STRING']);
-            $buttons .= "<a href='index.php?".$url."' class='pagiButton'>".$i."</a>";
+            $buttons .= "<a href='index.php?".$url."&pagi=".($i+1)."' class='pagiButton'>".($i+1)."</a>";
         }
         return $buttons;
     }
