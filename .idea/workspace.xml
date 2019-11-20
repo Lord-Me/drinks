@@ -5,12 +5,13 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/css/myStyles.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/myStyles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/partials/navigation.partials.php" beforeDir="false" afterPath="$PROJECT_DIR$/partials/navigation.partials.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Filter.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Filter.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/changeAvatar.view.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/changeAvatar.view.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/changePassword.view.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/changePassword.view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/UserModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/changeAvatar.view.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/changeAvatar.view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/changePassword.view.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/changePassword.view.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/editDrink.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/editDrink.view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/login.view.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/login.view.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/newDrink.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/newDrink.view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/register.view.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/register.view.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,13 +36,13 @@
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/css" />
-      <recent name="$PROJECT_DIR$/vendor/bootstrap/css/img" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/views" />
       <recent name="C:\xampp\htdocs\drinks\views" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/css" />
+      <recent name="$PROJECT_DIR$/vendor/bootstrap/css/img" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -79,6 +80,7 @@
       <workItem from="1574147515956" duration="16809000" />
       <workItem from="1574233853203" duration="49000" />
       <workItem from="1574233904048" duration="19898000" />
+      <workItem from="1574275331449" duration="5233000" />
     </task>
     <task id="LOCAL-00001" summary="Change password">
       <created>1573716999809</created>

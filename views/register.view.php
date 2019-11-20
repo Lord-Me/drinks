@@ -5,6 +5,7 @@
     <title>Register</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
     <link href="css/registerStyle.css" rel="stylesheet" type="text/css">
+    <link href="css/myStyles.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="register">
@@ -22,6 +23,7 @@
             <i class="fas fa-envelope"></i>
         </label>
         <input type="email" name="email" placeholder="Email" id="email" required>
+        <p class="errorText"><?=implode("<br>", $errorText)?></p>
         <input type="submit" value="Register">
     </form>
 </div>

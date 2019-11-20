@@ -5,6 +5,7 @@
     <title>Change Avatar</title>
     <link href="css/loginStyle.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <link href="css/myStyles.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="login">
@@ -14,6 +15,7 @@
             <i class="fas fa-chevron-circle-up"></i>
         </label>
         <input type="file" name="fileToUpload" placeholder="New Avatar" id="fileToUpload" required>
+        <p class="errorText"><?=implode("<br>", $errorText)?></p>
         <input type="submit" value="Change Avatar">
     </form>
 </div>

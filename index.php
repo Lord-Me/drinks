@@ -3,7 +3,7 @@
  * TODO make all pages 1005 height so footer is always at the bottom
  * TODO Hover change image in profile page
  * TODO header fixing
- * TODO error managing with the forms which have required fields: login, register, change password, change avatar, add, edit
+ * TODO Fix error with some fields where you remove their required tag
  * TODO Add secondary recipes and do delete checking with them
  */
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING)??"index";
@@ -80,8 +80,8 @@ switch ($page) {
             //get the url and make a query string and remove pagi
             $queryArray=[];
             $str = $_SERVER['QUERY_STRING'];//TODO needs sorting out
-
-            echo $_SERVER['QUERY_STRING'];
+            preg_match('~(.*?)=~', $str, $output);
+            echo $output[1];
 
             //Get the current pagination page number
             if (!is_numeric($queryArray["pagi"]) || $queryArray["pagi"] < 1 || $queryArray["pagi"] == NULL) {
@@ -164,6 +164,7 @@ switch ($page) {
      * LOGIN
      */
     case "login":
+        $errorText = [];//HAS ERROR DISPLAY
         session_start();
         if (isset($_SESSION['loggedin'])) {
             header('Location: index.php?page=index');
@@ -181,33 +182,37 @@ switch ($page) {
             // Now we check if the data from the login form was submitted, isset() will check if the data exists.
             if (!isset($_POST['username'], $_POST['password'])) {
                 // Could not get the data that should have been sent.
-                die ('Please fill both the username and password field!');
+                array_push($errorText, 'Please fill both the username and password field!');
             }
 
-            $user = $um->getUserByName($_POST['username']);
+            try {
+                $user = $um->getUserByName($_POST['username']);
 
-            if (!empty($user)) {
-                // Account exists, now we verify the password.
-                // Note: remember to use password_hash in your registration file to store the hashed passwords.
-                if (password_verify($_POST['password'], $user->getPassword())) {
-                    // Verification success! User has loggedin!
-                    // Create sessions so we know the user is logged in, they basically act like cookies but remember the data on the server.
-                    session_start();
-                    session_regenerate_id();
-                    $_SESSION['loggedin'] = TRUE;
-                    $_SESSION['name'] = $_POST['username'];
-                    $_SESSION['id'] = $user->getId();
-                    $_SESSION['role'] = $user->getRole();
-                    header('Location: index.php?page=index');
+                if (!empty($user)) {
+                    // Account exists, now we verify the password.
+                    // Note: remember to use password_hash in your registration file to store the hashed passwords.
+                    if (password_verify($_POST['password'], $user->getPassword())) {
+                        // Verification success! User has loggedin!
+                        // Create sessions so we know the user is logged in, they basically act like cookies but remember the data on the server.
+                        session_start();
+                        session_regenerate_id();
+                        $_SESSION['loggedin'] = TRUE;
+                        $_SESSION['name'] = $_POST['username'];
+                        $_SESSION['id'] = $user->getId();
+                        $_SESSION['role'] = $user->getRole();
+                        header('Location: index.php?page=index');
+                    } else {
+                        array_push($errorText, 'Incorrect password!');
+                    }
                 } else {
-                    echo 'Incorrect password!';
+                    array_push($errorText, 'Incorrect username!');
                 }
-            } else {
-                echo 'Incorrect username!';
+            }catch (PDOException $e){
+                array_push($errorText, 'Incorrect username!');
             }
         }
 
-        require("views/login.view.html");
+        require("views/login.view.php");
 
         break;
 
@@ -225,6 +230,7 @@ switch ($page) {
      * REGISTER
      */
     case "register":
+        $errorText = []; //Contains error messages
         session_start();
         if (isset($_SESSION['loggedin'])) {
             header('Location: index.php?page=index');
@@ -232,7 +238,6 @@ switch ($page) {
         }
 
         class ExceptionEmptyForm extends Exception{};
-
         class ExceptionUsernameExists extends Exception{};
 
         /*
@@ -244,20 +249,6 @@ switch ($page) {
             $um = new UserModel($pdo);
 
             try {
-                //Check filled in
-                if (!isset($_POST['username'], $_POST['password'], $_POST['email'])) {
-                    // Could not get the data that should have been sent.
-                    throw new ExceptionEmptyForm();
-                }
-                // Make sure the submitted registration values are not empty.
-                if (empty($_POST['username']) || empty($_POST['password']) || empty($_POST['email'])) {
-                    // One or more values are empty.
-                    throw new ExceptionEmptyForm();
-                }
-                if (strlen($_POST["password"]) > 20 || strlen($_POST["password"]) < 5) {
-                    throw new ExceptionInvalidInput('Password must be between 5 and 20 characters long!');
-                }
-
                 $newUser = $um->getInsertFormData();
                 $errors = $um->validate($newUser);
                 if (empty($errors)) {
@@ -276,20 +267,18 @@ switch ($page) {
                         }
                     }
                 } else {
-                    throw new ExceptionInvalidData(implode("<br>", $errors));
+                    throw new ExceptionInvalidData($errors);
                 }
             } catch (ExceptionInvalidData $e) {
-                die ($e->getMessage());
-            } catch (ExceptionEmptyForm $e) {
-                die('Please complete the registration form!');
+                $errorText =array_merge($errorText, $e->getMessage());
             } catch (ExceptionUsernameExists $e) {
-                die('Username exists, please choose another!');
+                array_push($errorText, 'Username exists, please choose another!');
             } catch (PDOException $e) {
                 echo $e->getMessage();
             }
         }
 
-        require("views/register.view.html");
+        require("views/register.view.php");
 
         break;
 
@@ -342,6 +331,7 @@ switch ($page) {
      * CHANGE PASSWORD
      */
     case "changePassword":
+        $errorText = [];//Error management is used here
         // We need to use sessions, so you should always start sessions using the below code.
         session_start();
         // If the user is not logged in redirect to the login page...
@@ -363,10 +353,6 @@ switch ($page) {
                     throw new ExceptionInvalidInput('Current password is incorrect');
                 }
 
-                if (strlen($_POST["password"]) > 20 || strlen($_POST["password"]) < 5) {
-                    throw new ExceptionInvalidInput('Password must be between 5 and 20 characters long!');
-                }
-
                 if (password_verify($_POST['password'], $user->getPassword())) {
                     throw new ExceptionInvalidInput('You must use a new password');
                 }
@@ -378,20 +364,20 @@ switch ($page) {
                     if ($um->update($newUser, $userToEdit)) {
                         header("Location: index.php?page=successfulPasswordChange");
                     } else {
-                        echo("Failed to update password<br>");
+                        array_push($errorText, "Failed to update password");
                     }
                 } else {
-                    throw new ExceptionInvalidData(implode("<br>", $errors));
+                    throw new ExceptionInvalidData($errors);
                 }
 
             } catch (ExceptionInvalidInput $e) {
-                die ($e->getMessage());
+                array_push($errorText, $e->getMessage());
             } catch (ExceptionInvalidData $e) {
-                die ($e->getMessage());
+                array_push($errorText, $e->getMessage());
             }
         }
 
-        require("views/$page.view.html");
+        require("views/$page.view.php");
         break;
 
     /*
@@ -408,6 +394,7 @@ switch ($page) {
      * Change Avatar
      */
     case "changeAvatar":
+        $errorText=[];//error text used here
         // We need to use sessions, so you should always start sessions using the below code.
         session_start();
         // If the user is not logged in redirect to the login page...
@@ -430,25 +417,25 @@ switch ($page) {
 
             $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
             if ($check !== false) {
-                echo "File is an image - " . $check["mime"] . ".";
+                //echo "File is an image - " . $check["mime"] . ".";
                 $uploadOk = true;
             } else {
-                echo "File is not an image.";
+                array_push($errorText, "File is not an image.");
                 $uploadOk = false;
             }
             // Check file size is less than 50KB
             if ($_FILES["fileToUpload"]["size"] > 50000) {
-                echo "Sorry, your file is too large.";
+                array_push($errorText, "Sorry, your file is too large.");
                 $uploadOk = false;
             }
             // Allow certain file formats
             if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
-                echo "Sorry, only JPG, JPEG & PNG files are allowed.";
+                array_push($errorText, "Sorry, only JPG, JPEG & PNG files are allowed.");
                 $uploadOk = false;
             }
             // Check if $uploadOk is set to 0 by an error
             if ($uploadOk == false) {
-                echo "Sorry, your file was not uploaded.";
+                //echo "Sorry, your file was not uploaded.";
                 // if everything is ok, try to upload file
             } else {
                 // Check if file already exists and delete it
@@ -457,17 +444,17 @@ switch ($page) {
                 }
                 if ($uploadOk == true) {
                     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {//TODO change image name
-                        echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded.";
+                        //echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded.";
                         //Delete previous image unless its the defaultAvatar one or used by another user.
                         if($um->getUserById($_SESSION['id'])->getAvatar() != "defaultAvatar.png") {
                             unlink("img/avatars/" . $um->getUserById($_SESSION['id'])->getAvatar());
                         }
                     } else {
-                        echo "Sorry, there was an error uploading your file.";
+                        array_push($errorText, "Sorry, there was an error uploading your file.");
                     }
-                } else {
-                    echo "Sorry, there was an error uploading your file.";
-                }
+                } /*else {
+                    array_push($errorText, "Sorry, there was an error uploading your file.");
+                }*/
             }
 
             try {
@@ -484,19 +471,17 @@ switch ($page) {
                             echo("Failed to update password<br>");
                         }
                     } else {
-                        throw new ExceptionInvalidData(implode("<br>", $errors));
+                        throw new ExceptionInvalidData($errors);
                     }
                 }
 
-            } catch (ExceptionInvalidInput $e) {
-                die ($e->getMessage());
             } catch (ExceptionInvalidData $e) {
-                die ($e->getMessage());
+                array_push($errorText, $e->getMessage());
             }
 
         }
 
-        require("views/$page.view.html");
+        require("views/$page.view.php");
         break;
 
     /*
@@ -534,7 +519,7 @@ switch ($page) {
             //Get the current pagination page number for the back and forward buttons
             $currentPagi = filter_input(INPUT_GET, 'pagi', FILTER_SANITIZE_NUMBER_INT) ?? 0;
             if (!is_numeric($currentPagi) || $currentPagi < 0) {
-               header("Location: index.php?page=myDrinks&pagi=0");
+               header("Location: index.php?page=myDrinks&pagi=0");//TODO header fix required
             }
 
 
@@ -562,7 +547,7 @@ switch ($page) {
             //Check if currentPagi is over the number of pages. If so, set is as last page
             if ($currentPagi > count($pages) - 1) {
                 $lastPagi = count($pages) - 1;
-                header("Location: index.php?page=myDrinks&pagi=" . $lastPagi);
+                header("Location: index.php?page=myDrinks&pagi=" . $lastPagi);//TODO header fix required
             }
             $thisPage = $pages[$currentPagi];
 
@@ -583,6 +568,8 @@ switch ($page) {
 
 
     case "newDrink":
+        $errorText = [];
+        $successText = [];
         // We need to use sessions, so you should always start sessions using the below code.
         session_start();
         // If the user is not logged in redirect to the login page...
@@ -610,23 +597,22 @@ switch ($page) {
                 }
                 if (empty($errors)) {
                     if ($dm->insert($newDrink)) {
-                        echo("Created new post successfully<br>");
+                        array_push($successText,"Created new post successfully<br>");
                     } else {
-                        echo("Failed to create new post<br>");
+                        array_push($errorText,"Failed to create new post");
                     }
                     if ($dm->uploadImage($newDrink)) {
-                        echo("Uploaded image successfully<br>");
+                        array_push($successText,"Uploaded image successfully<br>");
                     } else {
-                        echo("Failed to upload image<br>");
+                        array_push($errorText,"Failed to upload image<br>");
                     }
 
                 } else {
-                    throw new ExceptionInvalidData(implode("<br>", $errors));
+                    throw new ExceptionInvalidData($errors);
                 }
 
             } catch (ExceptionInvalidData $e) {
-                echo '<br>Caught exception: ', $e->getMessage(), '!!<br>';
-                die();
+                array_push($errorText, $e->getMessage());
             }
         }
 
@@ -635,6 +621,8 @@ switch ($page) {
         break;
 
     case "editDrink":
+        $errorText = [];
+        $successText = [];
         // We need to use sessions, so you should always start sessions using the below code.
         session_start();
         // If the user is not logged in redirect to the login page...
@@ -676,26 +664,25 @@ switch ($page) {
                 }
                 if (empty($errors)) {
                     if ($dm->update($newDrink)) {
-                        echo("Updated post successfully<br>");
+                        array_push($successText,"Updated post successfully<br>");
                     } else {
-                        echo("Failed to update post<br>");
+                        array_push($errorText,"Failed to update post<br>");
                     }
                     if ($dm->uploadImage($newDrink)) {
-                        echo("Uploaded image successfully<br>");
+                        array_push($successText,"Uploaded image successfully<br>");
                     } else {
-                        echo("Failed to upload image<br>");
+                        array_push($errorText,"Failed to upload image<br>");
                     }
                 } else {
-                    throw new ExceptionInvalidData(implode("<br>", $errors));
+                    throw new ExceptionInvalidData($errors);
                 }
                 echo "<script>alert(\"Updated content successfully\");</script>";
             }
             catch (ExceptionInvalidData $e) {
-                    echo '<br>Caught exception: ', $e->getMessage(), '!!<br>';
-                    die();
+                array_push($errorText,$e->getMessage());
             }
             catch (PDOException $e) {
-                echo 'Error: ' . $e->getMessage();
+                array_push($errorText,'Error: ' . $e->getMessage());
             }
         }
 
@@ -703,7 +690,7 @@ switch ($page) {
         try {
             $drink = $dm->getById($id);
         }catch (ExceptionPageNotFound $e) {
-            echo 'Error: ' . $e->getMessage();
+            array_push($errorText,'Error: ' . $e->getMessage());
         }
 
         $user = $um->getUserById($_SESSION["id"]);

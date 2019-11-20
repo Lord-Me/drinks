@@ -76,3 +76,10 @@
     resize: none;
     overflow: hidden;
 }
+
+/*ERROR TEXT*/
+.errorText {
+    color: red;
+    width: 100%;
+    text-align: center;
+}

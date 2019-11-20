@@ -22,7 +22,12 @@ class UserModel{
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'User');
         $stmt->execute();
-        return $stmt->fetch();
+        $user = $stmt->fetch();
+        if(!empty($user)){
+            return $user;
+        }else{
+            throw new PDOException();
+        }
     }
 
     function getUserByName(string $username):User{
@@ -42,7 +47,7 @@ class UserModel{
         $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_SPECIAL_CHARS);
         $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
-        $avatar = "defaultAvatar.jpg";
+        $avatar = "defaultAvatar.png";
 
         $newUser = new User();
         $newUser->setUsername($username);
@@ -136,16 +141,16 @@ class UserModel{
         $avatar = $newUser->getAvatar();
         echo "<br>";
         if(!is_string($username) || $username == NULL || preg_match('/[A-Za-z0-9]+/', $username) == 0){
-            array_push($errors, "Username es invalido");
+            array_push($errors, "Invalid Username");
         }
         if(!is_string($email) || $email == NULL || !filter_var($email, FILTER_VALIDATE_EMAIL)){
-            array_push($errors, "Email es invalido");
+            array_push($errors, "Invalid email");
         }
-        if(!is_string($password) || $password == NULL){
-            array_push($errors, "Password es invalido");
+        if(!is_string($password) || $password == NULL || strlen($_POST["password"]) > 20 || strlen($_POST["password"]) < 5){
+            array_push($errors, "Password must be between 5 and 20 characters long!");
         }
         if(!is_string($avatar) || $avatar == NULL){
-            array_push($errors, "Avatar es invalido");
+            array_push($errors, "Invalid avatar");
         }
 
         return $errors;

@@ -5,6 +5,8 @@
     <title>Login</title>
     <link href="css/loginStyle.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+    <link href="css/myStyles.css" rel="stylesheet" type="text/css">
+
 </head>
 <body>
 <div class="login">
@@ -18,6 +20,7 @@
             <i class="fas fa-lock"></i>
         </label>
         <input type="password" name="password" placeholder="Password" id="password" required>
+        <p class="errorText"><?=implode("<br>", $errorText)?></p>
         New here? <a href="index.php?page=register">Create an account</a>
         <input type="submit" value="Login">
     </form>
