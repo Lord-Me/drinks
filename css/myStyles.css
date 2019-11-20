@@ -71,6 +71,8 @@
 
 /*ADD AND EDIT FORM*/
 
-.addFormTitle h1 textarea{
+.addFormTitle h1 textarea, .addFormIngredients textarea, .addFormContent textarea{
     width: 100%;
+    resize: none;
+    overflow: hidden;
 }

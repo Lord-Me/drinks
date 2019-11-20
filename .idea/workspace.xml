@@ -3,16 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="23c4d5b8-9c93-4bf0-a230-ff61289df2da" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/avatars/defaultAvatar.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/myStyles.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/myStyles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/partials/navigation.partials.php" beforeDir="false" afterPath="$PROJECT_DIR$/partials/navigation.partials.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/partials/navigationLoggedIn.partials.php" beforeDir="false" afterPath="$PROJECT_DIR$/partials/navigationLoggedIn.partials.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Drink.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Drink.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DrinkModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DrinkModel.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/RecipesControl.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/RecipesControl.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/UserModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/UserModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Filter.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Filter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/changeAvatar.view.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/changeAvatar.view.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/changePassword.view.html" beforeDir="false" afterPath="$PROJECT_DIR$/views/changePassword.view.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/editDrink.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/editDrink.view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/myDrinks.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/myDrinks.view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/newDrink.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/newDrink.view.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -80,7 +78,7 @@
       <workItem from="1574147454885" duration="59000" />
       <workItem from="1574147515956" duration="16809000" />
       <workItem from="1574233853203" duration="49000" />
-      <workItem from="1574233904048" duration="13475000" />
+      <workItem from="1574233904048" duration="19898000" />
     </task>
     <task id="LOCAL-00001" summary="Change password">
       <created>1573716999809</created>
@@ -124,7 +122,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574082755431</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Nearly done. New TODOs and need to finish url managing on drinks and myDrinks">
+      <created>1574248269149</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1574248269149</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -148,7 +153,8 @@
     <MESSAGE value="Done drinks filters&#10;Added user filter link to drink page" />
     <MESSAGE value="Did pagination" />
     <MESSAGE value="Stuff in class" />
-    <option name="LAST_COMMIT_MESSAGE" value="Stuff in class" />
+    <MESSAGE value="Nearly done. New TODOs and need to finish url managing on drinks and myDrinks" />
+    <option name="LAST_COMMIT_MESSAGE" value="Nearly done. New TODOs and need to finish url managing on drinks and myDrinks" />
   </component>
   <component name="XPathView.XPathProjectComponent">
     <history />

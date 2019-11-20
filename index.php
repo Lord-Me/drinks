@@ -1,5 +1,11 @@
 <?php
-
+/*
+ * TODO make all pages 1005 height so footer is always at the bottom
+ * TODO Hover change image in profile page
+ * TODO header fixing
+ * TODO error managing with the forms which have required fields: login, register, change password, change avatar, add, edit
+ * TODO Add secondary recipes and do delete checking with them
+ */
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING)??"index";
 class ExceptionPageNotFound extends Exception{};
 class ExceptionInvalidData extends Exception{};
@@ -73,9 +79,9 @@ switch ($page) {
 
             //get the url and make a query string and remove pagi
             $queryArray=[];
-            parse_str($_SERVER['QUERY_STRING'], $queryArray);//TODO needs sorting out
+            $str = $_SERVER['QUERY_STRING'];//TODO needs sorting out
+
             echo $_SERVER['QUERY_STRING'];
-            die(implode(" ", $queryArray));
 
             //Get the current pagination page number
             if (!is_numeric($queryArray["pagi"]) || $queryArray["pagi"] < 1 || $queryArray["pagi"] == NULL) {
@@ -551,7 +557,7 @@ switch ($page) {
             }
 
             //Turn each array entry into an array of all the pages(pagination) with html sting
-            $pages = $recipeList->render($currentPagi, 5, "myDrinks");
+            $pages = $recipeList->render($currentPagi, 5, "myDrinks", $queryArray);
 
             //Check if currentPagi is over the number of pages. If so, set is as last page
             if ($currentPagi > count($pages) - 1) {
@@ -585,17 +591,17 @@ switch ($page) {
             exit();
         }
 
+        $connection = new DBConnect();
+        $pdo = $connection->getConnection();
+
+        $um = new UserModel($pdo);
+        $dm = new DrinkModel($pdo);
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             /*
              * CHECK author_id validity
              */
             try {
-                $connection = new DBConnect();
-                $pdo = $connection->getConnection();
-
-                $um = new UserModel($pdo);
-                $dm = new DrinkModel($pdo);
-
                 $newDrink = $dm->getInsertFormData();
                 $errors = $dm->validate($newDrink);
                 $imageErrors = $dm->validateImage($newDrink);
@@ -624,6 +630,7 @@ switch ($page) {
             }
         }
 
+        $user = $um->getUserById($_SESSION["id"]);
         require("views/$page.view.php");
         break;
 

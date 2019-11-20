@@ -3,6 +3,9 @@
 <?php
 require('partials/head.partials.php');
 ?>
+<link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
+<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.0/jquery-ui.min.js"></script>
 <script>
     var observe;
     if (window.attachEvent) {
@@ -16,28 +19,42 @@ require('partials/head.partials.php');
         };
     }
     function init () {
-        var text = document.getElementsByClassName('text');
-        text.forEach(myFunction);//TODO this foreach not working. ask fernandez
-        function myFunction(text){
+        let text = document.getElementsByClassName('text');
+        //textArr.forEach(myFunction);
+        for (let i=0; i<text.length; i++){
             function resize() {
-                text.style.height = 'auto';
-                text.style.height = text.scrollHeight + 'px';
+                text[i].style.height = 'auto';
+                text[i].style.height = text[i].scrollHeight + 'px';
             }
 
-            /* 0-timeout to get the already changed text */
+            /* 0-timeout to get the already changed text[i] */
             function delayedResize() {
                 window.setTimeout(resize, 0);
             }
 
-            observe(text, 'change', resize);
-            observe(text, 'cut', delayedResize);
-            observe(text, 'paste', delayedResize);
-            observe(text, 'drop', delayedResize);
-            observe(text, 'keydown', delayedResize);
+            observe(text[i], 'change', resize);
+            observe(text[i], 'cut', delayedResize);
+            observe(text[i], 'paste', delayedResize);
+            observe(text[i], 'drop', delayedResize);
+            observe(text[i], 'keydown', delayedResize);
 
-            text.focus();
-            text.select();
+            text[i].focus();
+            text[i].select();
             resize();
+
+        }
+    }
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#preview')
+                    .attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
         }
     }
 </script>
@@ -50,7 +67,7 @@ if (isset($_SESSION['loggedin'])) {
     require('partials/navigation.partials.php');
 }
 ?>
-<br><br><br>
+<br><br><br><br>
 <section>
     <div style='height: 59px'></div>
     <form action="index.php?page=editDrink&id=<?=$drink->getId()?>" method="post"  enctype="multipart/form-data" class="addForm">
@@ -63,8 +80,8 @@ if (isset($_SESSION['loggedin'])) {
                 </div>
                 <div class='col-lg-6 order-lg-2'>
                     <div class="addFormImage">
-                        <label for="fileToUpload"><img class="img-fluid rounded-circle" src="img/<?=$drink->getImage()?>" alt="<?=$drink->getImage()?>"></label><br>
-                        <input type="file" name="fileToUpload" placeholder="Preview Image" id="fileToUpload">
+                        <label for="fileToUpload"><img id="preview" class="img-fluid rounded-circle" src="img/<?=$drink->getImage()?>" alt="<?=$drink->getImage()?>"></label><br>
+                        <input onchange="readURL(this);" type="file" name="fileToUpload" placeholder="Preview Image" id="fileToUpload">
                     </div>
                 </div>
             </div>

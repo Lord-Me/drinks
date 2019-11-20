@@ -177,7 +177,4 @@ class Filter
     function getDrinks():array{
         return $this->drinks;
     }
-
-
-
 }
