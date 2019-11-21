@@ -18,40 +18,41 @@ class Drink
     }
 
     //GETTERS
+    //No strict get types so null errors can be managed elsewhere
 
-    function getId():int{
+    function getId(){
         return $this->id;
     }
 
-    function getAuthor_id():int{
+    function getAuthor_id(){
         return $this->author_id;
     }
 
-    function getCategory():int{
+    function getCategory(){
         return $this->category;
     }
 
-    function getTitle():String{
+    function getTitle(){
         return $this->title;
     }
 
-    function getIngredients():String{
+    function getIngredients(){
         return $this->ingredients;
     }
 
-    function getContent():String{
+    function getContent(){
         return $this->content;
     }
 
-    function getImage():String{
+    function getImage(){
         return $this->image;
     }
 
-    function getPublished_at():String{
+    function getPublished_at(){
         return $this->published_at;
     }
 
-    function getView():int{
+    function getView(){
         return $this->view;
     }
 

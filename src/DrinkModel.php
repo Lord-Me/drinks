@@ -266,29 +266,23 @@ class DrinkModel
     // Rep un objecte Post i comprova que les propietats siguen vàlides.
     public function validate(Drink $drink):array {
         $errors = [];
-        $id = $drink->getId();
-        $author_id = $drink->getAuthor_id();
-        $category = $drink->getCategory();
-        $title = $drink->getTitle();
-        $ingredients = $drink->getIngredients();
-        $content = $drink->getContent();
 
-        if(!is_numeric($id) || $id == NULL){
+        if(!is_numeric($drink->getId()) || $drink->getId() == NULL){
             array_push($errors, "ID es invalido");
         }
-        if(!is_numeric($author_id) || $author_id == NULL){
+        if(!is_numeric($drink->getAuthor_id()) || $drink->getAuthor_id() == NULL){
             array_push($errors, "Author ID es invalido");
         }
-        if(!is_numeric($category) || $category == NULL){
+        if(!is_numeric($drink->getCategory()) || $drink->getCategory() == NULL){
             array_push($errors, "Categoria es invalido");
         }
-        if(!is_string($title) || $title == NULL){
+        if(!is_string($drink->getTitle()) || $drink->getTitle() == NULL){
             array_push($errors, "Title es invalido");
         }
-        if(!is_string($ingredients) || $ingredients == NULL){
+        if(!is_string($drink->getIngredients()) || $drink->getIngredients() == NULL){
             array_push($errors, "Ingredients es invalido");
         }
-        if(!is_string($content) || $content == NULL){
+        if(!is_string($drink->getContent()) || $drink->getContent() == NULL){
             array_push($errors, "Content es invalido");
         }
 

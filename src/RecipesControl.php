@@ -84,13 +84,24 @@ class recipesControl{
     /*
      * Add pagination buttons to end
      */
-    function paginate(array $pages, int $currentPagi, array $queryArray):array{//TODO get queries outside the function and add each one manually
-        if (($key = array_search('pagi', $queryArray)) !== false) {unset($queryArray[$key]);}
-        $url = implode($queryArray);
+    function paginate(array $pages, int $currentPagi, array $queryArray):array{
+//SORT OUT URL
+        unset($queryArray['pagi']);
+        //MAKE URL A STRING
+        $keys = array_keys($queryArray);
+        $i = 0;
+        $url = "";
+        foreach ($queryArray as $item){
+            $url .= $keys[$i] . "=" . $item . "&";
+            $i++;
+        }
+        $url = substr($url, 0, -1);
+// -SORT OUT URL
+
         $forwardUrl = $url."&pagi=".($currentPagi+1);
         $backUrl = $url."&pagi=".($currentPagi-1);
 
-        $buttons = $this->createButtons(count($pages), $currentPagi, $queryArray);
+        $buttons = $this->createButtons(count($pages), $url);
         $forward = "<a href='index.php?".$forwardUrl."' class='pagiButton pagiForward'><i class='fas fa-arrow-right'></i></a>";
         $back = "<a href='index.php?".$backUrl."' class='pagiButton pagiBack'><i class='fas fa-arrow-left'></i></a>";
         $pagiButtons="";
@@ -128,9 +139,8 @@ class recipesControl{
     /*
      * Generate the bottom buttons
      */
-    function createButtons(int $amount, int $currentPagi, array $queryArray):string{
+    function createButtons(int $amount, string $url):string{
         $buttons="";
-        $url = implode($queryArray);
 
         for($i=0; $i<$amount; $i++){
             $buttons .= "<a href='index.php?".$url."&pagi=".($i+1)."' class='pagiButton'>".($i+1)."</a>";

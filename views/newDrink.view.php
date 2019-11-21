@@ -128,6 +128,7 @@ if (isset($_SESSION['loggedin'])) {
                 <div class="col-lg-12">
                     <div class="row filterFormSubmit">
                         <p class="errorText"><?=implode("<br>", $errorText)?></p>
+                        <p class="successText"><?=implode("<br>", $successText)?></p>
                         <input type="submit" value="Submit">
                     </div>
                 </div>

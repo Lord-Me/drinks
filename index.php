@@ -2,8 +2,6 @@
 /*
  * TODO make all pages 1005 height so footer is always at the bottom
  * TODO Hover change image in profile page
- * TODO header fixing
- * TODO Fix error with some fields where you remove their required tag
  * TODO Add secondary recipes and do delete checking with them
  */
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING)??"index";
@@ -54,7 +52,7 @@ switch ($page) {
 
             //Check which filters are in use
             $authorUrl = $filter->checkAuthorId();
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_GET["filterFormSubmit"]) && $_SERVER['REQUEST_METHOD'] == 'GET') {
                 $filter->checkFilterRadio();
                 $filter->checkSearchValue();
                 $filter->checkDate();
@@ -78,11 +76,13 @@ switch ($page) {
             }
 
             //get the url and make a query string and remove pagi
-            $queryArray=[];
-            $str = $_SERVER['QUERY_STRING'];//TODO needs sorting out
-            preg_match('~(.*?)=~', $str, $output);
-            echo $output[1];
+            $str = $_SERVER['QUERY_STRING'];
+            parse_str($str, $queryArray);
 
+            if(!array_key_exists("pagi", $queryArray)){
+                $addPagi = ["pagi" => 1];
+                $queryArray = array_merge($queryArray, $addPagi);
+            }
             //Get the current pagination page number
             if (!is_numeric($queryArray["pagi"]) || $queryArray["pagi"] < 1 || $queryArray["pagi"] == NULL) {
                 $currentPagi=1;
@@ -97,7 +97,7 @@ switch ($page) {
             if ($queryArray["pagi"] > count($pages)) {
                 $currentPagi = count($pages);
             }
-            $thisPage = $pages[$currentPagi];
+            $thisPage = $pages[$currentPagi-1];
 
             $view = implode("", $thisPage);
             require("views/$page.view.php");
@@ -267,7 +267,7 @@ switch ($page) {
                         }
                     }
                 } else {
-                    throw new ExceptionInvalidData($errors);
+                    throw new ExceptionInvalidData(implode("<br>", $errors));
                 }
             } catch (ExceptionInvalidData $e) {
                 $errorText =array_merge($errorText, $e->getMessage());
@@ -367,7 +367,7 @@ switch ($page) {
                         array_push($errorText, "Failed to update password");
                     }
                 } else {
-                    throw new ExceptionInvalidData($errors);
+                    throw new ExceptionInvalidData(implode("<br>", $errors));
                 }
 
             } catch (ExceptionInvalidInput $e) {
@@ -471,7 +471,7 @@ switch ($page) {
                             echo("Failed to update password<br>");
                         }
                     } else {
-                        throw new ExceptionInvalidData($errors);
+                        throw new ExceptionInvalidData(implode("<br>", $errors));
                     }
                 }
 
@@ -508,20 +508,10 @@ switch ($page) {
             //Using the Model for our drinks, I get all of the drinks with the same category
             $dm = new DrinkModel($pdo);
 
-
             /*
              * FILTER
              */
             $filter = new Filter($_SESSION['id']);
-
-
-
-            //Get the current pagination page number for the back and forward buttons
-            $currentPagi = filter_input(INPUT_GET, 'pagi', FILTER_SANITIZE_NUMBER_INT) ?? 0;
-            if (!is_numeric($currentPagi) || $currentPagi < 0) {
-               header("Location: index.php?page=myDrinks&pagi=0");//TODO header fix required
-            }
-
 
             //Check which filters are in use
             if (isset($_GET["filterFormSubmit"]) && $_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -541,15 +531,29 @@ switch ($page) {
                 $recipeList->add($drink);
             }
 
-            //Turn each array entry into an array of all the pages(pagination) with html sting
+            //get the url and make a query string and remove pagi
+            $str = $_SERVER['QUERY_STRING'];
+            parse_str($str, $queryArray);
+
+            if(!array_key_exists("pagi", $queryArray)){
+                $addPagi = ["pagi" => 1];
+                $queryArray = array_merge($queryArray, $addPagi);
+            }
+            //Get the current pagination page number
+            if (!is_numeric($queryArray["pagi"]) || $queryArray["pagi"] < 1 || $queryArray["pagi"] == NULL) {
+                $currentPagi=1;
+            }else {
+                $currentPagi = $queryArray["pagi"];
+            }
+
+            //Turn each array entry into an array of all the pages(pagination) with html sting. FilterLocation is the page the filter form is on
             $pages = $recipeList->render($currentPagi, 5, "myDrinks", $queryArray);
 
             //Check if currentPagi is over the number of pages. If so, set is as last page
-            if ($currentPagi > count($pages) - 1) {
-                $lastPagi = count($pages) - 1;
-                header("Location: index.php?page=myDrinks&pagi=" . $lastPagi);//TODO header fix required
+            if ($queryArray["pagi"] > count($pages)) {
+                $currentPagi = count($pages);
             }
-            $thisPage = $pages[$currentPagi];
+            $thisPage = $pages[$currentPagi-1];
 
             $view = implode("", $thisPage);
             require("views/$page.view.php");
@@ -608,7 +612,7 @@ switch ($page) {
                     }
 
                 } else {
-                    throw new ExceptionInvalidData($errors);
+                    throw new ExceptionInvalidData(implode("<br>", $errors));
                 }
 
             } catch (ExceptionInvalidData $e) {
@@ -639,7 +643,7 @@ switch ($page) {
 
         $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT)??NULL;
         if ($id == NULL) {
-            header("Location: views/error.view.php");
+            header("Location: index.php?page=default"); //404
         }
 
         //Get all drink IDs and test the given post ID to see if it exists
@@ -649,7 +653,7 @@ switch ($page) {
             array_push($allIds, $drink->getId());
         }
         if (!in_array($id, $allIds)) {
-            header("Location: views/error.view.php");
+            header("Location: index.php?page=default"); //404
         }
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -674,7 +678,7 @@ switch ($page) {
                         array_push($errorText,"Failed to upload image<br>");
                     }
                 } else {
-                    throw new ExceptionInvalidData($errors);
+                    throw new ExceptionInvalidData(implode("<br>", $errors));
                 }
                 echo "<script>alert(\"Updated content successfully\");</script>";
             }
@@ -708,7 +712,7 @@ switch ($page) {
             $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT )??NULL;
 
             if ($id == NULL) {
-                header("Location: views/error.view.php");
+                header("Location: index.php?page=default"); //404
             }
 
             //Get all drink IDs and test the given post ID to see if it exists
@@ -738,8 +742,7 @@ switch ($page) {
      * DEFAULT 404
      */
     default:
-        {
           require("views/error.view.php");
-        };
+          break;
 
 }
