@@ -206,7 +206,9 @@ class DrinkModel
         $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 
         if(!empty($drink->getImage())) {
-            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
+            $path = $_FILES['fileToUpload']['name'];
+            $ext = pathinfo($path, PATHINFO_EXTENSION);
+            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $drink->getTitle() . $ext)) {
                 echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded.";
                 return true;
             } else {

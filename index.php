@@ -1,7 +1,6 @@
 <?php
 /*
  * TODO make all pages 1005 height so footer is always at the bottom
- * TODO Hover change image in profile page
  * TODO Add secondary recipes and do delete checking with them
  */
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING)??"index";
@@ -424,7 +423,7 @@ switch ($page) {
                 $uploadOk = false;
             }
             // Check file size is less than 50KB
-            if ($_FILES["fileToUpload"]["size"] > 50000) {
+            if ($_FILES["fileToUpload"]["size"] > 100000) {
                 array_push($errorText, "Sorry, your file is too large.");
                 $uploadOk = false;
             }
@@ -439,16 +438,14 @@ switch ($page) {
                 // if everything is ok, try to upload file
             } else {
                 // Check if file already exists and delete it
-                if (file_exists($target_file)) {
-                    unlink($target_file);
+                foreach (glob("img/".$_SESSION["id"]."*") as $filename) {
+                    unlink($filename);
                 }
                 if ($uploadOk == true) {
-                    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {//TODO change image name
+                    $path = $_FILES['fileToUpload']['name'];
+                    $ext = pathinfo($path, PATHINFO_EXTENSION);
+                    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $_SESSION["id"] . "." . $ext)) {//TODO change image name
                         //echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded.";
-                        //Delete previous image unless its the defaultAvatar one or used by another user.
-                        if($um->getUserById($_SESSION['id'])->getAvatar() != "defaultAvatar.png") {
-                            unlink("img/avatars/" . $um->getUserById($_SESSION['id'])->getAvatar());
-                        }
                     } else {
                         array_push($errorText, "Sorry, there was an error uploading your file.");
                     }
@@ -457,28 +454,19 @@ switch ($page) {
                 }*/
             }
 
-            try {
-                if ($uploadOk == true) {
-                    $user = $um->getUserByName($_SESSION['name']);
+            if ($uploadOk == true) {
+                $user = $um->getUserByName($_SESSION['name']);
 
-                    $newUser = $um->getUpdateFormData($user);
-                    $errors = $um->validate($newUser);
-                    if (empty($errors)) {
-                        $userToEdit = $user->getId();
-                        if ($um->update($newUser, $userToEdit)) {
-                            header("Location: index.php?page=user");
-                        } else {
-                            echo("Failed to update password<br>");
-                        }
-                    } else {
-                        throw new ExceptionInvalidData(implode("<br>", $errors));
-                    }
+                $newUser = $um->getUpdateFormData($user);
+                $newUser->setAvatar($user->getId() .".". $ext);
+
+                $userToEdit = $user->getId();
+                if ($um->update($newUser, $userToEdit)) {
+                    header("Location: index.php?page=user");
+                } else {
+                    array_push($errorText, "Failed to update avatar");
                 }
-
-            } catch (ExceptionInvalidData $e) {
-                array_push($errorText, $e->getMessage());
             }
-
         }
 
         require("views/$page.view.php");

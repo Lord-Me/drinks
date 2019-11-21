@@ -2,8 +2,8 @@
 -- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Nov 20, 2019 at 12:10 PM
+-- Host: 127.0.0.1
+-- Generation Time: Nov 21, 2019 at 11:15 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -79,7 +79,10 @@ INSERT INTO `recipes` (`id`, `author_id`, `category`, `title`, `ingredients`, `c
 (12, 6, 2, 'Arbor Gold - Game Of Thrones', 'St. Germaine to rinse\r\n.5 oz. -or- 15ml. simple syrup\r\n2 barspoons benedictine\r\n1.5 oz. -or- 45 ml. Cognac\r\nGarnish: Rosemary', '1. Pour a small amount of St. Germanie into your glass and swirl it around to coat the sides before disposing of.\r\n2. To start the mix, pour your simple syrup, benedictine and cognac to a container.\r\n3. Add cracked ice to your container and stir.\r\n4. Pour the drink into your glass and garnish with a stick of rosemary.', 'Arbor-Gold.jpg', '2019-11-06', 1),
 (13, 6, 2, 'Milk Of The Poppy - Game Of Thrones', 'POPPY SEED ORGEAT\r\n• 200 grams of Poppy Seed\r\n• 200 Grams of Sugar\r\n• 200 Grams of Water\r\n\r\nMILK OF THE POPPY\r\n• .75 oz. -or- 22 ml. Poppy Orgeat\r\n• .5 oz. -or- 15 ml. Dry Curaçao\r\n• 2 oz. -or- 60 ml. Cognac\r\n• Rinse Glass in Absinthe\r\n• Shake over ice and double strain', '0. Before you begin, make yourself a batch of poppy seed orgeat: Add 200 grams of poppy seeds, 200 grams of sugar and 200 grams of water into your blender and pulverise. Let it sit for an hour. If the sugar has not completely dissolved, transfer it to a pan and simmer until it has dissolved. Lastly, strain and bottle your orgeat.\r\n\r\n1. Pour your poppy orgeat, dry curaçao and cognac into your shaker.\r\n2. (Optional) Rince your glass with a dash of absinthe.\r\n3. Add ice and shake well.\r\n4. Pour into your glass and enjoy.', 'Milk-Of-The-Poppy.jpg', '2019-11-06', 1),
 (14, 6, 2, 'Title', 'this ifds somfdsa&#13;&#10;fdsafds&#13;&#10;sdafdsa&#13;&#10;fdsafds&#13;&#10;afdsafdsafds', 'fdsfdsafdsa&#13;&#10;dfsd&#13;&#10;fsd&#13;&#10;afdsaf&#13;&#10;&#13;&#10;dsaf&#13;&#10;dsafdsa&#13;&#10;sda', 'SmileFace.png', '2019-11-20', 0),
-(15, 6, 2, 'Title', 'this ifds somfdsa&#13;&#10;fdsafds&#13;&#10;sdafdsa&#13;&#10;fdsafds&#13;&#10;afdsafdsafds', 'fdsfdsafdsa&#13;&#10;dfsd&#13;&#10;fsd&#13;&#10;afdsaf&#13;&#10;&#13;&#10;dsaf&#13;&#10;dsafdsa&#13;&#10;sda', 'SmileFace.png', '2019-11-20', 0);
+(15, 6, 2, 'Title', 'this ifds somfdsa&#13;&#10;fdsafds&#13;&#10;sdafdsa&#13;&#10;fdsafds&#13;&#10;afdsafdsafds', 'fdsfdsafdsa&#13;&#10;dfsd&#13;&#10;fsd&#13;&#10;afdsaf&#13;&#10;&#13;&#10;dsaf&#13;&#10;dsafdsa&#13;&#10;sda', 'SmileFace.png', '2019-11-20', 0),
+(16, 1, 2, 'New drink title', 'Some ingredients&#13;&#10;fdsa&#13;&#10;fdsa&#13;&#10;fdsa&#13;&#10;fdsa&#13;&#10;fdsa', 'Steps&#13;&#10;fdsaf&#13;&#10;fads&#13;&#10;fdsa&#13;&#10;fdsa&#13;&#10;fdsa', '', '2019-11-21', 0),
+(17, 1, 2, 'New Drink', 'fdsafdsa', 'fsdfsdafdsafdsafdsa', '', '2019-11-21', 0),
+(18, 1, 2, 'New Drink', 'fdsafdsa', 'fsdfsdafdsafdsafdsa', '', '2019-11-21', 0);
 
 -- --------------------------------------------------------
 
@@ -120,8 +123,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `email`, `password`, `avatar`, `role`) VALUES
-(1, 'admin', 'admin@drinks.com', '$2y$10$jKDnHS.yYfyy8cCMc7xxsOuuREM7ggRTNrUAKNMlPxxCvJe4WScza', 'defaultAvatar.png', 1),
-(6, 'dwes', 'dwes@drinks.com', '$2y$10$k50HnBUqE3ySDqfQ//2wX.rCuprx4w2LDsulqhaCC.CYES9CRzPzO', 'SmileFace.png', 2);
+(1, 'admin', 'admin@drinks.com', '$2y$10$hUAWQntrdYlTqXM.dppKUObYOcnWYLex/u5xvIokq/JLsaMSWF6mi', 'defaultAvatar.png', 1),
+(6, 'dwes', 'dwes@drinks.com', '$2y$10$DuQqxMIkXOHKK/8UusxV0OxTiBF6h0OCM04SmF8CPLu6RQZORNBCG', 'SmileFace.png', 2);
 
 --
 -- Indexes for dumped tables
@@ -162,7 +165,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `recipes`
 --
 ALTER TABLE `recipes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `roles`

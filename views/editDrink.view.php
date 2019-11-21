@@ -74,12 +74,12 @@ if (isset($_SESSION['loggedin'])) {
         <div class="container">
             <div class="row align-items-center">
                 <div class='col-lg-6 order-lg-1'>
-                    <div class="addFormTitle">
+                    <div class="addFormTitle p-5">
                         <h1 class="display-4"><textarea class="text" style="height:1em" type="text" name="title"><?=$drink->getTitle()?></textarea></h1>
                     </div>
                 </div>
                 <div class='col-lg-6 order-lg-2'>
-                    <div class="addFormImage">
+                    <div class="addFormImage p-5">
                         <label for="fileToUpload"><img id="preview" class="img-fluid rounded-circle" src="img/<?=$drink->getImage()?>" alt="<?=$drink->getImage()?>"></label><br>
                         <input onchange="readURL(this);" type="file" name="fileToUpload" placeholder="Preview Image" id="fileToUpload">
                     </div>

@@ -88,3 +88,11 @@
     width: 100%;
     text-align: center;
 }
+
+/*CHANGE AVATAR HOVER*/
+.avatar {
+    background-color: rgb(220, 220, 220);
+}
+.avatar:hover {
+    opacity: 0.75;
+}
