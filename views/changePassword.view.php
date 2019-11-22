@@ -21,6 +21,7 @@
         <input type="password" name="password" placeholder="New Password" id="password" required>
         <p class="errorText"><?=implode("<br>", $errorText)?></p>
         <input type="submit" value="Change Password">
+        <button onclick="history.go(-1);">Back </button>
     </form>
 </div>
 </body>

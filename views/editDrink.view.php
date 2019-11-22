@@ -134,7 +134,8 @@ if (isset($_SESSION['loggedin'])) {
                     <div class="row filterFormSubmit">
                         <p class="errorText"><?=implode("<br>", $errorText)?></p>
                         <p class="successText"><?=implode("<br>", $successText)?></p>
-                        <input type="submit" value="Submit">
+                        <input class="my-btn-left btn btn-primary my-btn-xl" type="submit" value="Submit">
+                        <a href="#" class="my-btn-right btn btn-primary my-btn-xl" onclick="history.go(-1);">Back </a>
                     </div>
                 </div>
             </div>

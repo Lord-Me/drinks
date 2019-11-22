@@ -14,7 +14,7 @@ class recipesControl{
 
         foreach ($this->drinks as $drink) {
             //Only add those which have the same ID as the current sesion
-            if(($_SESSION == NULL && $filterLocation != "myDrinks") || $_SESSION["id"] != 1 ) {
+            if($_SESSION == NULL || $filterLocation == "drinks" || $_SESSION["id"] == 1 ) {
                 array_push($html, $drink->render($side, $filterLocation));  //Add them all
             }else{
                 //Remove all posts not belonging to you in the case of the session not being the admin (1)

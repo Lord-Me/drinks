@@ -196,15 +196,19 @@ class Drink
 
         //See if user is logged in and if so, add the edit button
         $edit="";
-        if($this->getAuthor_id() == $_SESSION['id']){
-            $edit = " <a href='index.php?page=editDrink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a>";
+        if(!empty($_SESSION['id'])) {
+            if ($this->getAuthor_id() == $_SESSION['id']) {
+                $edit = " <a href='index.php?page=editDrink&id=" . $this->getId() . "' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a>";
+            }
         }
 
         //Añadir saltos de linea <br> a en cada salto de linea que hay en el texto sacado del DB
         $ingredients = $this->getIngredients();
         $steps = $this->getContent();
         $ingredients = str_replace("\n", '<br />', $ingredients);
+        $ingredients = str_replace("&#13;&#10;", "<br/>", $ingredients);
         $steps = str_replace("\n", '<br />', $steps);
+        $steps = str_replace("&#13;&#10;", '<br />', $steps);
 
         $html = '';
         $html .="<section>

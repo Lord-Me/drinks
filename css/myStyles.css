@@ -112,3 +112,41 @@ footer {
 .avatar:hover {
     opacity: 0.75;
 }
+
+
+/*Back button*/
+form button {
+    width: 100%;
+    padding: 15px;
+    background-color: #ee0979;
+    border: 0;
+    cursor: pointer;
+    font-weight: bold;
+    color: #ffffff;
+    transition: background-color 0.2s;
+}
+
+form button:hover {
+    background-color: #bd0760;
+    transition: background-color 0.2s;
+}
+
+/*Submit buttons*/
+.my-btn-xl{
+    text-transform: uppercase;
+    padding: 0.5rem 3rem;
+    font-size: .9rem;
+    font-weight: 700;
+    letter-spacing: .1rem;
+}
+
+.my-btn-left {
+    margin: 3rem 0 0 auto!important;
+}
+.my-btn-right {
+    margin: 3rem auto 0 0;
+}
+
+.send {
+    width: 100%;
+}

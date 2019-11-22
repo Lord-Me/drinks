@@ -17,6 +17,7 @@
         <input type="file" name="fileToUpload" placeholder="New Avatar" id="fileToUpload" required>
         <p class="errorText"><?=implode("<br>", $errorText)?></p>
         <input type="submit" value="Change Avatar">
+        <button onclick="history.go(-1);">Back </button>
     </form>
 </div>
 </body>

@@ -43,7 +43,7 @@ if (isset($_SESSION['loggedin'])) {
                         </div>
                     </div>
                     <div class="row filterFormSubmit">
-                        <input type="submit" value="Submit">
+                        <input class="btn btn-primary my-btn-xl mt-5" type="submit" name="filterFormSubmit" value="Filter">
                     </div>
                 </form>
             </div>

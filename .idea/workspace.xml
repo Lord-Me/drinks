@@ -2,12 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="23c4d5b8-9c93-4bf0-a230-ff61289df2da" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/drinks.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/drinks.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/loginStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/loginStyle.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/css/myStyles.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/myStyles.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/css/registerStyle.css" beforeDir="false" afterPath="$PROJECT_DIR$/css/registerStyle.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Drink.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Drink.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DrinkModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/DrinkModel.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RecipesControl.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/RecipesControl.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/changeAvatar.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/changeAvatar.view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/changePassword.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/changePassword.view.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/views/drinks.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/drinks.view.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/index.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/index.view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/editDrink.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/editDrink.view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/login.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/login.view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/myDrinks.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/myDrinks.view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/newDrink.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/newDrink.view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/register.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/register.view.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,13 +45,13 @@
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/views" />
-      <recent name="C:\xampp\htdocs\drinks\views" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/css" />
       <recent name="$PROJECT_DIR$/vendor/bootstrap/css/img" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/views" />
+      <recent name="C:\xampp\htdocs\drinks\views" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -75,9 +88,13 @@
       <workItem from="1574147454885" duration="59000" />
       <workItem from="1574147515956" duration="16809000" />
       <workItem from="1574233853203" duration="49000" />
-      <workItem from="1574233904048" duration="20008000" />
-      <workItem from="1574406995582" duration="56000" />
-      <workItem from="1574407053165" duration="5848000" />
+      <workItem from="1574233904048" duration="19898000" />
+      <workItem from="1574275331449" duration="5266000" />
+      <workItem from="1574284620514" duration="31000" />
+      <workItem from="1574333924286" duration="10025000" />
+      <workItem from="1574367498096" duration="6267000" />
+      <workItem from="1574449812703" duration="294000" />
+      <workItem from="1574450130111" duration="10432000" />
     </task>
     <task id="LOCAL-00001" summary="Change password">
       <created>1573716999809</created>
@@ -129,13 +146,27 @@
       <updated>1574248269149</updated>
     </task>
     <task id="LOCAL-00008" summary="Nearly done. New TODOs and need to finish url managing on drinks and myDrinks">
-      <created>1574254659927</created>
+      <created>1574284579586</created>
       <option name="number" value="00008" />
       <option name="presentableId" value="LOCAL-00008" />
       <option name="project" value="LOCAL" />
-      <updated>1574254659927</updated>
+      <updated>1574284579586</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Nearly done. New TODOs and need to finish url managing on drinks and myDrinks">
+      <created>1574344396803</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1574344396803</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Finished many TODOs&#10;Still got to finish a few and get images to delete correctly">
+      <created>1574374649196</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1574374649196</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -160,7 +191,8 @@
     <MESSAGE value="Did pagination" />
     <MESSAGE value="Stuff in class" />
     <MESSAGE value="Nearly done. New TODOs and need to finish url managing on drinks and myDrinks" />
-    <option name="LAST_COMMIT_MESSAGE" value="Nearly done. New TODOs and need to finish url managing on drinks and myDrinks" />
+    <MESSAGE value="Finished many TODOs&#10;Still got to finish a few and get images to delete correctly" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished many TODOs&#10;Still got to finish a few and get images to delete correctly" />
   </component>
   <component name="XPathView.XPathProjectComponent">
     <history />

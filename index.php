@@ -1,8 +1,5 @@
 <?php
-/*
- * TODO make all pages 1005 height so footer is always at the bottom
- * TODO Add secondary recipes and do delete checking with them
- */
+
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING)??"index";
 class ExceptionPageNotFound extends Exception{};
 class ExceptionInvalidData extends Exception{};
@@ -52,6 +49,7 @@ switch ($page) {
             //Check which filters are in use
             $authorUrl = $filter->checkAuthorId();
             if (isset($_GET["filterFormSubmit"]) && $_SERVER['REQUEST_METHOD'] == 'GET') {
+                echo "<script>aleart('Pause 1');</script>";
                 $filter->checkFilterRadio();
                 $filter->checkSearchValue();
                 $filter->checkDate();
@@ -138,7 +136,7 @@ switch ($page) {
             require("views/$page.view.php");
 
         } catch (ExceptionPageNotFound $e) {
-            require("views/error.view.php");
+            header("Location: index.php?page=default");
         }
         break;
 
@@ -407,7 +405,7 @@ switch ($page) {
         $um = new UserModel($pdo);
 
         // Check if image file is a actual image or fake image
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {//TODO turn this into a UserModel function
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $target_dir = "img/avatars/";
             $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
             $uploadOk = 1;
@@ -444,7 +442,7 @@ switch ($page) {
                 if ($uploadOk == true) {
                     $path = $_FILES['fileToUpload']['name'];
                     $ext = pathinfo($path, PATHINFO_EXTENSION);
-                    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $_SESSION["id"] . "." . $ext)) {//TODO change image name
+                    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $_SESSION["id"] . "." . $ext)) {
                         //echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded.";
                     } else {
                         array_push($errorText, "Sorry, there was an error uploading your file.");
@@ -644,10 +642,15 @@ switch ($page) {
             header("Location: index.php?page=default"); //404
         }
 
+        $drink = $dm->getById($id);
+        //CHECK IF USER OWNS THIS POST OR IS ADMIN. IF NOT, KICK THEM
+        if($_SESSION['id'] != $drink->getAuthor_id() && $_SESSION['id'] != 1){
+            header('Location: index.php?page=index');
+            exit();
+        }
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             try {
-                $drink = $dm->getById($id);
-
                 $newDrink = $dm->getUpdateFormData($drink);
                 $errors = $dm->validate($newDrink);
                 $imageErrors = $dm->validateImage($newDrink);
@@ -661,14 +664,11 @@ switch ($page) {
                         array_push($errorText,"Failed to update post<br>");
                     }
                     if ($dm->uploadImage($newDrink)) {
-                        array_push($successText,"Uploaded image successfully<br>");
-                    } else {
-                        array_push($errorText,"Failed to upload image<br>");
+                        array_push($successText,"Uploaded new image successfully<br>");
                     }
                 } else {
                     throw new ExceptionInvalidData(implode("<br>", $errors));
                 }
-                echo "<script>alert(\"Updated content successfully\");</script>";
             }
             catch (ExceptionInvalidData $e) {
                 array_push($errorText,$e->getMessage());
@@ -693,6 +693,15 @@ switch ($page) {
 
     case "deleteDrink": case "undeleteDrink":
         try {
+            // We need to use sessions, so you should always start sessions using the below code.
+            session_start();
+            // If the user is not logged in redirect to the login page...
+            if (!isset($_SESSION['loggedin'])) {
+                header('Location: index.php?page=login');
+                exit();
+            }
+
+
             $connection = new DBConnect();
             $pdo = $connection->getConnection();
             $dm = new DrinkModel($pdo);
@@ -711,15 +720,24 @@ switch ($page) {
             }
             if (!in_array($id, $allIds)) {
                 header("Location: index.php?page=myDrinks");
-                break;
+                exit();
             }
+
+            $drink = $dm->getById($id);
+            //CHECK IF USER OWNS THIS POST OR IS ADMIN. IF NOT, KICK THEM
+            if($_SESSION['id'] != $drink->getAuthor_id() && $_SESSION['id'] != 1){
+                header('Location: index.php?page=index');
+                exit();
+            }
+
+            //If all's okay, set as deleted
             if($page == "deleteDrink") {
                 $dm->markAsDeleted($id);
             }
             if($page == "undeleteDrink") {
                 $dm->markAsUndeleted($id);
             }
-            header("Location: index.php?page=myDrinks");
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
 
         } catch (PDOException $e) {
             echo 'Error: ' . $e->getMessage();

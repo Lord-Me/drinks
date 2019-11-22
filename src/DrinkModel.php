@@ -131,13 +131,19 @@ class DrinkModel
             $ingredients = $drink->getIngredients();
             $content = $drink->getcontent();
             $image = $drink->getImage();
-            $stmt = $this->pdo->prepare('INSERT INTO recipes(author_id, category, title, ingredients, content, image) VALUES(:author_id, :category, :title, :ingredients, :content, :image)');
+            //Check if $image is empty due to that field not being mandatory. If empty, do not send and let database set default
+            if (!empty($image)) {
+                $stmt = $this->pdo->prepare('INSERT INTO recipes(author_id, category, title, ingredients, content, image) VALUES(:author_id, :category, :title, :ingredients, :content, :image)');
+                $stmt->bindParam(':image', $image, PDO::PARAM_STR);
+            }else{
+                $stmt = $this->pdo->prepare('INSERT INTO recipes(author_id, category, title, ingredients, content) VALUES(:author_id, :category, :title, :ingredients, :content)');
+            }
             $stmt->bindParam(':author_id', $author_id, PDO::PARAM_INT);
             $stmt->bindParam(':category', $category, PDO::PARAM_INT);
             $stmt->bindParam(':title', $title, PDO::PARAM_STR);
             $stmt->bindParam(':ingredients', $ingredients, PDO::PARAM_STR);
             $stmt->bindParam(':content', $content, PDO::PARAM_STR);
-            $stmt->bindParam(':image', $image, PDO::PARAM_STR);
+
             $stmt->execute();
             $stmt = null;
 
@@ -201,7 +207,7 @@ class DrinkModel
     /*
      * UPLOAD IMAGE TO FILES
      */
-    function uploadImage(Drink $drink):bool{//TODO change image name
+    function uploadImage(Drink $drink):bool{
         $target_dir = "img/";
         $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 
@@ -236,8 +242,8 @@ class DrinkModel
                 array_push($errors, "File is not an image.");
                 $uploadOk = false;
             }
-            // Check file size is less than 50KB
-            if ($_FILES["fileToUpload"]["size"] > 100000) {
+            // Check file size is less than 200KB
+            if ($_FILES["fileToUpload"]["size"] > 200000) {
                 array_push($errors, "Sorry, your file is too large.");
                 $uploadOk = false;
             }
@@ -246,7 +252,7 @@ class DrinkModel
                 array_push($errors, "Sorry, only JPG, JPEG & PNG files are allowed.");
                 $uploadOk = false;
             }
-            // Check if $uploadOk is set to 0 by an error
+
             // Check if $uploadOk is set to 0 by an error
             if ($uploadOk == false) {
                 array_push($errors, "Sorry, your file was not uploaded.");

@@ -23,6 +23,7 @@
         <p class="errorText"><?=implode("<br>", $errorText)?></p>
         New here? <a href="index.php?page=register">Create an account</a>
         <input type="submit" value="Login">
+        <button onclick="history.go(-1);">Back </button>
     </form>
 </div>
 </body>

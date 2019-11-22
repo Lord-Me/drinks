@@ -25,6 +25,7 @@
         <input type="email" name="email" placeholder="Email" id="email" required>
         <p class="errorText"><?=implode("<br>", $errorText)?></p>
         <input type="submit" value="Register">
+        <button onclick="history.go(-1);">Back </button>
     </form>
 </div>
 </body>

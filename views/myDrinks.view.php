@@ -43,7 +43,7 @@ if (isset($_SESSION['loggedin'])) {
                         </div>
                     </div>
                     <div class="row filterFormSubmit">
-                        <input type="submit" name="filterFormSubmit" value="Submit">
+                        <input class="btn btn-primary my-btn-xl mt-5" type="submit" name="filterFormSubmit" value="Filter">
                     </div>
                 </form>
             </div>
@@ -56,7 +56,7 @@ if (isset($_SESSION['loggedin'])) {
         <div class="row align-items-center">
             <div class="col-lg-12">
                 <div class="p-5 text-center">
-                    <a class="newDrinkButton" href="index.php?page=newDrink">Create New Drink</a>
+                    <a class="newDrinkButton btn btn-primary btn-xl" href="index.php?page=newDrink">Create New Drink</a>
                 </div>
             </div>
         </div>
