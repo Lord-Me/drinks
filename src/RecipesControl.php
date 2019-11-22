@@ -13,13 +13,14 @@ class recipesControl{
         $pages = [];
 
         foreach ($this->drinks as $drink) {
-            //Remove all posts not belonging to you in the case of the session not being the admin (1)
-            if($_SESSION["id"] != 1) {
-                if($drink->getAuthor_Id() == $_SESSION["id"]) { //Only add those which have the same ID as the current session
+            //Only add those which have the same ID as the current sesion
+            if(($_SESSION == NULL && $filterLocation != "myDrinks") || $_SESSION["id"] != 1 ) {
+                array_push($html, $drink->render($side, $filterLocation));  //Add them all
+            }else{
+                //Remove all posts not belonging to you in the case of the session not being the admin (1)
+                if($drink->getAuthor_Id() == $_SESSION["id"]) {
                     array_push($html, $drink->render($side, $filterLocation));
                 }
-            }else{
-                array_push($html, $drink->render($side, $filterLocation));  //Add them all
             }
             if(count($html) != 0){
                 //Remove all NULL fields which are the ones where view == 0

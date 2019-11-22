@@ -110,8 +110,10 @@ class Drink
 
         //See if user is logged in and if so, add the edit button
         $edit="";
-        if($this->getAuthor_id() == $_SESSION['id']){
-            $edit = " <a href='index.php?page=editDrink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a>";
+        if($_SESSION != NULL) {
+            if ($this->getAuthor_id() == $_SESSION['id']) {
+                $edit = " <a href='index.php?page=editDrink&id=" . $this->getId() . "' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a>";
+            }
         }
 
         $category="";

@@ -1,3 +1,19 @@
+/*Footer*/
+footer {
+    position: absolute;
+    width: 100%;
+}
+
+#uniqueFooter footer {
+    position: relative;
+    bottom: 0;
+}
+
+#uniqueFooter {
+    margin: 0;
+    max-height: 100px;
+}
+
 .fillerDiv {
     height: 10%;
 }

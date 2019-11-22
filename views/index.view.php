@@ -28,7 +28,6 @@ require('partials/banner.partials.php');
           <div class="p-5">
             <h2 class="display-4">Professional cocktails!</h2>
             <p>Professional cocktails, just like you'd find at the bar, now at your fingertips, just like they're served in the most prestigious of cocktail bars.</p>
-              <a href="index.php?page=#" class="btn btn-primary btn-xl rounded-pill mt-5">Learn More</a>
           </div>
         </div>
       </div>
@@ -47,7 +46,6 @@ require('partials/banner.partials.php');
           <div class="p-5">
             <h2 class="display-4">Original cocktails!</h2>
             <p>Original cocktails, made and designed by Greg himself, all based off popular video games, series, movies and more!</p>
-              <a href="index.php?page=#" class="btn btn-primary btn-xl rounded-pill mt-5">Learn More</a>
           </div>
         </div>
       </div>

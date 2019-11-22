@@ -56,9 +56,11 @@ if (isset($_SESSION['loggedin'])) {
 echo $view;
 ?>
 
-<?php
-require('partials/footer.partials.php');
-?>
+<div id="uniqueFooter" class="py-5">
+    <?php
+    require('partials/footer.partials.php');
+    ?>
+</div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="js/scrollify-master/jquery.scrollify.js"></script>
