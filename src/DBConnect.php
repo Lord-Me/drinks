@@ -1,5 +1,8 @@
 <?php
 
+namespace APP;
+
+use PDO;
 
 class DBConnect
 {

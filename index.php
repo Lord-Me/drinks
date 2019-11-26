@@ -1,21 +1,19 @@
 <?php
 
+use App\DBConnect;
+use App\RecipesControl;
+use App\Model\DrinkModel;
+use App\Model\UserModel;
+use App\Entity\Filter;
+use App\Exceptions\ExceptionPageNotFound;
+use App\Exceptions\ExceptionInvalidData;
+use App\Exceptions\ExceptionInvalidInput;
+use App\Exceptions\ExceptionUsernameExists;
+
+require __DIR__ . '/config/bootstrap.php';
+
+
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING)??"index";
-class ExceptionPageNotFound extends Exception{};
-class ExceptionInvalidData extends Exception{};
-class ExceptionInvalidInput extends Exception{};
-
-/*
- * REQUIRES
- */
-require("src/RecipesControl.php");
-require("src/DBConnect.php");
-require("src/DrinkModel.php");
-require("src/UserModel.php");
-require("src/Drink.php");
-require("src/User.php");
-require("src/Filter.php");
-
 switch ($page) {
     /*
      * INDEX
@@ -49,7 +47,6 @@ switch ($page) {
             //Check which filters are in use
             $authorUrl = $filter->checkAuthorId();
             if (isset($_GET["filterFormSubmit"]) && $_SERVER['REQUEST_METHOD'] == 'GET') {
-                echo "<script>aleart('Pause 1');</script>";
                 $filter->checkFilterRadio();
                 $filter->checkSearchValue();
                 $filter->checkDate();
@@ -233,9 +230,6 @@ switch ($page) {
             header('Location: index.php?page=index');
             exit();
         }
-
-        class ExceptionEmptyForm extends Exception{};
-        class ExceptionUsernameExists extends Exception{};
 
         /*
          * AUTHENTICATE REGISTER

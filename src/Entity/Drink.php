@@ -1,5 +1,10 @@
 <?php
 
+namespace App\Entity;
+
+use App\Model\UserModel;
+use App\Model\DrinkModel;
+use App\DBConnect;
 
 class Drink
 {
@@ -99,8 +104,6 @@ class Drink
      */
 
     public function render($sideNum, string $filterLocation){
-        require_once('UserModel.php');
-        require_once('DrinkModel.php');
         //get the username of auther by their ID
         $connection = new DBConnect();
         $pdo = $connection->getConnection();
@@ -186,7 +189,6 @@ class Drink
 
 
     public function renderPage(){
-        require_once('UserModel.php');
         //get the username of author by their ID
         $connection = new DBConnect();
         $pdo = $connection->getConnection();

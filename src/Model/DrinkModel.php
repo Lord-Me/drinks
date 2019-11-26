@@ -1,5 +1,11 @@
 <?php
 
+namespace App\Model;
+
+use PDO;
+use PDOException;
+use App\Entity\Drink;
+use App\Exceptions\ExceptionPageNotFound;
 
 class DrinkModel
 {
@@ -17,7 +23,7 @@ class DrinkModel
          */
     function getAll():array{
         $posts = $this->pdo->query('SELECT * FROM recipes');
-        return $posts->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Drink');
+        return $posts->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'App\Entity\Drink');
     }
 
     /*
@@ -26,7 +32,7 @@ class DrinkModel
     public function getById(int $id):Drink {
         $stmt = $this->pdo->prepare('SELECT * FROM recipes WHERE id = :id');
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Drink');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'App\Entity\Drink');
         $stmt->execute();
         $post = $stmt->fetch();
         if ($post==false)
@@ -38,7 +44,7 @@ class DrinkModel
     public function getAllByAuthorId(int $author_id):array {
         $stmt = $this->pdo->prepare('SELECT * FROM recipes WHERE author_id = :author_id');
         $stmt->bindParam(':author_id', $author_id, PDO::PARAM_INT);
-        return $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Drink');
+        return $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'App\Entity\Drink');
     }
 
     /*
@@ -50,7 +56,7 @@ class DrinkModel
         $stmt = $this->pdo->prepare('SELECT * FROM recipes WHERE category = :type_id');
         $stmt->bindParam(':type_id', $type_id, PDO::PARAM_INT);
         $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'Drink');
+        return $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'App\Entity\Drink');
     }
 
     /*

@@ -1,4 +1,9 @@
 <?php
+
+namespace App\Entity;
+
+use App\Model\DrinkModel;
+
 class Filter
 {
     private $filters = [
@@ -171,7 +176,7 @@ class Filter
         function sortFunction(Drink $a, Drink $b ) {
             return strtotime($b->getPublished_at()) - strtotime($a->getPublished_at());
         }
-        usort($this->drinks, "sortFunction");
+        usort($this->drinks, "sortFunction");//TODO this broken somehow
     }
 
     function getDrinks():array{

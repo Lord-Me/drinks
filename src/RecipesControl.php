@@ -1,5 +1,8 @@
 <?php
 
+namespace APP;
+
+use App\Entity\Drink;
 
 class recipesControl{
     private $drinks = [];

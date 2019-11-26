@@ -1,5 +1,10 @@
 <?php
 
+namespace App\Model;
+
+use PDO;
+use PDOException;
+use App\Entity\User;
 
 class UserModel{
     private $pdo;
@@ -14,13 +19,13 @@ class UserModel{
      */
     function getAll():array{
         $posts = $this->pdo->query('SELECT * FROM users');
-        return $posts->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'User');
+        return $posts->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'App\Entity\User');
     }
 
     function getUserById(int $id):User{
         $stmt = $this->pdo->prepare('SELECT * FROM users WHERE id = :id');
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'User');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'App\Entity\User');
         $stmt->execute();
         $user = $stmt->fetch();
         if(!empty($user)){
@@ -33,7 +38,7 @@ class UserModel{
     function getUserByName(string $username):User{
         $stmt = $this->pdo->prepare('SELECT * FROM users WHERE username = :username');
         $stmt->bindParam(':username', $username, PDO::PARAM_STR);
-        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'User');
+        $stmt->setFetchMode(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'App\Entity\User');
         $stmt->execute();
         $user = $stmt->fetch();
         if(!empty($user)){
