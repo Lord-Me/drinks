@@ -5,12 +5,32 @@ use App\RecipesControl;
 use App\Model\DrinkModel;
 use App\Model\UserModel;
 use App\Entity\Filter;
+use App\Core\Router;
+use App\Core\Request;
 use App\Exceptions\ExceptionPageNotFound;
 use App\Exceptions\ExceptionInvalidData;
 use App\Exceptions\ExceptionInvalidInput;
 use App\Exceptions\ExceptionUsernameExists;
 
 require __DIR__ . '/config/bootstrap.php';
+
+$di = new \App\Utils\DependencyInjector();
+
+$db = new DBConnect();
+$di->set('PDO', $db->getConnection());
+
+
+$request = new Request();
+
+//var_dump($request);
+$route = new Router($di);
+$route->route($request);
+
+$action = $_GET['action'] ?? "indexARR";
+
+//echo $_SERVER['REQUEST_URI'];
+//echo $_SERVER['QUERY_STRING'];
+
 
 
 $page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING)??"index";
