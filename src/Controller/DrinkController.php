@@ -26,18 +26,40 @@ class DrinkController extends AbstractController
         return "";
     }
 
+    public function pageNotFound(){
+        require("views/error.view.php");
+    }
+
     public function showById($id)
     {
         try {
-            $dm = new DrinkModel($this->db);
-            $drink = $dm->getById($id);
-        } catch (Exception $e) {
-            $message = $e->getMessage();
+            session_start();
+            //Connect to the database
+            $connection = new DBConnect();
+
+            $pdo = $connection->getConnection();
+
+            //create new drink via the Model
+            $dm = new DrinkModel($pdo);
+
+            if ($id == NULL) {
+                throw new ExceptionPageNotFound();
+            }
+
+            //fetch the drink with the corresponding id
+            $recipe = $dm->getById($id);
+
+
+            //send it to the view
+            $view = $recipe->renderPage();
+            require("views/drink.view.php");
+
+        } catch (ExceptionPageNotFound $e) {
+            header("Location: /drinks/pageNotFound");
         }
-        require("views/show.view.php");
     }
 
-    public function showAllDrinks(){
+    public function showDrinks($pagi){//TODO pagi
         try {
             session_start();
             //Create a new object to contain all the drinks

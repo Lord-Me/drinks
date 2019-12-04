@@ -115,7 +115,7 @@ class Drink
         $edit="";
         if($_SESSION != NULL) {
             if ($this->getAuthor_id() == $_SESSION['id']) {
-                $edit = " <a href='index.php?page=editDrink&id=" . $this->getId() . "' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a>";
+                $edit = " <a href='/drinks/admin/edit/" . $this->getId() . "' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a>";
             }
         }
 
@@ -137,7 +137,7 @@ class Drink
             }
             if($this->view == 1) {
                 $html = '';
-                $html .= "<section class='scroll'>";
+                $html .= "<section>";
                 if ($sideNum != 0) {
                     $html .= "<div class='fillerDiv'></div>";
                 }
@@ -146,14 +146,14 @@ class Drink
                             <div class='row align-items-center'>
                                 <div class='col-lg-6 " . $side1 . "'>
                                     <div class='p-5'>
-                                        <img class='img-fluid rounded-circle' src='img/" . $this->getImage() . "' alt='" . $this->getImage() . "'>
+                                        <img class='img-fluid rounded-circle' src='/drinks/img/" . $this->getImage() . "' alt='" . $this->getImage() . "'>
                                     </div>
                                 </div>
                                 <div class='col-lg-6 " . $side2 . "'>
                                     <div class='p-5'>
                                         <h2 class='display-4'>" . $this->getTitle() . "</h2>
                                         <p>Author: " . ucfirst($username) . $edit ."</p>
-                                        <a href='index.php?page=drink&id=" . $this->getId() . "' class='btn btn-primary btn-xl rounded-pill mt-5'>Make This Drink</a>
+                                        <a href='ourDrinks/drink/" . $this->getId() . "' class='btn btn-primary btn-xl rounded-pill mt-5'>Make This Drink</a>
                                     </div>
                                 </div>
                             </div>
@@ -165,22 +165,22 @@ class Drink
             $html = '';
             if($this->view == 1){ //If set to normal
                 $html .="<tr>
-                    <td><a href='index.php?page=drink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsTitle'>".$this->getTitle()."</a></td>
+                    <td><a href='/drinks/ourDrinks/drink/".$this->getId()."' class='myDrinksButtons myDrinksButtonsTitle'>".$this->getTitle()."</a></td>
                     <td>".ucfirst($username)."</td>
                     <td>".$category."</td>
                     <td>".$this->getPublished_at()."</td>
-                    <td><a href='index.php?page=editDrink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a></td>
-                    <td><a href='index.php?page=deleteDrink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsDelete'>Delete</a></td>
+                    <td><a href='/drinks/admin/edit/".$this->getId()."' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a></td>
+                    <td><a href='/drinks/admin/edit/".$this->getId()."' class='myDrinksButtons myDrinksButtonsDelete'>Delete</a></td>
                 </tr>";
             }
             if($this->view == 0){ //if set as deleted
                 $html .="<tr>
-                    <td><a href='index.php?page=drink&id=".$this->getId()."' class='myDrinksButtonsRed myDrinksButtonsTitle'>".$this->getTitle()."</a></td>
+                    <td><a href='/drinks/ourDrinks/drink/".$this->getId()."' class='myDrinksButtonsRed myDrinksButtonsTitle'>".$this->getTitle()."</a></td>
                     <td class='myDrinksButtonsRed'>".ucfirst($username)."</td>
                     <td class='myDrinksButtonsRed'>".$category."</td>
                     <td class='myDrinksButtonsRed'>".$this->getPublished_at()."</td>
-                    <td><a href='index.php?page=editDrink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a></td>
-                    <td><a href='index.php?page=undeleteDrink&id=".$this->getId()."' class='myDrinksButtons myDrinksButtonsUndelete'>Undelete</a></td>
+                    <td><a href='/drinks/admin/edit/".$this->getId()."' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a></td>
+                    <td><a href='/drinks/admin/delete/".$this->getId()."' class='myDrinksButtons myDrinksButtonsUndelete'>Undelete</a></td>
                 </tr>";
             }
         }
@@ -200,7 +200,7 @@ class Drink
         $edit="";
         if(!empty($_SESSION['id'])) {
             if ($this->getAuthor_id() == $_SESSION['id']) {
-                $edit = " <a href='index.php?page=editDrink&id=" . $this->getId() . "' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a>";
+                $edit = " <a href='/drinks/admin/edit/" . $this->getId() . "' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a>";
             }
         }
 
@@ -219,7 +219,7 @@ class Drink
                         <div class='row align-items-center'>
                             <div class='col-lg-6 order-lg-2'>
                                 <div class='p-5'>
-                                    <img class='img-fluid rounded-circle' src='img/".$this->getImage()."' alt='".$this->getImage()."'>
+                                    <img class='img-fluid rounded-circle' src='/drinks/img/".$this->getImage()."' alt='".$this->getImage()."'>
                                 </div>
                             </div>
                             <div class='col-lg-6 order-lg-1'>
@@ -233,7 +233,7 @@ class Drink
                                 <table>
                                     <tr>
                                         <a href='index.php?page=drinks&author=".$this->getAuthor_id()."&pagi=0'>
-                                            Author: ".ucfirst($username)."<img src='img/avatars/".$userAvatar."' alt='userImage' height='30' width='30' class='rounded-circle'>
+                                            Author: ".ucfirst($username)."<img src='/drinks/img/avatars/".$userAvatar."' alt='userImage' height='30' width='30' class='rounded-circle'>
                                         </a> - ".$edit."
                                     </tr>
                                     <tr>

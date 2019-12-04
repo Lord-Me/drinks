@@ -39,122 +39,18 @@ switch ($page) {
      * INDEX
      */
     case "index":
-        require("views/$page.view.php");
         break;
 
     /*
      * DRINKS
      */
     case "drinks":
-        try {
-            session_start();
-            //Create a new object to contain all the drinks
-            $recipeList = new RecipesControl();
-
-            //Connect to the database
-
-            $connection = new DBConnect();
-            $pdo = $connection->getConnection();
-
-            //Using the Model for our drinks, I get all of the drinks with the same category
-            $dm = new DrinkModel($pdo);
-
-            /*
-             * FILTERS
-             */
-            $filter = new Filter(null);
-
-            //Check which filters are in use
-            $authorUrl = $filter->checkAuthorId();
-            if (isset($_GET["filterFormSubmit"]) && $_SERVER['REQUEST_METHOD'] == 'GET') {
-                $filter->checkFilterRadio();
-                $filter->checkSearchValue();
-                $filter->checkDate();
-            } else {
-                $filter->setAll();  //if no filters are in use, set filter to all
-            }
-
-            //Run filters
-            $filter->runFilter($dm);
-            $filter->runSort();
-
-            //retrieve the filtered drinks
-            $drinks = $filter->getDrinks();
-            /*
-             * /FILTERS
-             */
-
-            //Send each array entry to the object recipeList to be stored
-            foreach ($drinks as $drink) {
-                $recipeList->add($drink);
-            }
-
-            //get the url and make a query string and remove pagi
-            $str = $_SERVER['QUERY_STRING'];
-            parse_str($str, $queryArray);
-
-            if(!array_key_exists("pagi", $queryArray)){
-                $addPagi = ["pagi" => 1];
-                $queryArray = array_merge($queryArray, $addPagi);
-            }
-            //Get the current pagination page number
-            if (!is_numeric($queryArray["pagi"]) || $queryArray["pagi"] < 1 || $queryArray["pagi"] == NULL) {
-                $currentPagi=1;
-            }else {
-                $currentPagi = $queryArray["pagi"];
-                }
-
-            //Turn each array entry into an array of all the pages(pagination) with html sting. FilterLocation is the page the filter form is on
-            $pages = $recipeList->render($currentPagi, 5, "drinks", $queryArray);
-
-            //Check if currentPagi is over the number of pages. If so, set is as last page
-            if ($queryArray["pagi"] > count($pages)) {
-                $currentPagi = count($pages);
-            }
-            $thisPage = $pages[$currentPagi-1];
-
-            $view = implode("", $thisPage);
-            require("views/$page.view.php");
-
-        } Catch (PDOException $err) {
-            // Mostrem un missatge genèric d'error.
-            echo "Error: executant consulta SQL.";
-        }
-
         break;
 
     /*
      * DRINK
      */
     case "drink":
-        try {
-            session_start();
-            //Connect to the database
-            $connection = new DBConnect();
-
-            $pdo = $connection->getConnection();
-
-            //create new drink via the Model
-            $dm = new DrinkModel($pdo);
-
-            //buscamos el id del segundo query del url. Si no enquentra nada, lanza una exception y va directo a la pagina 404
-            $id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_STRING) ?? NULL;
-
-            if ($id == NULL) {
-                throw new ExceptionPageNotFound();
-            }
-
-            //fetch the drink with the corresponding id
-            $recipe = $dm->getById($id);
-
-
-            //send it to the view
-            $view = $recipe->renderPage();
-            require("views/$page.view.php");
-
-        } catch (ExceptionPageNotFound $e) {
-            header("Location: index.php?page=default");
-        }
         break;
 
     /*

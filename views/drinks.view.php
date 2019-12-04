@@ -62,7 +62,7 @@ echo $view;
     ?>
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="js/scrollify-master/jquery.scrollify.js"></script>
 <script>
     $(document).ready(function() {
@@ -70,6 +70,6 @@ echo $view;
             section : ".scroll",
         });
     });
-</script>
+</script>-->
 </body>
 </html>

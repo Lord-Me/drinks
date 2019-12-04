@@ -3,20 +3,20 @@
     "controller": "Drink",
     "method": "index"
   },
-  "drinks/ourDrinks": {
+  "drinks/pageNotFound": {
     "controller": "Drink",
-    "method":"showAllDrinks"
+    "method":"pageNotFound"
   },
-  "drinks/ourDrinks/:page": {
+  "drinks/ourDrinks/:pagi": {
     "controller": "Drink",
-    "method": "getAllWithPage",
+    "method":"showDrinks",
     "params": {
-      "page": "number"
+      "id": "number"
     }
   },
-  "drinks/posts/tag/:id": {
+  "drinks/ourDrinks/drink/:id": {
     "controller": "Drink",
-    "method": "showByTag",
+    "method": "showById",
     "params": {
       "id": "number"
     }

@@ -106,8 +106,8 @@ class recipesControl{
         $backUrl = $url."&pagi=".($currentPagi-1);
 
         $buttons = $this->createButtons(count($pages), $url);
-        $forward = "<a href='index.php?".$forwardUrl."' class='pagiButton pagiForward'><i class='fas fa-arrow-right'></i></a>";
-        $back = "<a href='index.php?".$backUrl."' class='pagiButton pagiBack'><i class='fas fa-arrow-left'></i></a>";
+        $forward = "<a href='ourDrinks?".$forwardUrl."' class='pagiButton pagiForward'><i class='fas fa-arrow-right'></i></a>";
+        $back = "<a href='ourDrinks?".$backUrl."' class='pagiButton pagiBack'><i class='fas fa-arrow-left'></i></a>";
         $pagiButtons="";
         for($i=0; $i<count($pages); $i++) {
             $pagiButtons .= "<section>
@@ -147,7 +147,7 @@ class recipesControl{
         $buttons="";
 
         for($i=0; $i<$amount; $i++){
-            $buttons .= "<a href='index.php?".$url."&pagi=".($i+1)."' class='pagiButton'>".($i+1)."</a>";
+            $buttons .= "<a href='ourDrinks".$url."&pagi=".($i+1)."' class='pagiButton'>".($i+1)."</a>";
         }
         return $buttons;
     }
