@@ -153,7 +153,7 @@ class Drink
                                     <div class='p-5'>
                                         <h2 class='display-4'>" . $this->getTitle() . "</h2>
                                         <p>Author: " . ucfirst($username) . $edit ."</p>
-                                        <a href='ourDrinks/drink/" . $this->getId() . "' class='btn btn-primary btn-xl rounded-pill mt-5'>Make This Drink</a>
+                                        <a href='/drinks/ourDrinks/drink/" . $this->getId() . "' class='btn btn-primary btn-xl rounded-pill mt-5'>Make This Drink</a>
                                     </div>
                                 </div>
                             </div>

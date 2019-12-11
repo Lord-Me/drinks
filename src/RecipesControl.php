@@ -10,7 +10,7 @@ class recipesControl{
     /*
      * RENDER EACH DRINK ON LIST PAGE
      */
-    public function render(int $currentPagi, int $drinksPerPage, string $filterLocation, array $queryArray):array {
+    public function render(int $currentPagi, int $drinksPerPage, string $filterLocation):array {
         $html = [];
         $side = 0;
         $pages = [];
@@ -80,7 +80,7 @@ class recipesControl{
         }
 
         //paginate everything
-        $finalArray = $this->paginate($pages, $currentPagi, $queryArray);
+        $finalArray = $this->paginate($pages, $currentPagi);
         return $finalArray;
 
     }
@@ -88,9 +88,9 @@ class recipesControl{
     /*
      * Add pagination buttons to end
      */
-    function paginate(array $pages, int $currentPagi, array $queryArray):array{
+    function paginate(array $pages, int $currentPagi):array{
 //SORT OUT URL
-        unset($queryArray['pagi']);
+        /*unset($queryArray['pagi']);
         //MAKE URL A STRING
         $keys = array_keys($queryArray);
         $i = 0;
@@ -99,15 +99,15 @@ class recipesControl{
             $url .= $keys[$i] . "=" . $item . "&";
             $i++;
         }
-        $url = substr($url, 0, -1);
+        $url = substr($url, 0, -1);*/
 // -SORT OUT URL
 
-        $forwardUrl = $url."&pagi=".($currentPagi+1);
-        $backUrl = $url."&pagi=".($currentPagi-1);
+        $forwardUrl = "/drinks/ourDrinks/".($currentPagi+1);
+        $backUrl = "/drinks/ourDrinks/".($currentPagi-1);
 
-        $buttons = $this->createButtons(count($pages), $url);
-        $forward = "<a href='ourDrinks?".$forwardUrl."' class='pagiButton pagiForward'><i class='fas fa-arrow-right'></i></a>";
-        $back = "<a href='ourDrinks?".$backUrl."' class='pagiButton pagiBack'><i class='fas fa-arrow-left'></i></a>";
+        $buttons = $this->createButtons(count($pages));
+        $forward = "<a href='".$forwardUrl."' class='pagiButton pagiForward'><i class='fas fa-arrow-right'></i></a>";
+        $back = "<a href='".$backUrl."' class='pagiButton pagiBack'><i class='fas fa-arrow-left'></i></a>";
         $pagiButtons="";
         for($i=0; $i<count($pages); $i++) {
             $pagiButtons .= "<section>
@@ -143,11 +143,11 @@ class recipesControl{
     /*
      * Generate the bottom buttons
      */
-    function createButtons(int $amount, string $url):string{
+    function createButtons(int $amount):string{
         $buttons="";
 
         for($i=0; $i<$amount; $i++){
-            $buttons .= "<a href='ourDrinks".$url."&pagi=".($i+1)."' class='pagiButton'>".($i+1)."</a>";
+            $buttons .= "<a href='/drinks/ourDrinks/".($i+1)."' class='pagiButton'>".($i+1)."</a>";
         }
         return $buttons;
     }

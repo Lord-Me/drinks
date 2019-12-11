@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\Drink;
 use App\DBConnect;
+use PDOException;
 use App\RecipesControl;
 use App\Model\DrinkModel;
 use App\Model\UserModel;
@@ -16,8 +17,11 @@ use App\Exceptions\ExceptionInvalidData;
 use App\Exceptions\ExceptionInvalidInput;
 use App\Exceptions\ExceptionUsernameExists;
 
-class UserControllerController extends AbstractController
+class UserController extends AbstractController
 {
+    /*
+     * LOGIN
+     */
 
     public function login(){
         $errorText = [];//HAS ERROR DISPLAY
@@ -56,7 +60,7 @@ class UserControllerController extends AbstractController
                         $_SESSION['name'] = $_POST['username'];
                         $_SESSION['id'] = $user->getId();
                         $_SESSION['role'] = $user->getRole();
-                        header('Location: index.php?page=index');
+                        header('Location: /drinks');
                     } else {
                         array_push($errorText, 'Incorrect password!');
                     }
@@ -69,6 +73,83 @@ class UserControllerController extends AbstractController
         }
 
         require("views/login.view.php");
+    }
+
+    /*
+     * LOGOUT
+     */
+
+    public function logout(){
+        session_start();
+        session_destroy();
+        // Redirect to the login page:
+        header('Location: /drinks');
+    }
+
+    /*
+     * REGISTER
+     */
+
+    public function register(){
+        $errorText = []; //Contains error messages
+        session_start();
+        if (isset($_SESSION['loggedin'])) {
+            header('Location: /drinks');
+            exit();
+        }
+
+        /*
+         * AUTHENTICATE REGISTER
+         */
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $connection = new DBConnect();
+            $pdo = $connection->getConnection();
+            $um = new UserModel($pdo);
+
+            try {
+                $newUser = $um->getInsertFormData();
+                $errors = $um->validate($newUser);
+                if (empty($errors)) {
+                    // We need to check if the account with that username exists.
+                    try {
+                        $user = $um->getUserByName($_POST['username']);
+                        // Username already exists as it didn't throw an empty error
+                        throw new ExceptionUsernameExists();
+                    } catch (PDOException $e) {
+                        // Username doesnt exists, insert new account
+                        if ($um->insert($newUser)) {
+                            header('Location: /drinks/user/successfulRegister');
+                        } else {
+                            // Something is wrong with the sql statement, check to make sure accounts table exists with all 3 fields.
+                            throw new PDOException('Could not prepare statement!');
+                        }
+                    }
+                } else {
+                    throw new ExceptionInvalidData(implode("<br>", $errors));
+                }
+            } catch (ExceptionInvalidData $e) {
+                $errorText =array_merge($errorText, $e->getMessage());
+            } catch (ExceptionUsernameExists $e) {
+                array_push($errorText, 'Username exists, please choose another!');
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+            }
+        }
+
+        require("views/register.view.php");
+    }
+
+    /*
+     * SUCCESSFUL REGISTER
+     */
+    public function successfulRegister(){
+        session_start();
+        if (isset($_SESSION['loggedin'])) {
+            header('Location: /drinks');
+            exit();
+        }
+
+        require("views/successfulRegister.view.php");
     }
 
 }

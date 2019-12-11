@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\Drink;
 use App\DBConnect;
+use PDOException;
 use App\RecipesControl;
 use App\Model\DrinkModel;
 use App\Model\UserModel;
@@ -59,7 +60,7 @@ class DrinkController extends AbstractController
         }
     }
 
-    public function showDrinks($pagi){//TODO pagi
+    public function showDrinks($currentPagi){
         try {
             session_start();
             //Create a new object to contain all the drinks
@@ -104,25 +105,28 @@ class DrinkController extends AbstractController
             }
 
             //get the url and make a query string and remove pagi
-            $str = $_SERVER['QUERY_STRING'];
+            /*$str = $_SERVER['QUERY_STRING'];
             parse_str($str, $queryArray);
 
             if(!array_key_exists("pagi", $queryArray)){
                 $addPagi = ["pagi" => 1];
                 $queryArray = array_merge($queryArray, $addPagi);
-            }
+            }*/
             //Get the current pagination page number
-            if (!is_numeric($queryArray["pagi"]) || $queryArray["pagi"] < 1 || $queryArray["pagi"] == NULL) {
+            /*if (!is_numeric($queryArray["pagi"]) || $queryArray["pagi"] < 1 || $queryArray["pagi"] == NULL) {
                 $currentPagi=1;
             }else {
                 $currentPagi = $queryArray["pagi"];
+            }*/
+            if($currentPagi < 1 || !isset($currentPagi)){
+                $currentPagi = 1;
             }
 
             //Turn each array entry into an array of all the pages(pagination) with html sting. FilterLocation is the page the filter form is on
-            $pages = $recipeList->render($currentPagi, 5, "drinks", $queryArray);
+            $pages = $recipeList->render($currentPagi, 5, "drinks");
 
             //Check if currentPagi is over the number of pages. If so, set is as last page
-            if ($queryArray["pagi"] > count($pages)) {
+            if ($currentPagi > count($pages)) {
                 $currentPagi = count($pages);
             }
             $thisPage = $pages[$currentPagi-1];

@@ -3,6 +3,7 @@
 namespace APP;
 
 use PDO;
+use PDOException;
 
 class DBConnect
 {

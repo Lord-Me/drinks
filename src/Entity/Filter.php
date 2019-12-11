@@ -171,12 +171,13 @@ class Filter
         }
     }
 
+    function sortFunction(Drink $a, Drink $b ) {
+        return strtotime($b->getPublished_at()) - strtotime($a->getPublished_at());
+    }
     function runSort():void{
-        //Order from newest to oldest
-        function sortFunction(Drink $a, Drink $b ) {
-            return strtotime($b->getPublished_at()) - strtotime($a->getPublished_at());
-        }
-        usort($this->drinks, "sortFunction");//TODO this broken somehow
+        /*-- Order from newest to oldest --*/
+
+        usort($this->drinks, "sortFunction");
     }
 
     function getDrinks():array{

@@ -7,7 +7,7 @@
     "controller": "Drink",
     "method":"pageNotFound"
   },
-  "drinks/ourDrinks/:pagi": {
+  "drinks/ourDrinks/:id": {
     "controller": "Drink",
     "method":"showDrinks",
     "params": {
@@ -21,37 +21,46 @@
       "id": "number"
     }
   },
-  "drinks/post/:id": {
-    "controller": "Drink",
-    "method": "showById",
-    "params": {
-      "id": "number"
-    }
-  },
-  "drinks/posts/search": {
-    "controller": "Drink",
-    "method": "search"
-  },
   "drinks/login": {
     "controller": "User",
     "method": "login"
   },
-  "drinks/admin/post/create": {
-    "controller": "Drink",
-    "method": "create"
+  "drinks/user/logout": {
+    "controller": "User",
+    "method": "logout"
   },
-  "drinks/admin/post/update/:id": {
+  "drinks/register": {
+    "controller": "User",
+    "method": "register"
+  },
+  "drinks/user/successfulRegister": {
+  "controller": "User",
+  "method": "successfulRegister"
+  },
+  "drinks/user/profile": {
+    "controller": "User",
+    "method": "profile"
+  },
+  "drinks/user/myDrinks/:id": {
     "controller": "Drink",
-    "method": "update",
+    "method": "myDrinks",
     "params": {
       "id": "number"
     }
   },
-  "drinks/admin/post/delete/:id": {
+  "drinks/user/newDrink": {
     "controller": "Drink",
-    "method": "edit",
+    "method": "newDrink"
+  },
+  "drinks/user/myDrinks/editDrink/:id": {
+    "controller": "Drink",
+    "method": "editDrink",
     "params": {
       "id": "number"
     }
+  },
+  "drinks/user/admin/users": {
+    "controller": "User",
+    "method": "userManagement"
   }
 }
