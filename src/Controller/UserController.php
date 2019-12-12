@@ -23,7 +23,8 @@ class UserController extends AbstractController
      * LOGIN
      */
 
-    public function login(){
+    public function login()
+    {
         $errorText = [];//HAS ERROR DISPLAY
         session_start();
         if (isset($_SESSION['loggedin'])) {
@@ -67,7 +68,7 @@ class UserController extends AbstractController
                 } else {
                     array_push($errorText, 'Incorrect username!');
                 }
-            }catch (PDOException $e){
+            } catch (PDOException $e) {
                 array_push($errorText, 'Incorrect username!');
             }
         }
@@ -79,7 +80,8 @@ class UserController extends AbstractController
      * LOGOUT
      */
 
-    public function logout(){
+    public function logout()
+    {
         session_start();
         session_destroy();
         // Redirect to the login page:
@@ -90,7 +92,8 @@ class UserController extends AbstractController
      * REGISTER
      */
 
-    public function register(){
+    public function register()
+    {
         $errorText = []; //Contains error messages
         session_start();
         if (isset($_SESSION['loggedin'])) {
@@ -128,7 +131,7 @@ class UserController extends AbstractController
                     throw new ExceptionInvalidData(implode("<br>", $errors));
                 }
             } catch (ExceptionInvalidData $e) {
-                $errorText =array_merge($errorText, $e->getMessage());
+                $errorText = array_merge($errorText, $e->getMessage());
             } catch (ExceptionUsernameExists $e) {
                 array_push($errorText, 'Username exists, please choose another!');
             } catch (PDOException $e) {
@@ -142,7 +145,8 @@ class UserController extends AbstractController
     /*
      * SUCCESSFUL REGISTER
      */
-    public function successfulRegister(){
+    public function successfulRegister()
+    {
         session_start();
         if (isset($_SESSION['loggedin'])) {
             header('Location: /drinks');
@@ -155,7 +159,8 @@ class UserController extends AbstractController
     /*
      * USER MANAGEMENT
      */
-    public function userManagement(){
+    public function userManagement()
+    {
         session_start();
         if (!isset($_SESSION['loggedin'])) {
             header('Location: /drinks/login');
@@ -172,7 +177,8 @@ class UserController extends AbstractController
     /*
      * USER PROFILE
      */
-    public function profile(){
+    public function profile()
+    {
         // We need to use sessions, so you should always start sessions using the below code.
         session_start();
         // If the user is not logged in redirect to the login page...
@@ -203,7 +209,8 @@ class UserController extends AbstractController
     /*
      * CHANGE PASSWORD
      */
-    public function changePassword(){
+    public function changePassword()
+    {
         $errorText = [];//Error management is used here
         // We need to use sessions, so you should always start sessions using the below code.
         session_start();
@@ -256,7 +263,8 @@ class UserController extends AbstractController
     /*
      * SUCCESSFUL PASSWORD CHANGE
      */
-    public function successfulPasswordChange(){
+    public function successfulPasswordChange()
+    {
         session_start();
         session_destroy();
 
@@ -266,8 +274,9 @@ class UserController extends AbstractController
     /*
      * CHANGE AVATAR
      */
-    public function changeAvatar(){
-        $errorText=[];//error text used here
+    public function changeAvatar()
+    {
+        $errorText = [];//error text used here
         // We need to use sessions, so you should always start sessions using the below code.
         session_start();
         // If the user is not logged in redirect to the login page...
@@ -282,7 +291,7 @@ class UserController extends AbstractController
 
         // Check if image file is a actual image or fake image
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $target_dir = "/drinks/img/avatars/";
+            $target_dir = __DIR__ . "/../../../drinks/img/avatars/";
             $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
             $uploadOk = true;
             $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
@@ -309,7 +318,7 @@ class UserController extends AbstractController
             // Check if $uploadOk is set to 0 by an error
             if ($uploadOk == true) {
                 // Check if file already exists and delete it
-                foreach (glob("/drinks/img/avatars/".$_SESSION["id"]."*") as $filename) {
+                foreach (glob("/drinks/img/avatars/" . $_SESSION["id"] . "*") as $filename) {
                     unlink($filename);
                 }
 
@@ -327,7 +336,7 @@ class UserController extends AbstractController
                 $user = $um->getUserByName($_SESSION['name']);
 
                 $newUser = $um->getUpdateFormData($user);
-                $newUser->setAvatar($user->getId() .".". $ext);
+                $newUser->setAvatar($user->getId() . "." . $ext);
 
                 $userToEdit = $user->getId();
                 if ($um->update($newUser, $userToEdit)) {
