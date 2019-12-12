@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <title>Register</title>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
-    <link href="css/registerStyle.css" rel="stylesheet" type="text/css">
+    <link href="/drinks/css/registerStyle.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="register">
@@ -17,6 +17,6 @@
 </html>
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    header('Location: index.php?page=login');
+    header('Location: /drinks/login');
 }
 ?>

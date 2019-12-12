@@ -17,7 +17,7 @@ if (isset($_SESSION['loggedin'])) {
     <div class="container">
         <div  class="row align-items-center text-center">
             <div class='col-lg-12'>
-                <form action="index.php?page=myDrinks" method="get" id="filterContainer" class="filterForm">
+                <form action="/drinks/user/myDrinks" method="get" id="filterContainer" class="filterForm">
                     <input type="hidden" name="page" value="<?=$_GET["page"] ?>">
                     <div class="row">
                         <div class="col-lg-6 order-lg-1 filterFormLeft">

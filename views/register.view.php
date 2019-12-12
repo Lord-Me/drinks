@@ -10,7 +10,7 @@
 <body>
 <div class="register">
     <h1>Register</h1>
-    <form action="index.php?page=register" method="post" autocomplete="off">
+    <form action="/drinks/register" method="post" autocomplete="off">
         <label for="username">
             <i class="fas fa-user"></i>
         </label>

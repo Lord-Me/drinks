@@ -41,6 +41,18 @@
     "controller": "User",
     "method": "profile"
   },
+  "drinks/user/profile/changePassword": {
+    "controller": "User",
+    "method": "changePassword"
+  },
+  "drinks/user/profile/successfulPasswordChange": {
+    "controller": "User",
+    "method": "successfulPasswordChange"
+  },
+  "drinks/user/profile/changeAvatar": {
+    "controller": "User",
+    "method": "changeAvatar"
+  },
   "drinks/user/myDrinks/:id": {
     "controller": "Drink",
     "method": "myDrinks",

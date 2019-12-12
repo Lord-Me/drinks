@@ -57,17 +57,6 @@ switch ($page) {
      * GESTION DE USUARIOS
      */
     case "users":
-        session_start();
-        if (!isset($_SESSION['loggedin'])) {
-            header('Location: index.php?page=login');
-            exit();
-        }
-        if ($_SESSION['role'] != 1) {
-            header('Location: index.php?page=index');
-            exit();
-        }
-        $view = "<br><br><br>Coming soon...";
-        require("views/$page.view.php");
         break;
 
     /*
@@ -99,177 +88,24 @@ switch ($page) {
      * USER PAGE
      */
     case "user":
-        // We need to use sessions, so you should always start sessions using the below code.
-        session_start();
-        // If the user is not logged in redirect to the login page...
-        if (!isset($_SESSION['loggedin'])) {
-            header('Location: index.php?page=login');
-            exit();
-        }
-
-
-        $connection = new DBConnect();
-        $pdo = $connection->getConnection();
-
-        $um = new UserModel($pdo);
-
-        try {
-            $connection = new DBConnect();
-            $pdo = $connection->getConnection();
-            $um = new UserModel($pdo);
-
-            $userInfo = $um->getUserById($_SESSION['id']);
-        } catch (PDOException $err) {
-            echo "Error";
-        }
-
-        require("views/profile.view.php");
         break;
 
     /*
      * CHANGE PASSWORD
      */
     case "changePassword":
-        $errorText = [];//Error management is used here
-        // We need to use sessions, so you should always start sessions using the below code.
-        session_start();
-        // If the user is not logged in redirect to the login page...
-        if (!isset($_SESSION['loggedin'])) {
-            header('Location: index.php?page=login');
-            exit();
-        }
-
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            try {
-                $connection = new DBConnect();
-                $pdo = $connection->getConnection();
-                $um = new UserModel($pdo);
-
-                $user = $um->getUserByName($_SESSION['name']);
-
-                //See if the password is the correct one
-                if (!password_verify($_POST['currentPassword'], $user->getPassword())) {
-                    throw new ExceptionInvalidInput('Current password is incorrect');
-                }
-
-                if (password_verify($_POST['password'], $user->getPassword())) {
-                    throw new ExceptionInvalidInput('You must use a new password');
-                }
-
-                $newUser = $um->getUpdateFormData($user);
-                $errors = $um->validate($newUser);
-                if (empty($errors)) {
-                    $userToEdit = $user->getId();
-                    if ($um->update($newUser, $userToEdit)) {
-                        header("Location: index.php?page=successfulPasswordChange");
-                    } else {
-                        array_push($errorText, "Failed to update password");
-                    }
-                } else {
-                    throw new ExceptionInvalidData(implode("<br>", $errors));
-                }
-
-            } catch (ExceptionInvalidInput $e) {
-                array_push($errorText, $e->getMessage());
-            } catch (ExceptionInvalidData $e) {
-                array_push($errorText, $e->getMessage());
-            }
-        }
-
-        require("views/$page.view.php");
         break;
 
     /*
      * successfulPasswordChange
      */
     case "successfulPasswordChange":
-        session_start();
-        session_destroy();
-
-        require("views/successfulPasswordChange.view.php");
         break;
 
     /*
      * Change Avatar
      */
     case "changeAvatar":
-        $errorText=[];//error text used here
-        // We need to use sessions, so you should always start sessions using the below code.
-        session_start();
-        // If the user is not logged in redirect to the login page...
-        if (!isset($_SESSION['loggedin'])) {
-            header('Location: index.php?page=login');
-            exit();
-        }
-
-        $connection = new DBConnect();
-        $pdo = $connection->getConnection();
-        $um = new UserModel($pdo);
-
-        // Check if image file is a actual image or fake image
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $target_dir = "img/avatars/";
-            $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
-            $uploadOk = 1;
-            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-
-            $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
-            if ($check !== false) {
-                //echo "File is an image - " . $check["mime"] . ".";
-                $uploadOk = true;
-            } else {
-                array_push($errorText, "File is not an image.");
-                $uploadOk = false;
-            }
-            // Check file size is less than 50KB
-            if ($_FILES["fileToUpload"]["size"] > 100000) {
-                array_push($errorText, "Sorry, your file is too large.");
-                $uploadOk = false;
-            }
-            // Allow certain file formats
-            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
-                array_push($errorText, "Sorry, only JPG, JPEG & PNG files are allowed.");
-                $uploadOk = false;
-            }
-            // Check if $uploadOk is set to 0 by an error
-            if ($uploadOk == false) {
-                //echo "Sorry, your file was not uploaded.";
-                // if everything is ok, try to upload file
-            } else {
-                // Check if file already exists and delete it
-                foreach (glob("img/".$_SESSION["id"]."*") as $filename) {
-                    unlink($filename);
-                }
-                if ($uploadOk == true) {
-                    $path = $_FILES['fileToUpload']['name'];
-                    $ext = pathinfo($path, PATHINFO_EXTENSION);
-                    if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $_SESSION["id"] . "." . $ext)) {
-                        //echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded.";
-                    } else {
-                        array_push($errorText, "Sorry, there was an error uploading your file.");
-                    }
-                } /*else {
-                    array_push($errorText, "Sorry, there was an error uploading your file.");
-                }*/
-            }
-
-            if ($uploadOk == true) {
-                $user = $um->getUserByName($_SESSION['name']);
-
-                $newUser = $um->getUpdateFormData($user);
-                $newUser->setAvatar($user->getId() .".". $ext);
-
-                $userToEdit = $user->getId();
-                if ($um->update($newUser, $userToEdit)) {
-                    header("Location: index.php?page=user");
-                } else {
-                    array_push($errorText, "Failed to update avatar");
-                }
-            }
-        }
-
-        require("views/$page.view.php");
         break;
 
     /*
@@ -280,7 +116,7 @@ switch ($page) {
         session_start();
         // If the user is not logged in redirect to the login page...
         if (!isset($_SESSION['loggedin'])) {
-            header('Location: index.php?page=login');
+            header('Location: /drinks/login');
             exit();
         }
 
@@ -366,7 +202,7 @@ switch ($page) {
         session_start();
         // If the user is not logged in redirect to the login page...
         if (!isset($_SESSION['loggedin'])) {
-            header('Location: index.php?page=login');
+            header('Location: /drinks/login');
             exit();
         }
 
@@ -419,7 +255,7 @@ switch ($page) {
         session_start();
         // If the user is not logged in redirect to the login page...
         if (!isset($_SESSION['loggedin'])) {
-            header('Location: index.php?page=login');
+            header('Location: /drinks/login');
             exit();
         }
 
@@ -499,7 +335,7 @@ switch ($page) {
             session_start();
             // If the user is not logged in redirect to the login page...
             if (!isset($_SESSION['loggedin'])) {
-                header('Location: index.php?page=login');
+                header('Location: /drinks/login');
                 exit();
             }
 

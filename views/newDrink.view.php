@@ -70,7 +70,7 @@ if (isset($_SESSION['loggedin'])) {
 <br><br><br><br>
 <section>
     <div style='height: 59px'></div>
-    <form action="index.php?page=newDrink" method="post"  enctype="multipart/form-data" class="addForm">
+    <form action="/drinks/user/newDrink" method="post"  enctype="multipart/form-data" class="addForm">
         <div class="container">
             <div class="row align-items-center">
                 <div class='col-lg-6 order-lg-1'>

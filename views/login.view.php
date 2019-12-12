@@ -11,7 +11,7 @@
 <body>
 <div class="login">
     <h1>Login</h1>
-    <form action="index.php?page=login" method="post">
+    <form action="/drinks/login" method="post">
         <label for="username">
             <i class="fas fa-user"></i>
         </label>
@@ -21,7 +21,7 @@
         </label>
         <input type="password" name="password" placeholder="Password" id="password" required>
         <p class="errorText"><?=implode("<br>", $errorText)?></p>
-        New here? <a href="index.php?page=register">Create an account</a>
+        New here? <a href="/drinks/register">Create an account</a>
         <input type="submit" value="Login">
         <button onclick="history.go(-1);">Back </button>
     </form>

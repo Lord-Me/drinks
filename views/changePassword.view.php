@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8">
     <title>Change Password</title>
-    <link href="css/loginStyle.css" rel="stylesheet" type="text/css">
+    <link href="/drinks/css/loginStyle.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
-    <link href="css/myStyles.css" rel="stylesheet" type="text/css">
+    <link href="/drinks/css/myStyles.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="login">
     <h1>Change Password</h1>
-    <form action="index.php?page=changePassword" method="post">
+    <form action="/drinks/user/profile/changePassword" method="post">
         <label for="currentPassword">
             <i class="fas fa-lock"></i>
         </label>

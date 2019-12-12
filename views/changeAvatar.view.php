@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8">
     <title>Change Avatar</title>
-    <link href="css/loginStyle.css" rel="stylesheet" type="text/css">
+    <link href="/drinks/css/loginStyle.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
-    <link href="css/myStyles.css" rel="stylesheet" type="text/css">
+    <link href="/drinks/css/myStyles.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div class="login">
     <h1>Change Avatar</h1>
-    <form action="index.php?page=changeAvatar" method="post" enctype="multipart/form-data">
+    <form action="/drinks/user/profile/changeAvatar" method="post" enctype="multipart/form-data">
         <label for="fileToUpload">
             <i class="fas fa-chevron-circle-up"></i>
         </label>

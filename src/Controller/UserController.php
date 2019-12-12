@@ -27,7 +27,7 @@ class UserController extends AbstractController
         $errorText = [];//HAS ERROR DISPLAY
         session_start();
         if (isset($_SESSION['loggedin'])) {
-            header('Location: index.php?page=index');
+            header('Location: /drinks');
             exit();
         }
 
@@ -152,4 +152,192 @@ class UserController extends AbstractController
         require("views/successfulRegister.view.php");
     }
 
+    /*
+     * USER MANAGEMENT
+     */
+    public function userManagement(){
+        session_start();
+        if (!isset($_SESSION['loggedin'])) {
+            header('Location: /drinks/login');
+            exit();
+        }
+        if ($_SESSION['role'] != 1) {
+            header('Location: /drinks/login');
+            exit();
+        }
+        $view = "<br><br><br>Coming soon...";
+        require("views/users.view.php");
+    }
+
+    /*
+     * USER PROFILE
+     */
+    public function profile(){
+        // We need to use sessions, so you should always start sessions using the below code.
+        session_start();
+        // If the user is not logged in redirect to the login page...
+        if (!isset($_SESSION['loggedin'])) {
+            header('Location: /drinks/login');
+            exit();
+        }
+
+
+        $connection = new DBConnect();
+        $pdo = $connection->getConnection();
+
+        $um = new UserModel($pdo);
+
+        try {
+            $connection = new DBConnect();
+            $pdo = $connection->getConnection();
+            $um = new UserModel($pdo);
+
+            $userInfo = $um->getUserById($_SESSION['id']);
+        } catch (PDOException $err) {
+            echo "Error";
+        }
+
+        require("views/profile.view.php");
+    }
+
+    /*
+     * CHANGE PASSWORD
+     */
+    public function changePassword(){
+        $errorText = [];//Error management is used here
+        // We need to use sessions, so you should always start sessions using the below code.
+        session_start();
+        // If the user is not logged in redirect to the login page...
+        if (!isset($_SESSION['loggedin'])) {
+            header('Location: /drinks/login');
+            exit();
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            try {
+                $connection = new DBConnect();
+                $pdo = $connection->getConnection();
+                $um = new UserModel($pdo);
+
+                $user = $um->getUserByName($_SESSION['name']);
+
+                //See if the password is the correct one
+                if (!password_verify($_POST['currentPassword'], $user->getPassword())) {
+                    throw new ExceptionInvalidInput('Current password is incorrect');
+                }
+
+                if (password_verify($_POST['password'], $user->getPassword())) {
+                    throw new ExceptionInvalidInput('You must use a new password');
+                }
+
+                $newUser = $um->getUpdateFormData($user);
+                $errors = $um->validate($newUser);
+                if (empty($errors)) {
+                    $userToEdit = $user->getId();
+                    if ($um->update($newUser, $userToEdit)) {
+                        header("Location: /drinks/user/profile/successfulPasswordChange");
+                    } else {
+                        array_push($errorText, "Failed to update password");
+                    }
+                } else {
+                    throw new ExceptionInvalidData(implode("<br>", $errors));
+                }
+
+            } catch (ExceptionInvalidInput $e) {
+                array_push($errorText, $e->getMessage());
+            } catch (ExceptionInvalidData $e) {
+                array_push($errorText, $e->getMessage());
+            }
+        }
+
+        require("views/changePassword.view.php");
+    }
+
+    /*
+     * SUCCESSFUL PASSWORD CHANGE
+     */
+    public function successfulPasswordChange(){
+        session_start();
+        session_destroy();
+
+        require("views/successfulPasswordChange.view.php");
+    }
+
+    /*
+     * CHANGE AVATAR
+     */
+    public function changeAvatar(){
+        $errorText=[];//error text used here
+        // We need to use sessions, so you should always start sessions using the below code.
+        session_start();
+        // If the user is not logged in redirect to the login page...
+        if (!isset($_SESSION['loggedin'])) {
+            header('Location: /drinks/login');
+            exit();
+        }
+
+        $connection = new DBConnect();
+        $pdo = $connection->getConnection();
+        $um = new UserModel($pdo);
+
+        // Check if image file is a actual image or fake image
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $target_dir = "/drinks/img/avatars/";
+            $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
+            $uploadOk = true;
+            $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+
+
+            $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
+            if ($check !== false) {
+                //echo "File is an image - " . $check["mime"] . ".";
+                $uploadOk = true;
+            } else {
+                array_push($errorText, "File is not an image.");
+                $uploadOk = false;
+            }
+            // Check file size is less than 200KB
+            if ($_FILES["fileToUpload"]["size"] > 200000) {
+                array_push($errorText, "Sorry, your file is too large.");
+                $uploadOk = false;
+            }
+            // Allow certain file formats
+            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg") {
+                array_push($errorText, "Sorry, only JPG, JPEG & PNG files are allowed.");
+                $uploadOk = false;
+            }
+            // Check if $uploadOk is set to 0 by an error
+            if ($uploadOk == true) {
+                // Check if file already exists and delete it
+                foreach (glob("/drinks/img/avatars/".$_SESSION["id"]."*") as $filename) {
+                    unlink($filename);
+                }
+
+                $path = $_FILES['fileToUpload']['name'];
+                $ext = pathinfo($path, PATHINFO_EXTENSION);
+                if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $_SESSION["id"] . "." . $ext)) {//TODO error here but only shows when theres the die()
+                    echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded.";
+                } else {
+                    array_push($errorText, "Sorry, there was an error uploading your file.");
+                    die("test");
+                }
+            }
+
+            if ($uploadOk == true) {
+                $user = $um->getUserByName($_SESSION['name']);
+
+                $newUser = $um->getUpdateFormData($user);
+                $newUser->setAvatar($user->getId() .".". $ext);
+
+                $userToEdit = $user->getId();
+                if ($um->update($newUser, $userToEdit)) {
+                    header("Location: /drinks/user/profile");
+                } else {
+                    array_push($errorText, "Failed to update avatar");
+                }
+            }
+        }
+
+        require("views/changeAvatar.view.php");
+    }
 }
