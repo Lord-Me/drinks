@@ -17,8 +17,8 @@ if (isset($_SESSION['loggedin'])) {
     <div class="container">
         <div  class="row align-items-center text-center">
             <div class='col-lg-12'>
-                <form action="/drinks/ourDrinks<?php echo $authorUrl ?>" method="get" id="filterContainer" class="filterForm">
-                    <input type="hidden" name="page" value="<?=$_GET["page"] ?>">
+                <form action="/drinks/ourDrinks/1" method="get" id="filterContainer" class="filterForm">
+                    <input type="hidden" name="author" value="<?= $author_id ?>">
                     <div class="row">
                         <div class="col-lg-6 order-lg-1 filterFormLeft">
                             <div class="row filterFormSearch">

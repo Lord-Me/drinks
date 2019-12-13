@@ -19,6 +19,9 @@ use App\Exceptions\ExceptionUsernameExists;
 
 class DrinkController extends AbstractController
 {
+    /*
+     * INDEX
+     */
     public function index()
     {
         $dm = new DrinkModel($this->db);
@@ -27,10 +30,16 @@ class DrinkController extends AbstractController
         return "";
     }
 
+    /*
+     * PAGE NOT FOUND
+     */
     public function pageNotFound(){
         require("views/error.view.php");
     }
 
+    /*
+     * SHOW SINGLE POST
+     */
     public function showById($id)
     {
         try {
@@ -60,6 +69,9 @@ class DrinkController extends AbstractController
         }
     }
 
+    /*
+     * SHOW ALL DRINKS
+     */
     public function showDrinks($currentPagi){
         try {
             session_start();
@@ -80,7 +92,8 @@ class DrinkController extends AbstractController
             $filter = new Filter(null);
 
             //Check which filters are in use
-            $authorUrl = $filter->checkAuthorId();
+            $author_id = $filter->checkAuthorId();
+
             if (isset($_GET["filterFormSubmit"]) && $_SERVER['REQUEST_METHOD'] == 'GET') {
                 $filter->checkFilterRadio();
                 $filter->checkSearchValue();
@@ -122,8 +135,12 @@ class DrinkController extends AbstractController
                 $currentPagi = 1;
             }
 
+            //Get the query string for the filter
+            $str = $_SERVER['QUERY_STRING'];
+            parse_str($str, $queryArray);
+
             //Turn each array entry into an array of all the pages(pagination) with html sting. FilterLocation is the page the filter form is on
-            $pages = $recipeList->render($currentPagi, 5, "drinks");
+            $pages = $recipeList->render($currentPagi, 5, "drinks", $queryArray);
 
             //Check if currentPagi is over the number of pages. If so, set is as last page
             if ($currentPagi > count($pages)) {
@@ -140,6 +157,9 @@ class DrinkController extends AbstractController
         }
     }
 
+    /*
+     * LOGIN
+     */
     public function login(){
         $errorText = [];//HAS ERROR DISPLAY
         session_start();
@@ -192,10 +212,14 @@ class DrinkController extends AbstractController
         require("views/login.view.php");
     }
 
+    /*
+     * CREATE NEW POST
+     */
+    /*
     public function create()
     {
         /* insert té dos comportaments, quan s'ha enviat el formulari i quan no
-           la variable submitted controlarà el comportament */
+           la variable submitted controlarà el comportament *//*
         $formSubmitted = false;
         $headerText = "Nova entrada";
 
@@ -224,11 +248,15 @@ class DrinkController extends AbstractController
             require("views/insert.view.php");
         }
     }
-
+    */
+    /*
+     * EDIT POST
+     */
+    /*
     public function update($id)
     {
         /* insert té dos comportaments, quan s'ha enviat el formulari i quan no
-        la variable submitted controlarà el comportament */
+        la variable submitted controlarà el comportament *//*
         $formSubmitted = false;
         $headerText = "Editar entrada";
         $dm = new DrinkModel($this->db);
@@ -258,6 +286,272 @@ class DrinkController extends AbstractController
             $drink = $dm->getById($id);
 
             require("views/insert.view.php");
+        }
+    }
+    */
+
+    /*
+     * MY DRINKS
+     */
+    public function myDrinks($currentPagi){
+        // We need to use sessions, so you should always start sessions using the below code.
+        session_start();
+        // If the user is not logged in redirect to the login page...
+        if (!isset($_SESSION['loggedin'])) {
+            header('Location: /drinks/login');
+            exit();
+        }
+
+        try {
+            //Create a new object to contain all the drinks
+            $recipeList = new RecipesControl();
+
+            //Connect to the database
+
+            $connection = new DBConnect();
+            $pdo = $connection->getConnection();
+
+            //Using the Model for our drinks, I get all of the drinks with the same category
+            $dm = new DrinkModel($pdo);
+
+            /*
+             * FILTER
+             */
+            $filter = new Filter($_SESSION['id']);
+
+            //Check which filters are in use
+            if (isset($_GET["filterFormSubmit"]) && $_SERVER['REQUEST_METHOD'] == 'GET') {
+                $filter->checkFilterRadio();
+                $filter->checkTitleSearchValue();
+                $filter->checkDate();
+            } else {
+                $filter->setAll();  //if no filters are in use, set filter to all
+            }
+
+            //Run filters
+            $filter->runFilter($dm);
+            $filter->runSort();
+            $drinks = $filter->getDrinks();
+
+            foreach ($drinks as $drink) {
+                $recipeList->add($drink);
+            }
+
+            if($currentPagi < 1 || !isset($currentPagi)){
+                $currentPagi = 1;
+            }
+
+            //Get the query string for the filter
+            $str = $_SERVER['QUERY_STRING'];
+            parse_str($str, $queryArray);
+
+            //Turn each array entry into an array of all the pages(pagination) with html sting. FilterLocation is the page the filter form is on
+            $pages = $recipeList->render($currentPagi, 5, "myDrinks", $queryArray);
+
+            //Check if currentPagi is over the number of pages. If so, set is as last page
+            if ($currentPagi > count($pages)) {
+                $currentPagi = count($pages);
+            }
+            $thisPage = $pages[$currentPagi-1];
+
+            $view = implode("", $thisPage);
+            require("views/myDrinks.view.php");
+
+        } Catch (PDOException $err) {
+            // Mostrem un missatge genèric d'error.
+            echo "Error: executant consulta SQL.";
+        }
+    }
+
+    /*
+     * NEW DRINK
+     */
+    public function newDrink(){
+        $errorText = [];
+        $successText = [];
+        // We need to use sessions, so you should always start sessions using the below code.
+        session_start();
+        // If the user is not logged in redirect to the login page...
+        if (!isset($_SESSION['loggedin'])) {
+            header('Location: /drinks/login');
+            exit();
+        }
+
+        $connection = new DBConnect();
+        $pdo = $connection->getConnection();
+
+        $um = new UserModel($pdo);
+        $dm = new DrinkModel($pdo);
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            /*
+             * CHECK author_id validity
+             */
+            try {
+                $newDrink = $dm->getInsertFormData();
+                $errors = $dm->validate($newDrink);
+                $imageErrors = $dm->validateImage($newDrink);
+                foreach ($imageErrors as $error) {
+                    array_push($errors, $error);
+                }
+                if (empty($errors)) {
+                    if ($dm->insert($newDrink)) {
+                        array_push($successText,"Created new post successfully<br>");
+                    } else {
+                        array_push($errorText,"Failed to create new post");
+                    }
+                    if ($dm->uploadImage($newDrink)) {
+                        array_push($successText,"Uploaded image successfully<br>");
+                    } else {
+                        array_push($errorText,"Failed to upload image<br>");
+                    }
+
+                } else {
+                    throw new ExceptionInvalidData(implode("<br>", $errors));
+                }
+
+            } catch (ExceptionInvalidData $e) {
+                array_push($errorText, $e->getMessage());
+            }
+        }
+
+        $user = $um->getUserById($_SESSION["id"]);
+        require("views/newDrink.view.php");
+    }
+
+    /*
+     * EDIT DRINK
+     */
+    public function editDrink($id){
+        $errorText = [];
+        $successText = [];
+        // We need to use sessions, so you should always start sessions using the below code.
+        session_start();
+        // If the user is not logged in redirect to the login page...
+        if (!isset($_SESSION['loggedin'])) {
+            header('Location: /drinks/login');
+            exit();
+        }
+
+        $connection = new DBConnect();
+        $pdo = $connection->getConnection();
+
+        $um = new UserModel($pdo);
+        $dm = new DrinkModel($pdo);
+
+
+        if ($id < 0) {
+            header("Location: /drinks"); //404
+        }
+
+        //Get all drink IDs and test the given post ID to see if it exists
+        $allDrinks = $dm->getAll();
+        $allIds =[];
+        foreach ($allDrinks as $drink){
+            array_push($allIds, $drink->getId());
+        }
+        if (!in_array($id, $allIds)) {
+            header("Location: /drinks/pageNotFound"); //404
+        }
+
+        $drink = $dm->getById($id);
+        //CHECK IF USER OWNS THIS POST OR IS ADMIN. IF NOT, KICK THEM
+        if($_SESSION['id'] != $drink->getAuthor_id() && $_SESSION['id'] != 1){
+            header('Location: /drinks');
+            exit();
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            try {
+                $newDrink = $dm->getUpdateFormData($drink);
+                $errors = $dm->validate($newDrink);
+                $imageErrors = $dm->validateImage($newDrink);
+                foreach ($imageErrors as $error) {
+                    array_push($errors, $error);
+                }
+                if (empty($errors)) {
+                    if ($dm->update($newDrink)) {
+                        array_push($successText,"Updated post successfully<br>");
+                    } else {
+                        array_push($errorText,"Failed to update post<br>");
+                    }
+                    if ($dm->uploadImage($newDrink)) {
+                        array_push($successText,"Uploaded new image successfully<br>");
+                    }
+                } else {
+                    throw new ExceptionInvalidData(implode("<br>", $errors));
+                }
+            }
+            catch (ExceptionInvalidData $e) {
+                array_push($errorText,$e->getMessage());
+            }
+            catch (PDOException $e) {
+                array_push($errorText,'Error: ' . $e->getMessage());
+            }
+        }
+
+
+        try {
+            $drink = $dm->getById($id);
+        }catch (ExceptionPageNotFound $e) {
+            array_push($errorText,'Error: ' . $e->getMessage());
+        }
+
+        $user = $um->getUserById($_SESSION["id"]);
+        require("views/editDrink.view.php");
+    }
+
+    /*
+     * DELETE DRINK
+     */
+    public function toggleDeleteDrink($id){
+        try {
+            // We need to use sessions, so you should always start sessions using the below code.
+            session_start();
+            // If the user is not logged in redirect to the login page...
+            if (!isset($_SESSION['loggedin'])) {
+                header('Location: /drinks/login');
+                exit();
+            }
+
+
+            $connection = new DBConnect();
+            $pdo = $connection->getConnection();
+            $dm = new DrinkModel($pdo);
+
+
+            if ($id < 0) {
+                header("Location: /drinks/pageNotFound"); //404
+            }
+
+            //Get all drink IDs and test the given post ID to see if it exists
+            $allDrinks = $dm->getAll();
+            $allIds =[];
+            foreach ($allDrinks as $drink){
+                array_push($allIds, $drink->getId());
+            }
+            if (!in_array($id, $allIds)) {
+                header("Location: /drinks/user/myDrinks");
+                exit();
+            }
+
+            $drink = $dm->getById($id);
+            //CHECK IF USER OWNS THIS POST OR IS ADMIN. IF NOT, KICK THEM
+            if($_SESSION['id'] != $drink->getAuthor_id() && $_SESSION['id'] != 1){
+                header('Location: /drinks');
+                exit();
+            }
+
+            //If all's okay, set as deleted
+            if($drink->getView() == 1) {
+                $dm->markAsDeleted($id);
+            }else{
+                $dm->markAsUndeleted($id);
+            }
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
         }
     }
 }

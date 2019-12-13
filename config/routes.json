@@ -60,13 +60,20 @@
       "id": "number"
     }
   },
-  "drinks/user/newDrink": {
+  "drinks/user/myDrinks/newDrink": {
     "controller": "Drink",
     "method": "newDrink"
   },
   "drinks/user/myDrinks/editDrink/:id": {
     "controller": "Drink",
     "method": "editDrink",
+    "params": {
+      "id": "number"
+    }
+  },
+  "drinks/user/myDrinks/toggleDeleteDrink/:id": {
+    "controller": "Drink",
+    "method": "toggleDeleteDrink",
     "params": {
       "id": "number"
     }

@@ -10,7 +10,7 @@ class recipesControl{
     /*
      * RENDER EACH DRINK ON LIST PAGE
      */
-    public function render(int $currentPagi, int $drinksPerPage, string $filterLocation):array {
+    public function render(int $currentPagi, int $drinksPerPage, string $filterLocation, array $queryArray):array {
         $html = [];
         $side = 0;
         $pages = [];
@@ -80,7 +80,7 @@ class recipesControl{
         }
 
         //paginate everything
-        $finalArray = $this->paginate($pages, $currentPagi);
+        $finalArray = $this->paginate($pages, $currentPagi, $filterLocation, $queryArray);
         return $finalArray;
 
     }
@@ -88,24 +88,30 @@ class recipesControl{
     /*
      * Add pagination buttons to end
      */
-    function paginate(array $pages, int $currentPagi):array{
+    function paginate(array $pages, int $currentPagi, string $filterLocation, array $queryArray):array
+    {
 //SORT OUT URL
-        /*unset($queryArray['pagi']);
         //MAKE URL A STRING
         $keys = array_keys($queryArray);
         $i = 0;
-        $url = "";
+        $queryString = "";
         foreach ($queryArray as $item){
-            $url .= $keys[$i] . "=" . $item . "&";
+            $queryString .= $keys[$i] . "=" . $item . "&";
             $i++;
         }
-        $url = substr($url, 0, -1);*/
+        $queryString = substr($queryString, 0, -1);
+        $queryString = "?".$queryString;
 // -SORT OUT URL
 
-        $forwardUrl = "/drinks/ourDrinks/".($currentPagi+1);
-        $backUrl = "/drinks/ourDrinks/".($currentPagi-1);
+        if ($filterLocation == "myDrinks") {
+            $forwardUrl = "/drinks/user/myDrinks/" . ($currentPagi + 1) . $queryString;
+            $backUrl = "/drinks/user/myDrinks/" . ($currentPagi - 1) . $queryString;
+        }else{
+            $forwardUrl = "/drinks/ourDrinks/" . ($currentPagi + 1) . $queryString;
+            $backUrl = "/drinks/ourDrinks/" . ($currentPagi - 1) . $queryString;
+        }
 
-        $buttons = $this->createButtons(count($pages));
+        $buttons = $this->createButtons(count($pages), $filterLocation, $queryString);
         $forward = "<a href='".$forwardUrl."' class='pagiButton pagiForward'><i class='fas fa-arrow-right'></i></a>";
         $back = "<a href='".$backUrl."' class='pagiButton pagiBack'><i class='fas fa-arrow-left'></i></a>";
         $pagiButtons="";
@@ -143,11 +149,15 @@ class recipesControl{
     /*
      * Generate the bottom buttons
      */
-    function createButtons(int $amount):string{
+    function createButtons(int $amount, string $filterLocation, string $queryString):string{
         $buttons="";
 
         for($i=0; $i<$amount; $i++){
-            $buttons .= "<a href='/drinks/ourDrinks/".($i+1)."' class='pagiButton'>".($i+1)."</a>";
+            if ($filterLocation == "myDrinks") {
+                $buttons .= "<a href='/drinks/user/myDrinks/" . ($i + 1) . $queryString . "' class='pagiButton'>" . ($i + 1) . "</a>";
+            }else{
+                $buttons .= "<a href='/drinks/ourDrinks/" . ($i + 1) . $queryString . "' class='pagiButton'>" . ($i + 1) . "</a>";
+            }
         }
         return $buttons;
     }

@@ -17,8 +17,7 @@ if (isset($_SESSION['loggedin'])) {
     <div class="container">
         <div  class="row align-items-center text-center">
             <div class='col-lg-12'>
-                <form action="/drinks/user/myDrinks" method="get" id="filterContainer" class="filterForm">
-                    <input type="hidden" name="page" value="<?=$_GET["page"] ?>">
+                <form method="get" id="filterContainer" class="filterForm">
                     <div class="row">
                         <div class="col-lg-6 order-lg-1 filterFormLeft">
                             <div class="row filterFormSearch">
@@ -56,7 +55,7 @@ if (isset($_SESSION['loggedin'])) {
         <div class="row align-items-center">
             <div class="col-lg-12">
                 <div class="p-5 text-center">
-                    <a class="newDrinkButton btn btn-primary btn-xl" href="index.php?page=newDrink">Create New Drink</a>
+                    <a class="newDrinkButton btn btn-primary btn-xl" href="/drinks/user/myDrinks/newDrink">Create New Drink</a>
                 </div>
             </div>
         </div>

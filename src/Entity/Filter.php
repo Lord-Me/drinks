@@ -44,7 +44,7 @@ class Filter
     function checkAuthorId(): string
     {
         if (!empty($this->authorId)) {                              //Filter by author
-            $authorUrl = "&author=" . $this->authorId;
+            $authorUrl = $this->authorId;
             $this->filters["author"] = true;
         } else {
             $authorUrl = "";
@@ -177,7 +177,7 @@ class Filter
     function runSort():void{
         /*-- Order from newest to oldest --*/
 
-        usort($this->drinks, "sortFunction");
+        usort($this->drinks, [$this, "sortFunction"]);
     }
 
     function getDrinks():array{

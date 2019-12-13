@@ -115,7 +115,7 @@ class Drink
         $edit="";
         if($_SESSION != NULL) {
             if ($this->getAuthor_id() == $_SESSION['id']) {
-                $edit = " <a href='/drinks/admin/edit/" . $this->getId() . "' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a>";
+                $edit = " <a href='/drinks/user/myDrinks/editDrink" . $this->getId() . "' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a>";
             }
         }
 
@@ -169,8 +169,8 @@ class Drink
                     <td>".ucfirst($username)."</td>
                     <td>".$category."</td>
                     <td>".$this->getPublished_at()."</td>
-                    <td><a href='/drinks/admin/edit/".$this->getId()."' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a></td>
-                    <td><a href='/drinks/admin/edit/".$this->getId()."' class='myDrinksButtons myDrinksButtonsDelete'>Delete</a></td>
+                    <td><a href='/drinks/user/myDrinks/editDrink/".$this->getId()."' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a></td>
+                    <td><a href='/drinks/user/myDrinks/toggleDeleteDrink/".$this->getId()."' class='myDrinksButtons myDrinksButtonsDelete'>Delete</a></td>
                 </tr>";
             }
             if($this->view == 0){ //if set as deleted
@@ -179,8 +179,8 @@ class Drink
                     <td class='myDrinksButtonsRed'>".ucfirst($username)."</td>
                     <td class='myDrinksButtonsRed'>".$category."</td>
                     <td class='myDrinksButtonsRed'>".$this->getPublished_at()."</td>
-                    <td><a href='/drinks/admin/edit/".$this->getId()."' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a></td>
-                    <td><a href='/drinks/admin/delete/".$this->getId()."' class='myDrinksButtons myDrinksButtonsUndelete'>Undelete</a></td>
+                    <td><a href='/drinks/user/myDrinks/editDrink/".$this->getId()."' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a></td>
+                    <td><a href='/drinks/user/myDrinks/toggleDeleteDrink/".$this->getId()."' class='myDrinksButtons myDrinksButtonsUndelete'>Undelete</a></td>
                 </tr>";
             }
         }
@@ -200,7 +200,7 @@ class Drink
         $edit="";
         if(!empty($_SESSION['id'])) {
             if ($this->getAuthor_id() == $_SESSION['id']) {
-                $edit = " <a href='/drinks/admin/edit/" . $this->getId() . "' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a>";
+                $edit = " <a href='/drinks/user/myDrinks/edit/" . $this->getId() . "' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a>";
             }
         }
 
@@ -232,7 +232,7 @@ class Drink
                             <div class='col-lg-6'>
                                 <table>
                                     <tr>
-                                        <a href='index.php?page=drinks&author=".$this->getAuthor_id()."&pagi=0'>
+                                        <a href='/drinks/ourDrinks/1?author=".$this->getAuthor_id()."'>
                                             Author: ".ucfirst($username)."<img src='/drinks/img/avatars/".$userAvatar."' alt='userImage' height='30' width='30' class='rounded-circle'>
                                         </a> - ".$edit."
                                     </tr>

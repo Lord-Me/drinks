@@ -70,7 +70,7 @@ if (isset($_SESSION['loggedin'])) {
 <br><br><br><br>
 <section>
     <div style='height: 59px'></div>
-    <form action="/drinks/user/editDrink?id=<?=$drink->getId()?>" method="post"  enctype="multipart/form-data" class="addForm">
+    <form action="/drinks/user/myDrinks/editDrink/<?=$drink->getId()?>" method="post"  enctype="multipart/form-data" class="addForm">
         <div class="container">
             <div class="row align-items-center">
                 <div class='col-lg-6 order-lg-1'>
