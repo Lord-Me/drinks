@@ -22,13 +22,12 @@ abstract class AbstractController {
 
         $this->db = $di->get('PDO');
         //$this->log = $di->get('Logger');
-        //$this->view = $di->get('Twig_Environment');
+        $this->view = $di->get('Twig');
         //$this->config = $di->get('Utils\Config');
     }
 
 
     protected function render(string $template, array $params): string {
-        //return $this->view->loadTemplate($template)->render($params);
-        require_once ($template);
+        return $this->view->load($template)->render($params);
     }
 }

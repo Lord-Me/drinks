@@ -80,7 +80,7 @@ if (isset($_SESSION['loggedin'])) {
                 </div>
                 <div class='col-lg-6 order-lg-2'>
                     <div class="addFormImage p-5">
-                        <label for="fileToUpload"><img id="preview" class="img-fluid rounded-circle" src="img/<?=$drink->getImage()?>" alt="<?=$drink->getImage()?>"></label><br>
+                        <label for="fileToUpload"><img id="preview" class="img-fluid rounded-circle" src="/drinks/img/<?=$drink->getImage()?>" alt="<?=$drink->getImage()?>"></label><br>
                         <input onchange="readURL(this);" type="file" name="fileToUpload" placeholder="Preview Image" id="fileToUpload">
                     </div>
                 </div>
@@ -89,7 +89,7 @@ if (isset($_SESSION['loggedin'])) {
                 <div class='col-lg-6'>
                     <table>
                         <tr>
-                            <td>Author: <?=ucfirst($user->getUsername())?> <img src='img/avatars/<?=$user->getAvatar()?>' alt='userImage' width='30' height='30' class='rounded-circle'></td>
+                            <td>Author: <?=ucfirst($user->getUsername())?> <img src='/drinks/img/avatars/<?=$user->getAvatar()?>' alt='userImage' width='30' height='30' class='rounded-circle'></td>
                         </tr>
                         <tr>
                             <td>Posted at: <?=$drink->getPublished_at()?></td>

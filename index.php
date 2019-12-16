@@ -14,17 +14,27 @@ use App\Exceptions\ExceptionUsernameExists;
 
 require __DIR__ . '/config/bootstrap.php';
 
+session_start();
+
 $di = new \App\Utils\DependencyInjector();
 
 $db = new DBConnect();
 $di->set('PDO', $db->getConnection());
 
+// Carreguem l'entorn de Twig
+$loader=new \Twig\Loader\FilesystemLoader(__DIR__.'/templates');
+$twig = new \Twig\Environment($loader);
+// Afegim una instància de Router a la plantilla.
+// La utilitzarem en les plantilles per a generar URL.
+$twig->addGlobal('router', new Router(new \App\Utils\DependencyInjector()));
+//l'incloem al contenidor de serveis
+$di->set('Twig', $twig);
 
 $request = new Request();
 
 //var_dump($request);
 $route = new Router($di);
-$route->route($request);
+echo $route->route($request);
 
 $action = $_GET['action'] ?? "indexARR";
 

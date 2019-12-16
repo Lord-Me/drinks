@@ -19,6 +19,23 @@ use App\Exceptions\ExceptionUsernameExists;
 
 class DrinkController extends AbstractController
 {
+    function getDefaultTwigProperties():array{
+        if (isset($_SESSION['loggedin'])) {
+            $loggedIn = ["loggedIn" => true];
+        }else {
+            $loggedIn = ["loggedIn" => false];
+        }
+
+        if($_SESSION['role']==1) {
+            $isAdmin = ["isAdmin" => true];
+        }else{
+            $isAdmin = ["isAdmin" => false];
+        }
+        $properties = ["username" => $_SESSION['name']];
+        array_merge($properties, $isAdmin, $loggedIn);
+        return $isAdmin;
+    }
+
     /*
      * INDEX
      */
@@ -26,15 +43,19 @@ class DrinkController extends AbstractController
     {
         $dm = new DrinkModel($this->db);
         $drinks = $dm->getAll();
-        require('views/index.view.php');
-        return "";
+
+        $properties = [];
+        array_merge($this->getDefaultTwigProperties(), $properties);
+        return $this->render('index.twig', $properties);
     }
 
     /*
      * PAGE NOT FOUND
      */
     public function pageNotFound(){
-        require("views/error.view.php");
+        $properties = [];
+        array_merge($this->getDefaultTwigProperties(), $properties);
+        return $this->render('404.twig', $properties);
     }
 
     /*
@@ -43,7 +64,6 @@ class DrinkController extends AbstractController
     public function showById($id)
     {
         try {
-            session_start();
             //Connect to the database
             $connection = new DBConnect();
 
@@ -74,7 +94,6 @@ class DrinkController extends AbstractController
      */
     public function showDrinks($currentPagi){
         try {
-            session_start();
             //Create a new object to contain all the drinks
             $recipeList = new RecipesControl();
 
@@ -162,7 +181,6 @@ class DrinkController extends AbstractController
      */
     public function login(){
         $errorText = [];//HAS ERROR DISPLAY
-        session_start();
         if (isset($_SESSION['loggedin'])) {
             header('Location: index.php?page=index');
             exit();
@@ -190,8 +208,6 @@ class DrinkController extends AbstractController
                     // Note: remember to use password_hash in your registration file to store the hashed passwords.
                     if (password_verify($_POST['password'], $user->getPassword())) {
                         // Verification success! User has loggedin!
-                        // Create sessions so we know the user is logged in, they basically act like cookies but remember the data on the server.
-                        session_start();
                         session_regenerate_id();
                         $_SESSION['loggedin'] = TRUE;
                         $_SESSION['name'] = $_POST['username'];
@@ -213,89 +229,9 @@ class DrinkController extends AbstractController
     }
 
     /*
-     * CREATE NEW POST
-     */
-    /*
-    public function create()
-    {
-        /* insert té dos comportaments, quan s'ha enviat el formulari i quan no
-           la variable submitted controlarà el comportament *//*
-        $formSubmitted = false;
-        $headerText = "Nova entrada";
-
-        if ($this->request->isPost()) {
-            //2. Tractar el formulari
-            $formSubmitted = true;
-            $dm = new DrinkModel($this->db);
-
-            // Obté les dades del formulari
-            $drink = $dm->getInsertFormData();
-
-            //3. Valida l'objecte Drink
-            $errors = $dm->validate($drink);
-
-            //4. Executa el INSERT
-            if (count($errors) == 0) {
-                $result = $dm->insert($drink);
-                $message = "El Drink s'ha insertat correctament";
-            } else {
-                $message = "El Drink NO s'ha insertat";
-            }
-            require("views/insert.view.php");
-        } else {
-            //1. Mostrar el formulari
-            $drink = new Drink();
-            require("views/insert.view.php");
-        }
-    }
-    */
-    /*
-     * EDIT POST
-     */
-    /*
-    public function update($id)
-    {
-        /* insert té dos comportaments, quan s'ha enviat el formulari i quan no
-        la variable submitted controlarà el comportament *//*
-        $formSubmitted = false;
-        $headerText = "Editar entrada";
-        $dm = new DrinkModel($this->db);
-
-        if ($this->request->isPost()) {
-            //2. Tractar el formulari
-            $formSubmitted = true;
-
-            // Obté les dades del formulari
-            $drink = $dm->getUpdateFormData();
-            $drink->setId($id);
-
-            //3. Valida l'objecte Drink
-            $errors = $dm->validate($drink);
-
-            //4. Executa el UPDATE
-            if (count($errors) == 0) {
-                $result = $dm->update($drink);
-                $message = "El Drink s'ha actualitzat correctament";
-            } else {
-                $message = "El Drink NO s'ha actualitzat correctament";
-            }
-            require("views/insert.view.php");
-        } else {
-            //1. Mostrar el formulari
-            // Carreguem l'objecte $drink
-            $drink = $dm->getById($id);
-
-            require("views/insert.view.php");
-        }
-    }
-    */
-
-    /*
      * MY DRINKS
      */
     public function myDrinks($currentPagi){
-        // We need to use sessions, so you should always start sessions using the below code.
-        session_start();
         // If the user is not logged in redirect to the login page...
         if (!isset($_SESSION['loggedin'])) {
             header('Location: /drinks/login');
@@ -369,8 +305,6 @@ class DrinkController extends AbstractController
     public function newDrink(){
         $errorText = [];
         $successText = [];
-        // We need to use sessions, so you should always start sessions using the below code.
-        session_start();
         // If the user is not logged in redirect to the login page...
         if (!isset($_SESSION['loggedin'])) {
             header('Location: /drinks/login');
@@ -425,8 +359,6 @@ class DrinkController extends AbstractController
     public function editDrink($id){
         $errorText = [];
         $successText = [];
-        // We need to use sessions, so you should always start sessions using the below code.
-        session_start();
         // If the user is not logged in redirect to the login page...
         if (!isset($_SESSION['loggedin'])) {
             header('Location: /drinks/login');
@@ -506,8 +438,6 @@ class DrinkController extends AbstractController
      */
     public function toggleDeleteDrink($id){
         try {
-            // We need to use sessions, so you should always start sessions using the below code.
-            session_start();
             // If the user is not logged in redirect to the login page...
             if (!isset($_SESSION['loggedin'])) {
                 header('Location: /drinks/login');

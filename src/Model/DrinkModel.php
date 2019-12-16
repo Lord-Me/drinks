@@ -214,7 +214,7 @@ class DrinkModel
      * UPLOAD IMAGE TO FILES
      */
     function uploadImage(Drink $drink):bool{
-        $target_dir = "img/";
+        $target_dir =  __DIR__ . "/../../../drinks/img/";
         $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 
         if(!empty($drink->getImage())) {
@@ -234,7 +234,7 @@ class DrinkModel
     function validateImage(Drink $drink):array{
         $errors = [];
 
-        $target_dir = "img/";
+        $target_dir =  __DIR__ . "/../../../drinks/img/";
         $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
         $uploadOk = 1;
         $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
@@ -266,7 +266,7 @@ class DrinkModel
             } else {
                 // Check if file already exists and delete it
                 if (file_exists($target_file)) {
-                    if ($target_file == "img/avatars/defaultAvatar.jpg") {
+                    if ($target_file ==  __DIR__ . "/../../../drinks/img/avatars/defaultAvatar.jpg") {
                         array_push($errors, "Sorry, you can not upload a file with that name.");
                     } else {
                         unlink($target_file);

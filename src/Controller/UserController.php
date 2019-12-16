@@ -26,7 +26,6 @@ class UserController extends AbstractController
     public function login()
     {
         $errorText = [];//HAS ERROR DISPLAY
-        session_start();
         if (isset($_SESSION['loggedin'])) {
             header('Location: /drinks');
             exit();
@@ -54,8 +53,6 @@ class UserController extends AbstractController
                     // Note: remember to use password_hash in your registration file to store the hashed passwords.
                     if (password_verify($_POST['password'], $user->getPassword())) {
                         // Verification success! User has loggedin!
-                        // Create sessions so we know the user is logged in, they basically act like cookies but remember the data on the server.
-                        session_start();
                         session_regenerate_id();
                         $_SESSION['loggedin'] = TRUE;
                         $_SESSION['name'] = $_POST['username'];
@@ -82,7 +79,6 @@ class UserController extends AbstractController
 
     public function logout()
     {
-        session_start();
         session_destroy();
         // Redirect to the login page:
         header('Location: /drinks');
@@ -95,7 +91,6 @@ class UserController extends AbstractController
     public function register()
     {
         $errorText = []; //Contains error messages
-        session_start();
         if (isset($_SESSION['loggedin'])) {
             header('Location: /drinks');
             exit();
@@ -147,7 +142,6 @@ class UserController extends AbstractController
      */
     public function successfulRegister()
     {
-        session_start();
         if (isset($_SESSION['loggedin'])) {
             header('Location: /drinks');
             exit();
@@ -161,7 +155,6 @@ class UserController extends AbstractController
      */
     public function userManagement()
     {
-        session_start();
         if (!isset($_SESSION['loggedin'])) {
             header('Location: /drinks/login');
             exit();
@@ -179,8 +172,6 @@ class UserController extends AbstractController
      */
     public function profile()
     {
-        // We need to use sessions, so you should always start sessions using the below code.
-        session_start();
         // If the user is not logged in redirect to the login page...
         if (!isset($_SESSION['loggedin'])) {
             header('Location: /drinks/login');
@@ -212,8 +203,6 @@ class UserController extends AbstractController
     public function changePassword()
     {
         $errorText = [];//Error management is used here
-        // We need to use sessions, so you should always start sessions using the below code.
-        session_start();
         // If the user is not logged in redirect to the login page...
         if (!isset($_SESSION['loggedin'])) {
             header('Location: /drinks/login');
@@ -265,7 +254,6 @@ class UserController extends AbstractController
      */
     public function successfulPasswordChange()
     {
-        session_start();
         session_destroy();
 
         require("views/successfulPasswordChange.view.php");
@@ -277,8 +265,6 @@ class UserController extends AbstractController
     public function changeAvatar()
     {
         $errorText = [];//error text used here
-        // We need to use sessions, so you should always start sessions using the below code.
-        session_start();
         // If the user is not logged in redirect to the login page...
         if (!isset($_SESSION['loggedin'])) {
             header('Location: /drinks/login');

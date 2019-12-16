@@ -10,7 +10,7 @@ if (isset($_SESSION['loggedin'])) {
     require('partials/navigationLoggedIn.partials.php');
 }else {
     require('partials/navigation.partials.php');
-}
+}//TODO turn this page into a twig
 ?>
 <br><br><br>
 <section>

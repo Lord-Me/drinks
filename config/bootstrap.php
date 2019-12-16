@@ -11,4 +11,6 @@ function autoloader($classname)
     require_once($filename);
 }
 
-spl_autoload_register('autoloader');
+//spl_autoload_register('autoloader');
+
+require __DIR__ .'/../vendor/autoload.php';
