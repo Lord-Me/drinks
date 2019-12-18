@@ -2,5 +2,46 @@
 
 {% block content %}
     <div style='height: 75px;'></div>
-    {{ drink | raw }}
+    <section>
+        <div class='container .mi-container-center'>
+            <div class='row align-items-center'>
+                <div class='col-lg-6 order-lg-2'>
+                    <div class='p-5'>
+                        <img class='img-fluid rounded-circle' src='/drinks/img/{{ drink.image }}' alt='{{ drink.image }}'>
+                    </div>
+                </div>
+                <div class='col-lg-6 order-lg-1'>
+                    <div class='p-5'>
+                        <h1 class='display-4'>{{ drink.title }}</h1>
+                    </div>
+                </div>
+            </div>
+            <div class='row align-items-center'>
+                <div class='col-lg-6'>
+                    <table>
+                        <tr>
+                            <a href='/drinks/ourDrinks/1?author={{ drink.author_id }}'>
+                                Author: {{ drink.author_name | capitalize }} <img src='/drinks/img/avatars/{{ drink.author_avatar }}' alt='userAvatar' height='30' width='30' class='rounded-circle'>
+                            </a>{% if drink.author_id == sessionId or sessionId == 1 %} - <a href='/drinks/user/myDrinks/editDrink/{{ drink.id }}' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a>{% endif %}
+                        </tr>
+                        <tr>
+                            <td>Posted at: {{ drink.published_at }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class='row align-items-center'>
+                <div class='col-lg-6'>
+                    <h3>Ingredients</h3>
+                    <p>{{ ingredients|raw }}</p>
+                </div>
+            </div>
+            <div class='row align-items-center'>
+                <div class='col-lg-6'>
+                    <h3>Steps</h3>
+                    <p>{{ steps|raw }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

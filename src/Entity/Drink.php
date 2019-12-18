@@ -10,7 +10,6 @@ class Drink
 {
     private $id;
     private $author_id;
-    private $author_name;
     private $category;
     private $title;
     private $ingredients;
@@ -18,6 +17,9 @@ class Drink
     private $image;
     private $published_at;
     private $view;
+
+    private $author_name;
+    private $author_avatar;
     
     function __construct()
     {
@@ -32,10 +34,6 @@ class Drink
 
     function getAuthor_id(){
         return $this->author_id;
-    }
-
-    function getAuthor_name(){
-        return $this->author_name;
     }
 
     function getCategory(){
@@ -66,6 +64,14 @@ class Drink
         return $this->view;
     }
 
+    function getAuthor_name(){
+        return $this->author_name;
+    }
+
+    function getAuthor_avatar(){
+        return $this->author_avatar;
+    }
+
     //SETTERS
 
     function setId($id){
@@ -74,10 +80,6 @@ class Drink
 
     function setAuthor_id($author_id){
         $this->author_id = $author_id;
-    }
-
-    function setAuthor_name($author_name){
-        $this->author_name = $author_name;
     }
 
     function setCategory($category){
@@ -108,164 +110,11 @@ class Drink
         $this->view = $view;
     }
 
-    /*
-     * RENDER
-     */
-
-    public function render($sideNum, string $filterLocation){
-        //get the username of auther by their ID
-        $connection = new DBConnect();
-        $pdo = $connection->getConnection();
-        $um = new UserModel($pdo);
-        $dm = new DrinkModel($pdo);
-        $username = $um->getUserById($this->getAuthor_id())->getUsername();
-
-        //See if user is logged in and if so, add the edit button
-        $edit="";
-        if($_SESSION != NULL) {
-            if ($this->getAuthor_id() == $_SESSION['id']) {
-                $edit = " <a href='/drinks/user/myDrinks/editDrink" . $this->getId() . "' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a>";
-            }
-        }
-
-        $category="";
-        if($dm->getById($this->getId())->getCategory() == 1){
-            $category = "Professional";
-        }elseif ($dm->getById($this->getId())->getCategory() == 2){
-            $category = "Original";
-        }
-
-        if($filterLocation == "drinks") {               //RUN THE RENDER FOR THE MAIN DRINKS PAGE
-            //make the html string
-            //Alternate between left and right
-            $side1 = "";
-            $side2 = "";
-            if ($sideNum % 2) {
-                $side1 = "order-lg-2";
-                $side2 = "order-lg-1";
-            }
-            if($this->view == 1) {
-                $html = '';
-                $html .= "<section>";
-                if ($sideNum != 0) {
-                    $html .= "<div class='fillerDiv'></div>";
-                }
-                $html .= "<div class='mi-container-centered'>
-                        <div class='container'>
-                            <div class='row align-items-center'>
-                                <div class='col-lg-5 " . $side1 . "'>
-                                    <div class='p-5'>
-                                        <img class='img-fluid rounded-circle' src='/drinks/img/" . $this->getImage() . "' alt='" . $this->getImage() . "'>
-                                    </div>
-                                </div>
-                                <div class='col-lg-7 " . $side2 . "'>
-                                    <div class='p-5'>
-                                        <h2 class='display-4'>" . $this->getTitle() . "</h2>
-                                        <p>Author: " . ucfirst($username) . $edit ."</p>
-                                        <a href='/drinks/ourDrinks/drink/" . $this->getId() . "' class='btn btn-primary btn-xl rounded-pill mt-5'>Make This Drink</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                 </section>";
-            }else{return null;}
-        }else{                                      //RUN THE RENDER FOR THE MYDRINKS PAGE WHERE ITS ONLY A LIST
-            $html = '';
-            if($this->view == 1){ //If set to normal
-                $html .="<tr>
-                    <td><a href='/drinks/ourDrinks/drink/".$this->getId()."' class='myDrinksButtons myDrinksButtonsTitle'>".$this->getTitle()."</a></td>
-                    <td>".ucfirst($username)."</td>
-                    <td>".$category."</td>
-                    <td>".$this->getPublished_at()."</td>
-                    <td><a href='/drinks/user/myDrinks/editDrink/".$this->getId()."' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a></td>
-                    <td><a href='/drinks/user/myDrinks/toggleDeleteDrink/".$this->getId()."' class='myDrinksButtons myDrinksButtonsDelete'>Delete</a></td>
-                </tr>";
-            }
-            if($this->view == 0){ //if set as deleted
-                $html .="<tr>
-                    <td><a href='/drinks/ourDrinks/drink/".$this->getId()."' class='myDrinksButtonsRed myDrinksButtonsTitle'>".$this->getTitle()."</a></td>
-                    <td class='myDrinksButtonsRed'>".ucfirst($username)."</td>
-                    <td class='myDrinksButtonsRed'>".$category."</td>
-                    <td class='myDrinksButtonsRed'>".$this->getPublished_at()."</td>
-                    <td><a href='/drinks/user/myDrinks/editDrink/".$this->getId()."' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a></td>
-                    <td><a href='/drinks/user/myDrinks/toggleDeleteDrink/".$this->getId()."' class='myDrinksButtons myDrinksButtonsUndelete'>Undelete</a></td>
-                </tr>";
-            }
-        }
-        return $html;
+    function setAuthor_name($author_name){
+        $this->author_name = $author_name;
     }
 
-
-    public function renderPage(){
-        //get the username of author by their ID
-        $connection = new DBConnect();
-        $pdo = $connection->getConnection();
-        $um = new UserModel($pdo);
-        $username = $um->getUserById($this->getAuthor_id())->getUsername();
-        $userAvatar = $um->getUserById($this->getAuthor_id())->getAvatar();
-
-        //See if user is logged in and if so, add the edit button
-        $edit="";
-        if(!empty($_SESSION['id'])) {
-            if ($this->getAuthor_id() == $_SESSION['id']) {
-                $edit = " <a href='/drinks/user/myDrinks/edit/" . $this->getId() . "' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a>";
-            }
-        }
-
-        //Añadir saltos de linea <br> a en cada salto de linea que hay en el texto sacado del DB
-        $ingredients = $this->getIngredients();
-        $steps = $this->getContent();
-        $ingredients = str_replace("\n", '<br />', $ingredients);
-        $ingredients = str_replace("&#13;&#10;", "<br/>", $ingredients);
-        $steps = str_replace("\n", '<br />', $steps);
-        $steps = str_replace("&#13;&#10;", '<br />', $steps);
-
-        $html = '';
-        $html .="<section>
-                    <div class='container .mi-container-center'>
-                        <div class='row align-items-center'>
-                            <div class='col-lg-6 order-lg-2'>
-                                <div class='p-5'>
-                                    <img class='img-fluid rounded-circle' src='/drinks/img/".$this->getImage()."' alt='".$this->getImage()."'>
-                                </div>
-                            </div>
-                            <div class='col-lg-6 order-lg-1'>
-                                <div class='p-5'>
-                                    <h1 class='display-4'>".$this->getTitle()."</h1>
-                                </div>
-                            </div>
-                        </div>
-                        <div class='row align-items-center'>
-                            <div class='col-lg-6'>
-                                <table>
-                                    <tr>
-                                        <a href='/drinks/ourDrinks/1?author=".$this->getAuthor_id()."'>
-                                            Author: ".ucfirst($username)."<img src='/drinks/img/avatars/".$userAvatar."' alt='userImage' height='30' width='30' class='rounded-circle'>
-                                        </a> - ".$edit."
-                                    </tr>
-                                    <tr>
-                                        <td>Posted at: ".$this->getPublished_at()."</td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                        <div class='row align-items-center'> 
-                            <div class='col-lg-6'>
-                                <h3>Ingredients</h3>
-                                <p>".$ingredients."</p>
-                            </div>
-                        </div>
-                        <div class='row align-items-center'>
-                            <div class='col-lg-6'>
-                                <h3>Steps</h3>
-                                <p>".$steps."</p>
-                            </div>
-                        </div>
-                    </div>
-                 </section>";
-        return $html;
+    function setAuthor_avatar($author_avatar){
+        $this->author_avatar = $author_avatar;
     }
-
-
 }

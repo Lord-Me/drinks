@@ -21,24 +21,42 @@ class DrinkController extends AbstractController
 {
     private function getDefaultTwigProperties():array{
         if (isset($_SESSION['loggedin'])) {
-            $loggedIn = ["loggedIn" => true];
+            $sessionInfo = [
+                "loggedIn" => true,
+                "sessionId" => $_SESSION['id']
+            ];
             if($_SESSION['role']==1) {
-                $isAdmin = [
-                    "isAdmin" => true,
-                    "sessionId" => $_SESSION['id']
-                ];
+                $isAdmin = ["isAdmin" => true];
             }else{
                 $isAdmin = ["isAdmin" => false];
             }
             $username = ["username" => $_SESSION['name']];
         }else {
-            $loggedIn = ["loggedIn" => false];
+            $sessionInfo = ["loggedIn" => false];
             $isAdmin = ["isAdmin" => false];
             $username = ["username" => null];
         }
-        $properties=[];
-        array_merge($properties, $isAdmin, $loggedIn, $username);
-        return $properties;
+        return array_merge($isAdmin, $sessionInfo, $username);
+    }
+
+    private function createPages(array $drinks, int $drinksPerPage):array {
+        $pages = [];
+
+        $page = [];
+        foreach ($drinks as $drink) {
+            //create a page every 10 html posts
+            array_push($page, $drink);
+            if (count($page) == $drinksPerPage) {
+                array_push($pages, $page);
+                $page = [];
+            }
+        }
+        //create a final page with left over drinks if there are any due to pagination
+        if(!empty($page)){
+            array_push($pages, $page);
+        }
+
+        return $pages;
     }
 
     /*
@@ -49,8 +67,8 @@ class DrinkController extends AbstractController
         $dm = new DrinkModel($this->db);
         $drinks = $dm->getAll();
 
-        $properties = [];
-        array_merge($this->getDefaultTwigProperties(), $properties);
+        $subProperties = [];
+        $properties = array_merge($this->getDefaultTwigProperties(), $subProperties);
         return $this->render('index.twig', $properties);
     }
 
@@ -58,8 +76,8 @@ class DrinkController extends AbstractController
      * PAGE NOT FOUND
      */
     public function pageNotFound(){
-        $properties = [];
-        array_merge($this->getDefaultTwigProperties(), $properties);
+        $subProperties = [];
+        $properties = array_merge($this->getDefaultTwigProperties(), $subProperties);
         return $this->render('404.twig', $properties);
     }
 
@@ -69,29 +87,33 @@ class DrinkController extends AbstractController
     public function showById($id)
     {
         try {
-            //Connect to the database
-            $connection = new DBConnect();
-
-            $pdo = $connection->getConnection();
-
             //create new drink via the Model
-            $dm = new DrinkModel($pdo);
+            $dm = new DrinkModel($this->db);
+            $um = new UserModel($this->db);
 
             if ($id == NULL) {
                 throw new ExceptionPageNotFound();
             }
 
             //fetch the drink with the corresponding id
-            $recipe = $dm->getById($id);
+            $drink = $dm->getById($id);
+            $drink->setAuthor_name($um->getUserById($drink->getAuthor_id())->getUsername());
+            $drink->setAuthor_avatar($um->getUserById($drink->getAuthor_id())->getAvatar());
 
+            //Format text
+            $ingredients = $drink->getIngredients();
+            $steps = $drink->getContent();
+            $ingredients = str_replace("\n", '<br />', $ingredients);
+            $ingredients = str_replace("&#13;&#10;", "<br/>", $ingredients);
+            $steps = str_replace("\n", '<br />', $steps);
+            $steps = str_replace("&#13;&#10;", '<br />', $steps);
 
-            //send it to the view
-            $view = $recipe->renderPage();
-
-            $properties= [
-                "drink" => $view,
+            $subProperties= [
+                "drink" => $drink,
+                "ingredients" => $ingredients,
+                "steps" => $steps
             ];
-            array_merge($this->getDefaultTwigProperties(), $properties);
+            $properties = array_merge($this->getDefaultTwigProperties(), $subProperties);
             return $this->render('drink.twig', $properties);
 
         } catch (ExceptionPageNotFound $e) {
@@ -104,8 +126,6 @@ class DrinkController extends AbstractController
      */
     public function showDrinks($currentPagi){
         try {
-            //Create a new object to contain all the drinks
-            $rc = new RecipesControl();
 
             //Using the Model for our drinks, I get all of the drinks with the same category
             $dm = new DrinkModel($this->db);
@@ -141,9 +161,8 @@ class DrinkController extends AbstractController
             //Send each array entry to be stored
             foreach ($drinks as $drink) {
                 $drink->setAuthor_name($um->getUserById($drink->getAuthor_id())->getUsername());
-                $rc->add($drink);
             }
-            $pages = $rc->createPages(6);
+            $pages = $this->createPages($drinks, 6);
 
             if($currentPagi < 1 || !isset($currentPagi)){
                 $currentPagi = 1;
@@ -165,15 +184,14 @@ class DrinkController extends AbstractController
             $queryString = substr($queryString, 0, -1);
             $queryString = "?".$queryString;
 
-            $properties= [
+            $subProperties= [
                 "pages" => $pages,
                 "currentPagi" => $currentPagi,
                 "author_id" => $author_id,
                 "queryString" => $queryString
             ];
-            array_merge($this->getDefaultTwigProperties(), $properties);
+            $properties = array_merge($this->getDefaultTwigProperties(), $subProperties);
             return $this->render('drinks.twig', $properties);
-            //require ("views/drinks.view.php");
 
         } Catch (PDOException $err) {
             // Mostrem un missatge genèric d'error.
@@ -244,16 +262,9 @@ class DrinkController extends AbstractController
         }
 
         try {
-            //Create a new object to contain all the drinks
-            $recipeList = new RecipesControl();
-
-            //Connect to the database
-
-            $connection = new DBConnect();
-            $pdo = $connection->getConnection();
-
             //Using the Model for our drinks, I get all of the drinks with the same category
-            $dm = new DrinkModel($pdo);
+            $dm = new DrinkModel($this->db);
+            $um = new UserModel($this->db);
 
             /*
              * FILTER
@@ -274,29 +285,40 @@ class DrinkController extends AbstractController
             $filter->runSort();
             $drinks = $filter->getDrinks();
 
+            //Send each array entry to be stored
             foreach ($drinks as $drink) {
-                $recipeList->add($drink);
+                $drink->setAuthor_name($um->getUserById($drink->getAuthor_id())->getUsername());
             }
+            $pages = $this->createPages($drinks, 5);
 
             if($currentPagi < 1 || !isset($currentPagi)){
                 $currentPagi = 1;
             }
-
-            //Get the query string for the filter
-            $str = $_SERVER['QUERY_STRING'];
-            parse_str($str, $queryArray);
-
-            //Turn each array entry into an array of all the pages(pagination) with html sting. FilterLocation is the page the filter form is on
-            $pages = $recipeList->render($currentPagi, 5, "myDrinks", $queryArray);
-
-            //Check if currentPagi is over the number of pages. If so, set is as last page
-            if ($currentPagi > count($pages)) {
+            if($currentPagi > count($pages)){
                 $currentPagi = count($pages);
             }
-            $thisPage = $pages[$currentPagi-1];
 
-            $view = implode("", $thisPage);
-            require("views/myDrinks.view.php");
+            //Get the query array and turn it into string
+            $str = $_SERVER['QUERY_STRING'];
+            parse_str($str, $queryArray);
+            $keys = array_keys($queryArray);
+            $i = 0;
+            $queryString = "";
+            foreach ($queryArray as $item){
+                $queryString .= $keys[$i] . "=" . $item . "&";
+                $i++;
+            }
+            $queryString = substr($queryString, 0, -1);
+            $queryString = "?".$queryString;
+
+
+            $subProperties= [
+                "pages" => $pages,
+                "currentPagi" => $currentPagi,
+                "queryString" => $queryString
+            ];
+            $properties = array_merge($this->getDefaultTwigProperties(), $subProperties);
+            return $this->render('myDrinks.twig', $properties);
 
         } Catch (PDOException $err) {
             // Mostrem un missatge genèric d'error.

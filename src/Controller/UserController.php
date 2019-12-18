@@ -6,7 +6,6 @@ namespace App\Controller;
 use App\Entity\Drink;
 use App\DBConnect;
 use PDOException;
-use App\RecipesControl;
 use App\Model\DrinkModel;
 use App\Model\UserModel;
 use App\Entity\Filter;
@@ -80,7 +79,6 @@ class UserController extends AbstractController
     public function logout()
     {
         session_destroy();
-        // Redirect to the login page:
         header('Location: /drinks');
     }
 

@@ -1,7 +1,6 @@
 <?php
 
 use App\DBConnect;
-use App\RecipesControl;
 use App\Model\DrinkModel;
 use App\Model\UserModel;
 use App\Entity\Filter;
