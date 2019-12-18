@@ -1,0 +1,104 @@
+{% extends 'bases/base.twig' %}
+
+{% block content %}
+    <div style='height: 75px;'></div>
+    <section>
+        <div class="container">
+            <div  class="row align-items-center text-center">
+                <div class='col-lg-12'>
+                    <form action="/drinks/ourDrinks/1" method="get" id="filterContainer" class="filterForm">
+                        <input type="hidden" name="author" value="{{ author_id }}">
+                        <div class="row">
+                            <div class="col-lg-6 order-lg-1 filterFormLeft">
+                                <div class="row filterFormSearch">
+                                    <label for="generalSearch">Search: </label>
+                                    <input id="generalSearch" type="text" name="search" placeholder="Search..."><br>
+                                </div>
+                                <div class="row filterFormRadio">
+                                    <input id="filterAll" type="radio" name="categoryFilter" value="all" checked="checked" class="filter">
+                                    <label for="filterAll">All Drinks</label>
+
+                                    <input id="filterProf" type="radio" name="categoryFilter" value="pro" class="filter">
+                                    <label for="filterProf">Professional Drinks</label>
+
+                                    <input id="filterOri" type="radio" name="categoryFilter" value="ori" class="filter">
+                                    <label for="filterOri">Original Drinks</label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 order-lg-2 filterFormRight">
+                                <p>Search between dates</p>
+                                <input class="filterFormDate" type="date" name="time1" value="">
+                                <input class="filterFormDate" type="date" name="time2" value="">
+                            </div>
+                        </div>
+                        <div class="row filterFormSubmit">
+                            <input class="btn btn-primary my-btn-xl mt-5" type="submit" name="filterFormSubmit" value="Filter">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% if pages|length == 0 %}
+        <section>
+            <div class='mi-container-centered'>
+                <div class='container'>
+                    <div class='row align-items-center'>
+                        <h1>No Search Results!</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% else %}
+        {% set sideCounter = 0 %}
+
+        <!-- GET CURRENT PAGE -->
+        {% set page = pages[currentPagi - 1] %}
+
+        {% for drink in page %}
+            {% set side1 = "" %}
+            {% set side2 = "" %}
+
+            {% if sideCounter is even %}
+                {% set side1 = "order-lg-2" %}
+                {% set side2 = "order-lg-1" %}
+            {% endif %}
+            <section>
+                <div class='mi-container-centered'>
+                    <div class='container'>
+                        <div class='row align-items-center'>
+                            <div class='col-lg-5 {{ side1 }} '>
+                                <div class='p-5'>
+                                    <img class='img-fluid rounded-circle' src='/drinks/img/{{ drink.image }}' alt='{{ drink.image }}'>
+                                </div>
+                            </div>
+                            <div class='col-lg-7 {{ side2 }} '>
+                                <div class='p-5'>
+                                    <h2 class='display-4'> {{ drink.title }}</h2>
+                                    <p>Author: {{ drink.author_name | capitalize }} {% if loggedIn and drink.author_id == sessionId %} - <a href='/drinks/user/myDrinks/editDrink {{ drink.id }}' class='myDrinksButtons myDrinksButtonsEdit'>Edit</a>{% endif %}</p>
+                                    <a href='/drinks/ourDrinks/drink/{{ drink.id }}' class='btn btn-primary btn-xl rounded-pill mt-5'>Make This Drink</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            {% set sideCounter = sideCounter + 1 %}
+        {% endfor %}
+
+        <!-- PAGINATION -->
+        {% if pages|length > 1 %}
+            <section>
+                <div class='mi-container-centered'>
+                    <div class='container'>
+                        <div class='row align-items-center'>
+                            <div class='col-lg-12 text-center'>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        {% endif %}
+    {% endif %}
+{% endblock %}

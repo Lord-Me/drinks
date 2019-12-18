@@ -13,7 +13,8 @@ class Filter
         "ori" => false,
         "search" => false,
         "titleSearch" => false,
-        "date" => false
+        "date" => false,
+        "deleted" => false
     ];
     private $drinks = [];
     private $authorId;
@@ -89,7 +90,11 @@ class Filter
         return false;
     }
 
-    function setAll(){
+    function removeDeleted():void{
+        $this->filters["deleted"] = true;
+    }
+
+    function setAll():void{
         $this->filters["all"] = true;
     }
 
@@ -150,6 +155,18 @@ class Filter
 
                 //Check searchValue word in title, ingredients and content with stripos.
                 if(stripos($title, $this->searchValue) !== false || stripos($ingredients, $this->searchValue) !== false || stripos($content, $this->searchValue) !== false){
+                    array_push($filteredDrinks, $this->drinks[$i]);
+                }
+            }
+            $this->drinks = $filteredDrinks;
+        }
+
+        //Remove deleted
+        if($this->filters["deleted"]) {
+            $filteredDrinks = [];
+            for ($i = 0; $i < count($this->drinks); $i++) {
+                $view = $this->drinks[$i]->getView();
+                if ($view == 1) {
                     array_push($filteredDrinks, $this->drinks[$i]);
                 }
             }

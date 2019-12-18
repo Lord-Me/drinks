@@ -10,6 +10,7 @@ use App\Exceptions\ExceptionPageNotFound;
 class DrinkModel
 {
     private $pdo;
+    private $ext;
 
     public function  __construct(PDO $pdo)
     {
@@ -45,6 +46,13 @@ class DrinkModel
         $stmt = $this->pdo->prepare('SELECT * FROM recipes WHERE author_id = :author_id');
         $stmt->bindParam(':author_id', $author_id, PDO::PARAM_INT);
         return $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'App\Entity\Drink');
+    }
+
+    public function getByTitle(int $title):array {
+        $stmt = $this->pdo->prepare('SELECT * FROM recipes WHERE title = :title');
+        $stmt->bindParam(':title', $title, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_CLASS | PDO::FETCH_PROPS_LATE, 'App\Entity\Drink') ?? NULL;
     }
 
     /*
@@ -169,7 +177,7 @@ class DrinkModel
             $title = $newDrink->getTitle();
             $ingredients = $newDrink->getIngredients();
             $content = $newDrink->getContent();
-            $image = $newDrink->getImage();
+            $image = $newDrink->getTitle() . "." . $this->ext;
 
             $stmt = $this->pdo->prepare('UPDATE recipes SET category = :category, title = :title, ingredients = :ingredients, content = :content, image = :image where id = :id');
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
@@ -219,8 +227,8 @@ class DrinkModel
 
         if(!empty($drink->getImage())) {
             $path = $_FILES['fileToUpload']['name'];
-            $ext = pathinfo($path, PATHINFO_EXTENSION);
-            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $drink->getTitle() . $ext)) {
+            $this->ext = pathinfo($path, PATHINFO_EXTENSION);
+            if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_dir . $drink->getTitle() . "." . $this->ext)) {
                 echo "The file " . basename($_FILES["fileToUpload"]["name"]) . " has been uploaded.";
                 return true;
             } else {
@@ -268,7 +276,7 @@ class DrinkModel
                 if (file_exists($target_file)) {
                     if ($target_file ==  __DIR__ . "/../../../drinks/img/avatars/defaultAvatar.jpg") {
                         array_push($errors, "Sorry, you can not upload a file with that name.");
-                    } else {
+                    } elseif(in_array(basename($_FILES["fileToUpload"]["name"]), $this->getByTitle($drink->getTitle()))) {
                         unlink($target_file);
                     }
                 }

@@ -10,6 +10,7 @@ class Drink
 {
     private $id;
     private $author_id;
+    private $author_name;
     private $category;
     private $title;
     private $ingredients;
@@ -31,6 +32,10 @@ class Drink
 
     function getAuthor_id(){
         return $this->author_id;
+    }
+
+    function getAuthor_name(){
+        return $this->author_name;
     }
 
     function getCategory(){
@@ -69,6 +74,10 @@ class Drink
 
     function setAuthor_id($author_id){
         $this->author_id = $author_id;
+    }
+
+    function setAuthor_name($author_name){
+        $this->author_name = $author_name;
     }
 
     function setCategory($category){
@@ -144,12 +153,12 @@ class Drink
                 $html .= "<div class='mi-container-centered'>
                         <div class='container'>
                             <div class='row align-items-center'>
-                                <div class='col-lg-6 " . $side1 . "'>
+                                <div class='col-lg-5 " . $side1 . "'>
                                     <div class='p-5'>
                                         <img class='img-fluid rounded-circle' src='/drinks/img/" . $this->getImage() . "' alt='" . $this->getImage() . "'>
                                     </div>
                                 </div>
-                                <div class='col-lg-6 " . $side2 . "'>
+                                <div class='col-lg-7 " . $side2 . "'>
                                     <div class='p-5'>
                                         <h2 class='display-4'>" . $this->getTitle() . "</h2>
                                         <p>Author: " . ucfirst($username) . $edit ."</p>
@@ -214,7 +223,6 @@ class Drink
 
         $html = '';
         $html .="<section>
-                    <div style='height: 59px;'></div>
                     <div class='container .mi-container-center'>
                         <div class='row align-items-center'>
                             <div class='col-lg-6 order-lg-2'>

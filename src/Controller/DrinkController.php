@@ -19,21 +19,26 @@ use App\Exceptions\ExceptionUsernameExists;
 
 class DrinkController extends AbstractController
 {
-    function getDefaultTwigProperties():array{
+    private function getDefaultTwigProperties():array{
         if (isset($_SESSION['loggedin'])) {
             $loggedIn = ["loggedIn" => true];
+            if($_SESSION['role']==1) {
+                $isAdmin = [
+                    "isAdmin" => true,
+                    "sessionId" => $_SESSION['id']
+                ];
+            }else{
+                $isAdmin = ["isAdmin" => false];
+            }
+            $username = ["username" => $_SESSION['name']];
         }else {
             $loggedIn = ["loggedIn" => false];
-        }
-
-        if($_SESSION['role']==1) {
-            $isAdmin = ["isAdmin" => true];
-        }else{
             $isAdmin = ["isAdmin" => false];
+            $username = ["username" => null];
         }
-        $properties = ["username" => $_SESSION['name']];
-        array_merge($properties, $isAdmin, $loggedIn);
-        return $isAdmin;
+        $properties=[];
+        array_merge($properties, $isAdmin, $loggedIn, $username);
+        return $properties;
     }
 
     /*
@@ -82,7 +87,12 @@ class DrinkController extends AbstractController
 
             //send it to the view
             $view = $recipe->renderPage();
-            require("views/drink.view.php");
+
+            $properties= [
+                "drink" => $view,
+            ];
+            array_merge($this->getDefaultTwigProperties(), $properties);
+            return $this->render('drink.twig', $properties);
 
         } catch (ExceptionPageNotFound $e) {
             header("Location: /drinks/pageNotFound");
@@ -95,15 +105,11 @@ class DrinkController extends AbstractController
     public function showDrinks($currentPagi){
         try {
             //Create a new object to contain all the drinks
-            $recipeList = new RecipesControl();
-
-            //Connect to the database
-
-            $connection = new DBConnect();
-            $pdo = $connection->getConnection();
+            $rc = new RecipesControl();
 
             //Using the Model for our drinks, I get all of the drinks with the same category
-            $dm = new DrinkModel($pdo);
+            $dm = new DrinkModel($this->db);
+            $um = new UserModel($this->db);
 
             /*
              * FILTERS
@@ -112,6 +118,7 @@ class DrinkController extends AbstractController
 
             //Check which filters are in use
             $author_id = $filter->checkAuthorId();
+            $filter->removeDeleted();
 
             if (isset($_GET["filterFormSubmit"]) && $_SERVER['REQUEST_METHOD'] == 'GET') {
                 $filter->checkFilterRadio();
@@ -131,44 +138,42 @@ class DrinkController extends AbstractController
              * /FILTERS
              */
 
-            //Send each array entry to the object recipeList to be stored
+            //Send each array entry to be stored
             foreach ($drinks as $drink) {
-                $recipeList->add($drink);
+                $drink->setAuthor_name($um->getUserById($drink->getAuthor_id())->getUsername());
+                $rc->add($drink);
             }
+            $pages = $rc->createPages(6);
 
-            //get the url and make a query string and remove pagi
-            /*$str = $_SERVER['QUERY_STRING'];
-            parse_str($str, $queryArray);
-
-            if(!array_key_exists("pagi", $queryArray)){
-                $addPagi = ["pagi" => 1];
-                $queryArray = array_merge($queryArray, $addPagi);
-            }*/
-            //Get the current pagination page number
-            /*if (!is_numeric($queryArray["pagi"]) || $queryArray["pagi"] < 1 || $queryArray["pagi"] == NULL) {
-                $currentPagi=1;
-            }else {
-                $currentPagi = $queryArray["pagi"];
-            }*/
             if($currentPagi < 1 || !isset($currentPagi)){
                 $currentPagi = 1;
             }
-
-            //Get the query string for the filter
-            $str = $_SERVER['QUERY_STRING'];
-            parse_str($str, $queryArray);
-
-            //Turn each array entry into an array of all the pages(pagination) with html sting. FilterLocation is the page the filter form is on
-            $pages = $recipeList->render($currentPagi, 5, "drinks", $queryArray);
-
-            //Check if currentPagi is over the number of pages. If so, set is as last page
-            if ($currentPagi > count($pages)) {
+            if($currentPagi > count($pages)){
                 $currentPagi = count($pages);
             }
-            $thisPage = $pages[$currentPagi-1];
 
-            $view = implode("", $thisPage);
-            require('views/drinks.view.php');
+            //Get the query array and turn it into string
+            $str = $_SERVER['QUERY_STRING'];
+            parse_str($str, $queryArray);
+            $keys = array_keys($queryArray);
+            $i = 0;
+            $queryString = "";
+            foreach ($queryArray as $item){
+                $queryString .= $keys[$i] . "=" . $item . "&";
+                $i++;
+            }
+            $queryString = substr($queryString, 0, -1);
+            $queryString = "?".$queryString;
+
+            $properties= [
+                "pages" => $pages,
+                "currentPagi" => $currentPagi,
+                "author_id" => $author_id,
+                "queryString" => $queryString
+            ];
+            array_merge($this->getDefaultTwigProperties(), $properties);
+            return $this->render('drinks.twig', $properties);
+            //require ("views/drinks.view.php");
 
         } Catch (PDOException $err) {
             // Mostrem un missatge genèric d'error.

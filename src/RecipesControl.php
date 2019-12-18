@@ -7,9 +7,31 @@ use App\Entity\Drink;
 class recipesControl{
     private $drinks = [];
 
-    /*
-     * RENDER EACH DRINK ON LIST PAGE
-     */
+    public function createPages(int $drinksPerPage):array {
+        $html = [];
+        $side = 0;
+        $pages = [];
+
+        $page = [];
+        foreach ($this->drinks as $drink) {
+            //create a page every 10 html posts
+            array_push($page, $drink);
+            if (count($page) == $drinksPerPage) {
+                array_push($pages, $page);
+                $page = [];
+            }
+        }
+        //create a final page with left over drinks if there are any due to pagination
+        if(!empty($page)){
+            array_push($pages, $page);
+        }
+
+        return $pages;
+    }
+
+        /*
+         * RENDER EACH DRINK ON LIST PAGE
+         */
     public function render(int $currentPagi, int $drinksPerPage, string $filterLocation, array $queryArray):array {
         $html = [];
         $side = 0;
