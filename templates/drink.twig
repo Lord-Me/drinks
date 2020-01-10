@@ -42,6 +42,11 @@
                     <p>{{ steps|raw }}</p>
                 </div>
             </div>
+            {% if loggedIn == true %}
+                <div class="row align-items-center">
+                    <a href="#"><img src="/drinks/img/like.png" height="40" width="40"></a>
+                </div>
+            {% endif %}
         </div>
     </section>
 {% endblock %}
