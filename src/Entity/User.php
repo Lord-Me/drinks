@@ -5,11 +5,62 @@ namespace App\Entity;
 class User
 {
     private $id;
+    private $firstName;
+    private $lastName;
+    private $province;
     private $username;
     private $email;
     private $password;
     private $avatar;
     private $role;
+
+    /**
+     * @return mixed
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param mixed $firstName
+     */
+    public function setFirstName($firstName): void
+    {
+        $this->firstName = $firstName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param mixed $lastName
+     */
+    public function setLastName($lastName): void
+    {
+        $this->lastName = $lastName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProvince()
+    {
+        return $this->province;
+    }
+
+    /**
+     * @param mixed $province
+     */
+    public function setProvince($province): void
+    {
+        $this->province = $province;
+    }
 
     /**
      * @return mixed

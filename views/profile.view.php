@@ -29,6 +29,18 @@ if (isset($_SESSION['loggedin'])) {
                     <p>Welcome to your profile page!</p>
                     <table>
                         <tr>
+                            <td>First Name:</td>
+                            <td><?=$userInfo->getFirstName();?></td>
+                        </tr>
+                        <tr>
+                            <td>Last Name:</td>
+                            <td><?=$userInfo->getLastName();?></td>
+                        </tr>
+                        <tr>
+                            <td>Province:</td>
+                            <td><?=$userInfo->getProvince();?></td>
+                        </tr>
+                        <tr>
                             <td>Username:</td>
                             <td><?=$userInfo->getUsername();?></td>
                         </tr>

@@ -2,10 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="23c4d5b8-9c93-4bf0-a230-ff61289df2da" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/drinks.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/drinks.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Exceptions/ExceptionEmailExists.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/drinks.sql" beforeDir="false" afterPath="$PROJECT_DIR$/config/drinks.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/drink.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/drink.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Model/UserModel.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/UserModel.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/drinks.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/drinks.view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/profile.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/profile.view.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/register.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/register.view.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,18 +48,19 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Exceptions" />
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\xampp\htdocs\drinks\templates" />
-      <recent name="$PROJECT_DIR$/views" />
-      <recent name="C:\xampp\htdocs\drinks\views" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/css" />
       <recent name="$PROJECT_DIR$/vendor/bootstrap/css/img" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/Exceptions" />
+      <recent name="C:\xampp\htdocs\drinks\templates" />
+      <recent name="$PROJECT_DIR$/views" />
+      <recent name="C:\xampp\htdocs\drinks\views" />
     </key>
   </component>
   <component name="ServiceViewManager">
@@ -108,7 +116,7 @@
       <workItem from="1578571021845" duration="602000" />
       <workItem from="1578572952960" duration="63000" />
       <workItem from="1578573018145" duration="1186000" />
-      <workItem from="1578654088450" duration="1107000" />
+      <workItem from="1578654088450" duration="6872000" />
     </task>
     <task id="LOCAL-00001" summary="Change password">
       <created>1573716999809</created>
@@ -187,7 +195,14 @@
       <option name="project" value="LOCAL" />
       <updated>1574461312032</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Added login drink function">
+      <created>1578655232271</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1578655232271</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -214,13 +229,26 @@
     <MESSAGE value="Nearly done. New TODOs and need to finish url managing on drinks and myDrinks" />
     <MESSAGE value="Finished many TODOs&#10;Still got to finish a few and get images to delete correctly" />
     <MESSAGE value="Done-ish" />
-    <option name="LAST_COMMIT_MESSAGE" value="Done-ish" />
+    <MESSAGE value="Added login drink function" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added login drink function" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="494" y="169" width="443" height="561" key="#com.intellij.ide.util.MemberChooser" timestamp="1578656302418">
+      <screen x="0" y="28" width="1440" height="844" />
+    </state>
+    <state x="494" y="169" width="443" height="561" key="#com.intellij.ide.util.MemberChooser/0.28.1440.844@0.28.1440.844" timestamp="1578656302418" />
+    <state x="285" y="47" width="862" height="806" key="CommitChangelistDialog2" timestamp="1578655231237">
+      <screen x="0" y="28" width="1440" height="844" />
+    </state>
+    <state x="285" y="47" width="862" height="806" key="CommitChangelistDialog2/0.28.1440.844@0.28.1440.844" timestamp="1578655231237" />
     <state x="503" y="208" width="426" height="483" key="FileChooserDialogImpl" timestamp="1578478812288">
       <screen x="0" y="28" width="1440" height="844" />
     </state>
     <state x="503" y="208" width="426" height="483" key="FileChooserDialogImpl/0.28.1440.844@0.28.1440.844" timestamp="1578478812288" />
+    <state x="315" y="186" width="802" height="527" key="Vcs.Push.Dialog.v2" timestamp="1578655242540">
+      <screen x="0" y="28" width="1440" height="844" />
+    </state>
+    <state x="315" y="186" width="802" height="527" key="Vcs.Push.Dialog.v2/0.28.1440.844@0.28.1440.844" timestamp="1578655242540" />
   </component>
   <component name="XPathView.XPathProjectComponent">
     <history />

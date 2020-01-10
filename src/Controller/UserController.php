@@ -108,44 +108,45 @@ class UserController extends AbstractController
                 if (empty($errors)) {
                     // We need to check if the account with that username exists.
                     try {
-                        $user = $um->getUserByName($_POST['username']);
+                        $um->getUserByName($_POST['username']);
                         // Username already exists as it didn't throw an empty error
                         throw new ExceptionUsernameExists();
                     } catch (PDOException $e) {
-                        // Username doesnt exists, insert new account
-                        if ($um->insert($newUser)) {
-                            header('Location: /drinks/user/successfulRegister');
-                        } else {
-                            // Something is wrong with the sql statement, check to make sure accounts table exists with all 3 fields.
-                            throw new PDOException('Could not prepare statement!');
+                        try {
+                            $um->getUserByEmail($_POST['email']);
+                            // Username already exists as it didn't throw an empty error
+                            throw new ExceptionEmailExists();
+                        } catch (PDOException $e) {
+                            // Username doesnt exists, insert new account
+                            if ($um->insert($newUser)) {
+                                $user = $um->getUserByName($_POST['username']);
+                                session_regenerate_id();
+                                $_SESSION['loggedin'] = TRUE;
+                                $_SESSION['name'] = $_POST['username'];
+                                $_SESSION['id'] = $user->getId();
+                                $_SESSION['role'] = $user->getRole();
+                                header('Location: /drinks/user/profile');
+                            } else {
+                                // Something is wrong with the sql statement, check to make sure accounts table exists with all 3 fields.
+                                throw new PDOException('Could not prepare statement!');
+                            }
                         }
                     }
                 } else {
                     throw new ExceptionInvalidData(implode("<br>", $errors));
                 }
             } catch (ExceptionInvalidData $e) {
-                $errorText = array_merge($errorText, $e->getMessage());
+                array_push($errorText, $e->getMessage());
             } catch (ExceptionUsernameExists $e) {
                 array_push($errorText, 'Username exists, please choose another!');
+            } catch (ExceptionEmailExists $e) {
+                array_push($errorText, 'Email already in use, please choose another!');
             } catch (PDOException $e) {
                 echo $e->getMessage();
             }
         }
 
         require("views/register.view.php");
-    }
-
-    /*
-     * SUCCESSFUL REGISTER
-     */
-    public function successfulRegister()
-    {
-        if (isset($_SESSION['loggedin'])) {
-            header('Location: /drinks');
-            exit();
-        }
-
-        require("views/successfulRegister.view.php");
     }
 
     /*

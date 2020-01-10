@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 09, 2020 at 01:44 PM
+-- Generation Time: Jan 10, 2020 at 02:10 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -108,6 +108,9 @@ INSERT INTO `roles` (`id`, `role`) VALUES
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
+  `firstName` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
+  `lastName` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
+  `province` varchar(30) COLLATE utf8_spanish2_ci NOT NULL,
   `username` varchar(20) COLLATE utf8_spanish2_ci NOT NULL,
   `email` varchar(40) COLLATE utf8_spanish2_ci NOT NULL,
   `password` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
@@ -119,10 +122,11 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `email`, `password`, `avatar`, `role`) VALUES
-(1, 'admin', 'admin@drinks.com', '$2y$12$rc.xefNh57cHYvYS74aDEOdBS75uvef6aDk4RyUTSCEQR1CJkAo1W', 'defaultAvatar.png', 1),
-(6, 'dwes', 'dwes@drinks.com', '$2y$12$jlMRS8nLajav5HcDa13f2OONhupk9OmQ2ZTl/KyqVgGALJRI9k/xO', 'SmileFace.png', 2),
-(8, 'newUser', 'mail@gmail.com', '$2y$10$KX8xRJdrfz4hUyrkZV8V8ehiXd.HxZdMhTInf0amrI14GIlLKLSNq', 'defaultAvatar.png', 2);
+INSERT INTO `users` (`id`, `firstName`, `lastName`, `province`, `username`, `email`, `password`, `avatar`, `role`) VALUES
+(1, 'admin', 'SR', 'Province', 'admin', 'admin@drinks.com', '$2y$12$rc.xefNh57cHYvYS74aDEOdBS75uvef6aDk4RyUTSCEQR1CJkAo1W', 'defaultAvatar.png', 1),
+(6, 'Vicent', 'Jorda', 'Pego', 'dwes', 'dwes@drinks.com', '$2y$12$jlMRS8nLajav5HcDa13f2OONhupk9OmQ2ZTl/KyqVgGALJRI9k/xO', 'SmileFace.png', 2),
+(9, 'Aidan', 'Pennell', 'Valencia', 'aidPennell', 'ajpennell@gmail.com', '$2y$10$5m2wsf/QzAYd2VG4tE4gUeilunCO11qAqllbaNA0.9VIvfThpqIWa', 'defaultAvatar.png', 2),
+(12, 'John', 'Pennell', 'Valencia', 'johnPennell', 'johnPennell@gmail.com', '$2y$10$2XksQzQu8dTpusrWSF3IaeyN7GkNlY9JD.nXT5A79ryQTfsYhDcFS', 'defaultAvatar.png', 2);
 
 --
 -- Indexes for dumped tables
@@ -175,7 +179,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables

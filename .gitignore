@@ -1,1 +1,6 @@
 node_modules
+composer.lock
+vendor/composer
+vendor/twig
+vendor/symfony
+vendor/autoload.php

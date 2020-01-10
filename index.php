@@ -1,4 +1,5 @@
 <?php
+//TODO my drinks page shows pagination even when the user has no drinks
 
 use App\DBConnect;
 use App\Model\DrinkModel;
