@@ -78,8 +78,11 @@
       "id": "number"
     }
   },
-  "drinks/user/admin/users": {
+  "drinks/user/admin/users/:id": {
     "controller": "User",
-    "method": "userManagement"
+    "method": "userManagement",
+    "params": {
+      "id": "number"
+    }
   }
 }

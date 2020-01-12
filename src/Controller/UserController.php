@@ -18,6 +18,45 @@ use App\Exceptions\ExceptionUsernameExists;
 
 class UserController extends AbstractController
 {
+    private function getDefaultTwigProperties():array{
+        if (isset($_SESSION['loggedin'])) {
+            $sessionInfo = [
+                "loggedIn" => true,
+                "sessionId" => $_SESSION['id']
+            ];
+            if($_SESSION['role']==1) {
+                $isAdmin = ["isAdmin" => true];
+            }else{
+                $isAdmin = ["isAdmin" => false];
+            }
+            $username = ["username" => $_SESSION['name']];
+        }else {
+            $sessionInfo = ["loggedIn" => false];
+            $isAdmin = ["isAdmin" => false];
+            $username = ["username" => null];
+        }
+        return array_merge($isAdmin, $sessionInfo, $username);
+    }
+    private function createPages(array $users, int $usersPerPage):array {
+        $pages = [];
+
+        $page = [];
+        foreach ($users as $user) {
+            array_push($page, $user);
+            if (count($page) == $usersPerPage) {
+                array_push($pages, $page);
+                $page = [];
+            }
+        }
+        //create a final page with left over drinks if there are any due to pagination
+        if(!empty($page)){
+            array_push($pages, $page);
+        }
+
+        return $pages;
+    }
+
+
     /*
      * LOGIN
      */
@@ -152,7 +191,7 @@ class UserController extends AbstractController
     /*
      * USER MANAGEMENT
      */
-    public function userManagement()
+    public function userManagement($currentPagi)
     {
         if (!isset($_SESSION['loggedin'])) {
             header('Location: /drinks/login');
@@ -162,7 +201,68 @@ class UserController extends AbstractController
             header('Location: /drinks/login');
             exit();
         }
-        $view = "<br><br><br>Coming soon...";
+        try {
+            //Using the Model for our drinks, I get all of the drinks with the same category
+            $dm = new DrinkModel($this->db);
+            $um = new UserModel($this->db);
+
+            $userFilter = filter_input(INPUT_GET, 'userFilter', FILTER_SANITIZE_SPECIAL_CHARS);
+
+            if($userFilter == "admin"){
+                $allUsers = $um->getAll();
+                $users = [];
+                foreach ($allUsers as $user){
+                    if($user->getRole() == 1){
+                        array_push($users, $user);
+                    }
+                }
+            }elseif ($userFilter == "user"){
+                $allUsers = $um->getAll();
+                $users = [];
+                foreach ($allUsers as $user){
+                    if($user->getRole() == 2){
+                        array_push($users, $user);
+                    }
+                }
+            }else{
+                $users = $um->getAll();
+            }
+
+            $pages = $this->createPages($users, 7);
+
+            if($currentPagi < 1 || !isset($currentPagi)){
+                $currentPagi = 1;
+            }
+            if($currentPagi > count($pages)){
+                $currentPagi = count($pages);
+            }
+
+            //Get the query array and turn it into string
+            $str = $_SERVER['QUERY_STRING'];
+            parse_str($str, $queryArray);
+            $keys = array_keys($queryArray);
+            $i = 0;
+            $queryString = "";
+            foreach ($queryArray as $item){
+                $queryString .= $keys[$i] . "=" . $item . "&";
+                $i++;
+            }
+            $queryString = substr($queryString, 0, -1);
+            $queryString = "?".$queryString;
+
+
+            $subProperties= [
+                "pages" => $pages,
+                "currentPagi" => $currentPagi,
+                "queryString" => $queryString
+            ];
+            $properties = array_merge($this->getDefaultTwigProperties(), $subProperties);
+            return $this->render('users.twig', $properties);
+
+        } Catch (PDOException $err) {
+            // Mostrem un missatge genèric d'error.
+            echo "Error: executant consulta SQL.";
+        }
         require("views/users.view.php");
     }
 

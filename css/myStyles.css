@@ -150,3 +150,9 @@ form button:hover {
 .send {
     width: 100%;
 }
+
+
+/*User management*/
+.usersTable {
+    width: 100%;
+}
