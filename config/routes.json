@@ -84,5 +84,19 @@
     "params": {
       "id": "number"
     }
+  },
+  "drinks/user/admin/users/changeRole/:id": {
+    "controller": "User",
+    "method": "changeRole",
+    "params": {
+      "id": "number"
+    }
+  },
+  "drinks/user/admin/users/deleteUser/:id": {
+    "controller": "User",
+    "method": "deleteUser",
+    "params": {
+      "id": "number"
+    }
   }
 }

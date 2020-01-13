@@ -175,7 +175,45 @@ class UserModel{
             $stmt->bindParam(':password', $password, PDO::PARAM_STR);
             $stmt->bindParam(':avatar', $avatar, PDO::PARAM_STR);
             $stmt->execute();
-            echo $stmt->rowCount();
+            $stmt = null;
+
+            return true;
+        }
+        catch (PDOException $err) {
+            return false;
+        }
+    }
+
+    function changeRole(User $user):bool
+    {
+        try{
+            if ($user->getRole() == 1) {
+                $newRole = 2;
+            } elseif($user->getRole() == 2) {
+                $newRole = 1;
+            }
+
+            $stmt = $this->pdo->prepare('UPDATE users SET role = :role WHERE id = :id');
+            $stmt->bindValue(':role', $newRole, PDO::PARAM_INT);
+            $stmt->bindValue(':id', $user->getId(), PDO::PARAM_INT);
+            $stmt->execute();
+            $stmt = null;
+
+            return true;
+        }
+        catch (PDOException $err) {
+            return false;
+        }
+    }
+
+    function delete(User $user):bool
+    {
+        try{
+
+
+            $stmt = $this->pdo->prepare('DELETE from users WHERE id = :id');
+            $stmt->bindValue(':id', $user->getId(), PDO::PARAM_INT);
+            $stmt->execute();
             $stmt = null;
 
             return true;

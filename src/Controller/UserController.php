@@ -250,7 +250,6 @@ class UserController extends AbstractController
             $queryString = substr($queryString, 0, -1);
             $queryString = "?".$queryString;
 
-
             $subProperties= [
                 "pages" => $pages,
                 "currentPagi" => $currentPagi,
@@ -433,5 +432,81 @@ class UserController extends AbstractController
         }
 
         require("views/changeAvatar.view.php");
+    }
+
+    /*
+     * CHANGE ROLE
+     */
+    public function changeRole($id){
+        try {
+            // If the user is not logged in redirect to the login page...
+            if (!isset($_SESSION['loggedin'])) {
+                header('Location: /drinks/login');
+                exit();
+            }
+
+            $um = new UserModel($this->db);
+
+            //Get all drink IDs and test the given post ID to see if it exists
+            $allUsers = $um->getAll();
+            $allIds =[];
+            foreach ($allUsers as $user){
+                array_push($allIds, $user->getId());
+            }
+            if (!in_array($id, $allIds)) {
+                header("Location: /drinks/user/admin/users/1");
+                exit();
+            }
+
+            $user = $um->getUserById($id);
+
+            if($_SESSION['id'] != $user->getId()){
+                $um->changeRole($user);
+            }
+
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
+    }
+
+
+    /*
+     * DELETE USER
+     */
+    public function deleteUser($id){
+        try {
+            // If the user is not logged in redirect to the login page...
+            if (!isset($_SESSION['loggedin'])) {
+                header('Location: /drinks/login');
+                exit();
+            }
+
+            $um = new UserModel($this->db);
+            $dm = new DrinkModel($this->db);
+
+            //Get all drink IDs and test the given post ID to see if it exists
+            $allUsers = $um->getAll();
+            $allIds =[];
+            foreach ($allUsers as $user){
+                array_push($allIds, $user->getId());
+            }
+            if (!in_array($id, $allIds)) {
+                header("Location: /drinks/user/admin/users/1");
+                exit();
+            }
+
+            $user = $um->getUserById($id);
+
+            if($dm->getAllByAuthorId($user->getId()) == NULL && $_SESSION['id'] != $user->getId()){
+                $um->delete($user);
+            }
+
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+
+        } catch (PDOException $e) {
+            echo 'Error: ' . $e->getMessage();
+        }
     }
 }
