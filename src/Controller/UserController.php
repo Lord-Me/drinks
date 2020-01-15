@@ -117,6 +117,8 @@ class UserController extends AbstractController
 
     public function logout()
     {
+        session_unset();
+        setcookie(session_name(), '', time() - 3600);
         session_destroy();
         header('Location: /drinks');
     }

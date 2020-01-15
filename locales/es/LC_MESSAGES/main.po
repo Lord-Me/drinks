@@ -1,0 +1,42 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: 2020-01-15 04:43-0500\n"
+"PO-Revision-Date: 2020-01-15 05:15-0500\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.0.6\n"
+"X-Poedit-Basepath: ../../..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: templates_php\n"
+"X-Poedit-SearchPath-1: templates\n"
+"X-Poedit-SearchPath-2: partials\n"
+"X-Poedit-SearchPath-3: views\n"
+
+#: templates_php/fe/feffc9d37184e6260b31d05052e0d5279188662292ae0070ecef414ebded82ab.php:81
+msgid "User Management"
+msgstr "Control De Usuários"
+
+#: templates_php/fe/feffc9d37184e6260b31d05052e0d5279188662292ae0070ecef414ebded82ab.php:97
+msgid "Sign Up"
+msgstr "Registrar"
+
+#: templates_php/fe/feffc9d37184e6260b31d05052e0d5279188662292ae0070ecef414ebded82ab.php:103
+msgid "Log In"
+msgstr "Iniciar Sesión"
+
+#: templates_php/fe/feffc9d37184e6260b31d05052e0d5279188662292ae0070ecef414ebded82ab.php:112
+msgid "My Drinks"
+msgstr "Mis Bebidas"
+
+#: templates_php/fe/feffc9d37184e6260b31d05052e0d5279188662292ae0070ecef414ebded82ab.php:122
+msgid "%username% profile"
+msgstr "perfil %username%"
+
+#: templates_php/fe/feffc9d37184e6260b31d05052e0d5279188662292ae0070ecef414ebded82ab.php:128
+msgid "Log Out"
+msgstr "Cerrar Sessión"

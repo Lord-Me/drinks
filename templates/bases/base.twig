@@ -37,7 +37,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         {% if isAdmin == true %}
-            <a class="navbar-brand" href = "/drinks/user/admin/users/1" > User Management </a >
+            <a class="navbar-brand" href = "/drinks/user/admin/users/1" >{% trans %} User Management {% endtrans %}</a >
             <button class="navbar-toggler" type = "button" data - toggle = "collapse" data - target = "#navbarResponsive" aria - controls = "navbarResponsive" aria - expanded = "false" aria - label = "Toggle navigation" >
                 <span class="navbar-toggler-icon" ></span >
             </button >
@@ -46,25 +46,25 @@
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/drinks/register">Sign Up</a>
+                        <a class="nav-link" href="/drinks/register">{% trans "Sign Up" %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/drinks/login">Log In</a>
+                        <a class="nav-link" href="/drinks/login">{% trans "Log In" %}</a>
                     </li>
                 </ul>
             </div>
         {% else %}
-            <a class="navbar-brand" href="/drinks/user/myDrinks/1">My Drinks</a>
+            <a class="navbar-brand" href="/drinks/user/myDrinks/1">{% trans "My Drinks" %}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/drinks/user/profile">{{ username }} Profile</a>
+                        <a class="nav-link" href="/drinks/user/profile">{% trans %} {{ username }} profile {% endtrans %}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/drinks/user/logout">Log Out</a>
+                        <a class="nav-link" href="/drinks/user/logout">{% trans "Log Out" %}</a>
                     </li>
                 </ul>
             </div>
@@ -76,7 +76,7 @@
 <!-- Footer -->
 <footer class="py-5 bg-black" style="    max-height: 100px;">
     <div class="container">
-        <p class="m-0 text-center text-white small">Copyright &copy; Your Website 2019</p>
+        <p class="m-0 text-center text-white small">Copyright &copy; Cocktails - Aidan 2019</p>
     </div>
     <!-- /.container -->
 </footer>
