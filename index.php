@@ -31,6 +31,14 @@ $twig->addGlobal('router', new Router(new \App\Utils\DependencyInjector()));
 //l'incloem al contenidor de serveis
 $di->set('Twig', $twig);
 
+// GETTEXT
+bindtextdomain('main', 'locales');
+bind_textdomain_codeset('main', 'UTF-8');
+textdomain('main');
+
+putenv('LANGUAGE=es');
+echo gettext("Sign Up");
+
 $request = new Request();
 
 //var_dump($request);
