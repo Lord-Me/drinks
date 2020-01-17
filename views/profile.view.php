@@ -51,15 +51,31 @@ if (isset($_SESSION['loggedin'])) {
                         <tr>
                             <td><a href="/drinks/user/profile/changePassword" >Change Password</a></td>
                         </tr>
+                        <tr>
+                            <td>Language:</td>
+                            <td><?=$userInfo->getLanguage();?></td>
+                        </tr>
                     </table>
                     <a href="#" onclick="showForm()">Change language</a>
                     <form id="hiddenForm" method="post" action="#">
                         <select name="language">
-                            <option value="english">English</option>
-                            <option value="spanish">Español</option>
-                            <option value="valencian">Valencià/Català</option>
+                            <?php
+                                if($userInfo->getLanguage() == "es"){
+                                    echo   "<option value='en'>English</option>
+                                            <option value='es' selected='selected'>Español</option>
+                                            <option value='ca'>Valencià/Català</option>";
+                                }elseif($userInfo->getLanguage() == "ca"){
+                                    echo   "<option value='en'>English</option>
+                                            <option value='es'>Español</option>
+                                            <option value='ca' selected='selected'>Valencià/Català</option>";
+                                }else{
+                                    echo   "<option value='en'>English</option>
+                                            <option value='es'>Español</option>
+                                            <option value='ca'>Valencià/Català</option>";
+                                }
+                            ?>
                         </select>
-                        <input type="submit" value="Canviar Idioma">
+                        <input type="submit" name="submit" value="Canviar Idioma">
                     </form>
                 </div>
             </div>

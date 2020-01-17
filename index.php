@@ -31,126 +31,20 @@ $twig->addGlobal('router', new Router(new \App\Utils\DependencyInjector()));
 //l'incloem al contenidor de serveis
 $di->set('Twig', $twig);
 
+if(isset($_SESSION['language'])){
+    putenv('LANGUAGE='.$_SESSION['language']);
+}else {
+    putenv('LANGUAGE=uk');
+}
+
 // GETTEXT
 bindtextdomain('main', 'locales');
 bind_textdomain_codeset('main', 'UTF-8');
 textdomain('main');
 
-putenv('LANGUAGE=es');
-echo gettext("Sign Up");
 
 $request = new Request();
 
 //var_dump($request);
 $route = new Router($di);
 echo $route->route($request);
-
-$action = $_GET['action'] ?? "indexARR";
-
-//echo $_SERVER['REQUEST_URI'];
-//echo $_SERVER['QUERY_STRING'];
-
-
-
-$page = filter_input(INPUT_GET, 'page', FILTER_SANITIZE_STRING)??"index";
-switch ($page) {
-    /*
-     * INDEX
-     */
-    case "index":
-        break;
-
-    /*
-     * DRINKS
-     */
-    case "drinks":
-        break;
-
-    /*
-     * DRINK
-     */
-    case "drink":
-        break;
-
-    /*
-     * GESTION DE USUARIOS
-     */
-    case "users":
-        break;
-
-    /*
-     * LOGIN
-     */
-    case "login":
-        break;
-
-    /*
-     * LOGOUT
-     */
-    case "logout":
-        break;
-
-    /*
-     * REGISTER
-     */
-    case "register":
-        break;
-
-    /*
-     * SUCCESSFUL REGISTER
-     */
-    case "successfulRegister":
-        break;
-
-
-    /*
-     * USER PAGE
-     */
-    case "user":
-        break;
-
-    /*
-     * CHANGE PASSWORD
-     */
-    case "changePassword":
-        break;
-
-    /*
-     * successfulPasswordChange
-     */
-    case "successfulPasswordChange":
-        break;
-
-    /*
-     * Change Avatar
-     */
-    case "changeAvatar":
-        break;
-
-    /*
-     * My Drinks
-     */
-    case "myDrinks":
-        break;
-
-
-    /*
-     * ADD NEW DRINK
-     */
-    case "newDrink":
-        break;
-
-    case "editDrink":
-        break;
-
-    case "deleteDrink": case "undeleteDrink":
-        break;
-
-    /*
-     * DEFAULT 404
-     */
-    default:
-          require("views/error.view.php");
-          break;
-
-}

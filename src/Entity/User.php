@@ -13,6 +13,23 @@ class User
     private $password;
     private $avatar;
     private $role;
+    private $language;
+
+    /**
+     * @return mixed
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * @param mixed $language
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+    }
 
     /**
      * @return mixed

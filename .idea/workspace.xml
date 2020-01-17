@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="23c4d5b8-9c93-4bf0-a230-ff61289df2da" name="Default Changelist" comment="">
+    <list default="true" id="66524342-9c04-40c5-908d-633f26a2a9cc" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/drinks.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/drinks.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/locales/es/LC_MESSAGES/main.mo" beforeDir="false" afterPath="$PROJECT_DIR$/locales/es/LC_MESSAGES/main.mo" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/locales/es/LC_MESSAGES/main.po" beforeDir="false" afterPath="$PROJECT_DIR$/locales/es/LC_MESSAGES/main.po" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/partials/navigation.partials.php" beforeDir="false" afterPath="$PROJECT_DIR$/partials/navigation.partials.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/partials/navigationLoggedIn.partials.php" beforeDir="false" afterPath="$PROJECT_DIR$/partials/navigationLoggedIn.partials.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/bases/base.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/bases/base.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/views/profile.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/profile.view.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution>
       <executable />
@@ -19,19 +30,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="XAMPP">
+  <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/twig/twig" />
       <path value="$PROJECT_DIR$/vendor/composer" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
-      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
-      <path value="$PROJECT_DIR$/vendor/bootstrap/js" />
       <path value="$PROJECT_DIR$/vendor/bootstrap/css" />
+      <path value="$PROJECT_DIR$/vendor/bootstrap/js" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-mbstring" />
       <path value="$PROJECT_DIR$/vendor/twig/extensions" />
     </include_path>
   </component>
-  <component name="ProjectId" id="1TZc9HfpcUsxa78hhnxC9tJbrGR" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="1WWGcTgyEdDhWeetT55bzn9gbi2" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -39,22 +49,8 @@
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/Exceptions" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
-  </component>
-  <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/Exceptions" />
-      <recent name="C:\xampp\htdocs\drinks\templates" />
-      <recent name="$PROJECT_DIR$/views" />
-      <recent name="C:\xampp\htdocs\drinks\views" />
-    </key>
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/css" />
-      <recent name="$PROJECT_DIR$/vendor/bootstrap/css/img" />
-    </key>
   </component>
   <component name="ServiceViewManager">
     <option name="viewStates">
@@ -73,212 +69,26 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="23c4d5b8-9c93-4bf0-a230-ff61289df2da" name="Default Changelist" comment="" />
-      <created>1573670913806</created>
+      <changelist id="66524342-9c04-40c5-908d-633f26a2a9cc" name="Default Changelist" comment="" />
+      <created>1579258018083</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1573670913806</updated>
-      <workItem from="1573670949785" duration="10920000" />
-      <workItem from="1573716638486" duration="9284000" />
-      <workItem from="1573730970997" duration="5272000" />
-      <workItem from="1573803370171" duration="288000" />
-      <workItem from="1573903057242" duration="173000" />
-      <workItem from="1573903247801" duration="12769000" />
-      <workItem from="1573927490053" duration="275000" />
-      <workItem from="1574015278270" duration="14716000" />
-      <workItem from="1574061681010" duration="16201000" />
-      <workItem from="1574147454885" duration="59000" />
-      <workItem from="1574147515956" duration="16809000" />
-      <workItem from="1574233853203" duration="49000" />
-      <workItem from="1574233904048" duration="19898000" />
-      <workItem from="1574275331449" duration="5266000" />
-      <workItem from="1574284620514" duration="31000" />
-      <workItem from="1574333924286" duration="10025000" />
-      <workItem from="1574367498096" duration="6267000" />
-      <workItem from="1574449812703" duration="294000" />
-      <workItem from="1574450130111" duration="10667000" />
-      <workItem from="1576694054086" duration="226000" />
-      <workItem from="1576694293912" duration="209000" />
-      <workItem from="1576695086481" duration="10019000" />
-      <workItem from="1576758192515" duration="886000" />
-      <workItem from="1578388253324" duration="4566000" />
-      <workItem from="1578474255740" duration="2716000" />
-      <workItem from="1578478791207" duration="24000" />
-      <workItem from="1578478841183" duration="1406000" />
-      <workItem from="1578553881840" duration="6000" />
-      <workItem from="1578571021845" duration="602000" />
-      <workItem from="1578572952960" duration="63000" />
-      <workItem from="1578573018145" duration="1186000" />
-      <workItem from="1578654088450" duration="6902000" />
-      <workItem from="1578914277552" duration="175000" />
-      <workItem from="1578914456255" duration="6489000" />
-      <workItem from="1578992712662" duration="1160000" />
-      <workItem from="1579074103432" duration="6311000" />
-      <workItem from="1579163414573" duration="1198000" />
-      <workItem from="1579170309048" duration="2395000" />
+      <updated>1579258018083</updated>
+      <workItem from="1579258026866" duration="4416000" />
     </task>
-    <task id="LOCAL-00001" summary="Change password">
-      <created>1573716999809</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1573716999810</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Change password">
-      <created>1573727220764</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1573727220764</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Done drinks filters&#10;Added user filter link to drink page">
-      <created>1573772421287</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1573772421287</updated>
-    </task>
-    <task id="LOCAL-00004" summary="Done drinks filters&#10;Added user filter link to drink page">
-      <created>1573803462877</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1573803462877</updated>
-    </task>
-    <task id="LOCAL-00005" summary="Did pagination">
-      <created>1573917053772</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1573917053772</updated>
-    </task>
-    <task id="LOCAL-00006" summary="Stuff in class">
-      <created>1574082755431</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1574082755431</updated>
-    </task>
-    <task id="LOCAL-00007" summary="Nearly done. New TODOs and need to finish url managing on drinks and myDrinks">
-      <created>1574248269149</created>
-      <option name="number" value="00007" />
-      <option name="presentableId" value="LOCAL-00007" />
-      <option name="project" value="LOCAL" />
-      <updated>1574248269149</updated>
-    </task>
-    <task id="LOCAL-00008" summary="Nearly done. New TODOs and need to finish url managing on drinks and myDrinks">
-      <created>1574284579586</created>
-      <option name="number" value="00008" />
-      <option name="presentableId" value="LOCAL-00008" />
-      <option name="project" value="LOCAL" />
-      <updated>1574284579586</updated>
-    </task>
-    <task id="LOCAL-00009" summary="Nearly done. New TODOs and need to finish url managing on drinks and myDrinks">
-      <created>1574344396803</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1574344396803</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Finished many TODOs&#10;Still got to finish a few and get images to delete correctly">
-      <created>1574374649196</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1574374649196</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Done-ish">
-      <created>1574461312032</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1574461312032</updated>
-    </task>
-    <task id="LOCAL-00012" summary="Added login drink function">
-      <created>1578655232271</created>
-      <option name="number" value="00012" />
-      <option name="presentableId" value="LOCAL-00012" />
-      <option name="project" value="LOCAL" />
-      <updated>1578655232271</updated>
-    </task>
-    <task id="LOCAL-00013" summary="Added login drink function">
-      <created>1578661903435</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1578661903435</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Added login drink function">
-      <created>1578921087003</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1578921087003</updated>
-    </task>
-    <task id="LOCAL-00015" summary="Did twig and translation stuff. Poedit">
-      <created>1579083516542</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1579083516542</updated>
-    </task>
-    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
-          </value>
-        </entry>
-      </map>
-    </option>
-  </component>
-  <component name="VcsManagerConfiguration">
-    <MESSAGE value="Change password" />
-    <MESSAGE value="Done drinks filters&#10;Added user filter link to drink page" />
-    <MESSAGE value="Did pagination" />
-    <MESSAGE value="Stuff in class" />
-    <MESSAGE value="Nearly done. New TODOs and need to finish url managing on drinks and myDrinks" />
-    <MESSAGE value="Finished many TODOs&#10;Still got to finish a few and get images to delete correctly" />
-    <MESSAGE value="Done-ish" />
-    <MESSAGE value="Added login drink function" />
-    <MESSAGE value="Did twig and translation stuff. Poedit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Did twig and translation stuff. Poedit" />
-  </component>
   <component name="WindowStateProjectService">
-    <state x="494" y="169" width="443" height="561" key="#com.intellij.ide.util.MemberChooser" timestamp="1578656302418">
+    <state x="494" y="169" width="443" height="561" key="#com.intellij.ide.util.MemberChooser" timestamp="1579258464243">
       <screen x="0" y="28" width="1440" height="844" />
     </state>
-    <state x="494" y="169" width="443" height="561" key="#com.intellij.ide.util.MemberChooser/0.28.1440.844@0.28.1440.844" timestamp="1578656302418" />
-    <state x="285" y="47" width="862" height="806" key="CommitChangelistDialog2" timestamp="1579180622771">
+    <state x="494" y="169" width="443" height="561" key="#com.intellij.ide.util.MemberChooser/0.28.1440.844@0.28.1440.844" timestamp="1579258464243" />
+    <state x="285" y="47" width="862" height="806" key="CommitChangelistDialog2" timestamp="1579262472833">
       <screen x="0" y="28" width="1440" height="844" />
     </state>
-    <state x="285" y="47" width="862" height="806" key="CommitChangelistDialog2/0.28.1440.844@0.28.1440.844" timestamp="1579180622771" />
-    <state x="503" y="208" width="426" height="483" key="FileChooserDialogImpl" timestamp="1578478812288">
-      <screen x="0" y="28" width="1440" height="844" />
-    </state>
-    <state x="503" y="208" width="426" height="483" key="FileChooserDialogImpl/0.28.1440.844@0.28.1440.844" timestamp="1578478812288" />
-    <state x="515" y="376" width="401" height="148" key="NewPhpFileDialog" timestamp="1579079651808">
-      <screen x="0" y="28" width="1440" height="844" />
-    </state>
-    <state x="515" y="376" width="401" height="148" key="NewPhpFileDialog/0.28.1440.844@0.28.1440.844" timestamp="1579079651808" />
-    <state x="315" y="186" width="802" height="527" key="Vcs.Push.Dialog.v2" timestamp="1579180628605">
-      <screen x="0" y="28" width="1440" height="844" />
-    </state>
-    <state x="315" y="186" width="802" height="527" key="Vcs.Push.Dialog.v2/0.28.1440.844@0.28.1440.844" timestamp="1579180628605" />
-  </component>
-  <component name="XPathView.XPathProjectComponent">
-    <history />
-    <find-history>
-      <element expression="background-image" />
-    </find-history>
+    <state x="285" y="47" width="862" height="806" key="CommitChangelistDialog2/0.28.1440.844@0.28.1440.844" timestamp="1579262472833" />
   </component>
 </project>

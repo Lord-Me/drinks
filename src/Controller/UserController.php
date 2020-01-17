@@ -96,6 +96,7 @@ class UserController extends AbstractController
                         $_SESSION['name'] = $_POST['username'];
                         $_SESSION['id'] = $user->getId();
                         $_SESSION['role'] = $user->getRole();
+                        $_SESSION['language'] = $user->getLanguage();
                         header('Location: /drinks');
                     } else {
                         array_push($errorText, 'Incorrect password!');
@@ -278,21 +279,21 @@ class UserController extends AbstractController
             exit();
         }
 
+        $um = new UserModel($this->db);
 
-        $connection = new DBConnect();
-        $pdo = $connection->getConnection();
+        $userInfo = $um->getUserById($_SESSION['id']);
 
-        $um = new UserModel($pdo);
+        if(isset($_POST['submit'])){
+            $language = filter_input(INPUT_POST, "language", FILTER_SANITIZE_STRING);
+            echo $language;
+            $userInfo->setLanguage($language);
 
-        try {
-            $connection = new DBConnect();
-            $pdo = $connection->getConnection();
-            $um = new UserModel($pdo);
+            $um->update($userInfo, $_SESSION['id']);
 
-            $userInfo = $um->getUserById($_SESSION['id']);
-        } catch (PDOException $err) {
-            echo "Error";
+            //header("Location: /drinks/user/profile");
         }
+
+
 
         require("views/profile.view.php");
     }
