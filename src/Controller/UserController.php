@@ -91,6 +91,7 @@ class UserController extends AbstractController
                     // Note: remember to use password_hash in your registration file to store the hashed passwords.
                     if (password_verify($_POST['password'], $user->getPassword())) {
                         // Verification success! User has loggedin!
+                        ini_set( 'session.cookie_httponly', 1 ); //TODO http only coookies
                         session_regenerate_id();
                         $_SESSION['loggedin'] = TRUE;
                         $_SESSION['name'] = $_POST['username'];
@@ -283,17 +284,20 @@ class UserController extends AbstractController
 
         $userInfo = $um->getUserById($_SESSION['id']);
 
-        if(isset($_POST['submit'])){
+        if(isset($_POST['submit'])){ //TODO returns to en after refresh
             $language = filter_input(INPUT_POST, "language", FILTER_SANITIZE_STRING);
-            echo $language;
             $userInfo->setLanguage($language);
 
-            $um->update($userInfo, $_SESSION['id']);
+            if(!$um->update($userInfo, $_SESSION['id'])){
+                echo "error";
+            }
+
+            echo $um->getUserById($_SESSION["id"])->getLanguage();
+
+            //$_SESSION["language"] = $userInfo->getLanguage();
 
             //header("Location: /drinks/user/profile");
         }
-
-
 
         require("views/profile.view.php");
     }

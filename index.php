@@ -1,5 +1,9 @@
 <?php
 //TODO my drinks page shows pagination even when the user has no drinks
+//TODO session regenerate every 15 min
+
+//$2y$12$K1lggcRKGKv6txa5GfokG.3VydiMlj56tuRp6MOP5CFaBpl8qou7u
+//$2y$10$Dx1ISCFDvOsmtc7EKjVV.uU15iPKFmXKU.ZlYs6cFuG/zHeXmTeOC
 
 use App\DBConnect;
 use App\Model\DrinkModel;

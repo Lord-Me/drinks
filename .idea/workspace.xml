@@ -2,26 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="66524342-9c04-40c5-908d-633f26a2a9cc" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/deployment.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/drinks.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/drinks.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/locales/es/LC_MESSAGES/main.mo" beforeDir="false" afterPath="$PROJECT_DIR$/locales/es/LC_MESSAGES/main.mo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/locales/es/LC_MESSAGES/main.po" beforeDir="false" afterPath="$PROJECT_DIR$/locales/es/LC_MESSAGES/main.po" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/partials/navigation.partials.php" beforeDir="false" afterPath="$PROJECT_DIR$/partials/navigation.partials.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/partials/navigationLoggedIn.partials.php" beforeDir="false" afterPath="$PROJECT_DIR$/partials/navigationLoggedIn.partials.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/bases/base.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/bases/base.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/views/profile.view.php" beforeDir="false" afterPath="$PROJECT_DIR$/views/profile.view.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution>
       <executable />
@@ -50,6 +40,7 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../my_project" />
     <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
   </component>
   <component name="ServiceViewManager">
@@ -74,21 +65,42 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1579258018083</updated>
-      <workItem from="1579258026866" duration="4416000" />
+      <workItem from="1579258026866" duration="5048000" />
+      <workItem from="1579676951860" duration="6972000" />
     </task>
+    <task id="LOCAL-00001" summary="Language select">
+      <created>1579262476606</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1579262476606</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Language select" />
+    <option name="LAST_COMMIT_MESSAGE" value="Language select" />
   </component>
   <component name="WindowStateProjectService">
     <state x="494" y="169" width="443" height="561" key="#com.intellij.ide.util.MemberChooser" timestamp="1579258464243">
       <screen x="0" y="28" width="1440" height="844" />
     </state>
     <state x="494" y="169" width="443" height="561" key="#com.intellij.ide.util.MemberChooser/0.28.1440.844@0.28.1440.844" timestamp="1579258464243" />
-    <state x="285" y="47" width="862" height="806" key="CommitChangelistDialog2" timestamp="1579262472833">
+    <state x="285" y="47" width="862" height="806" key="CommitChangelistDialog2" timestamp="1579691950017">
       <screen x="0" y="28" width="1440" height="844" />
     </state>
-    <state x="285" y="47" width="862" height="806" key="CommitChangelistDialog2/0.28.1440.844@0.28.1440.844" timestamp="1579262472833" />
+    <state x="285" y="47" width="862" height="806" key="CommitChangelistDialog2/0.28.1440.844@0.28.1440.844" timestamp="1579691950017" />
+    <state x="503" y="208" width="426" height="483" key="FileChooserDialogImpl" timestamp="1579685965413">
+      <screen x="0" y="28" width="1440" height="844" />
+    </state>
+    <state x="503" y="208" width="426" height="483" key="FileChooserDialogImpl/0.28.1440.844@0.28.1440.844" timestamp="1579685965413" />
+    <state x="315" y="186" width="802" height="527" key="Vcs.Push.Dialog.v2" timestamp="1579262484467">
+      <screen x="0" y="28" width="1440" height="844" />
+    </state>
+    <state x="315" y="186" width="802" height="527" key="Vcs.Push.Dialog.v2/0.28.1440.844@0.28.1440.844" timestamp="1579262484467" />
   </component>
 </project>
