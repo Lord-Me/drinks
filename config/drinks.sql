@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 10, 2020 at 02:10 PM
+-- Generation Time: Jan 22, 2020 at 12:51 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -115,18 +115,19 @@ CREATE TABLE `users` (
   `email` varchar(40) COLLATE utf8_spanish2_ci NOT NULL,
   `password` varchar(100) COLLATE utf8_spanish2_ci NOT NULL,
   `avatar` varchar(50) COLLATE utf8_spanish2_ci NOT NULL DEFAULT 'defaultAvatar.png',
-  `role` int(11) NOT NULL DEFAULT 2
+  `role` int(11) NOT NULL DEFAULT 2,
+  `language` varchar(2) COLLATE utf8_spanish2_ci NOT NULL DEFAULT 'en'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `firstName`, `lastName`, `province`, `username`, `email`, `password`, `avatar`, `role`) VALUES
-(1, 'admin', 'SR', 'Province', 'admin', 'admin@drinks.com', '$2y$12$rc.xefNh57cHYvYS74aDEOdBS75uvef6aDk4RyUTSCEQR1CJkAo1W', 'defaultAvatar.png', 1),
-(6, 'Vicent', 'Jorda', 'Pego', 'dwes', 'dwes@drinks.com', '$2y$12$jlMRS8nLajav5HcDa13f2OONhupk9OmQ2ZTl/KyqVgGALJRI9k/xO', 'SmileFace.png', 2),
-(9, 'Aidan', 'Pennell', 'Valencia', 'aidPennell', 'ajpennell@gmail.com', '$2y$10$5m2wsf/QzAYd2VG4tE4gUeilunCO11qAqllbaNA0.9VIvfThpqIWa', 'defaultAvatar.png', 2),
-(12, 'John', 'Pennell', 'Valencia', 'johnPennell', 'johnPennell@gmail.com', '$2y$10$2XksQzQu8dTpusrWSF3IaeyN7GkNlY9JD.nXT5A79ryQTfsYhDcFS', 'defaultAvatar.png', 2);
+INSERT INTO `users` (`id`, `firstName`, `lastName`, `province`, `username`, `email`, `password`, `avatar`, `role`, `language`) VALUES
+(1, 'admin', 'SR', 'Province', 'admin', 'admin@drinks.com', '$2y$12$K1lggcRKGKv6txa5GfokG.3VydiMlj56tuRp6MOP5CFaBpl8qou7u', 'defaultAvatar.png', 1, 'en'),
+(6, 'Vicent', 'Jorda', 'Pego', 'dwes', 'dwes@drinks.com', '$2y$12$po6HvhxwAxIwHRLuBqeaOOjCGhJrDZhT0KktgCjpX/WHBlDx/Ep9i', 'SmileFace.png', 2, 'en'),
+(9, 'Aidan', 'Pennell', 'Valencia', 'aidPennell', 'ajpennell@gmail.com', '$2y$10$5m2wsf/QzAYd2VG4tE4gUeilunCO11qAqllbaNA0.9VIvfThpqIWa', 'defaultAvatar.png', 2, 'en'),
+(12, 'John', 'Pennell', 'Valencia', 'johnPennell', 'johnPennell@gmail.com', '$2y$10$2XksQzQu8dTpusrWSF3IaeyN7GkNlY9JD.nXT5A79ryQTfsYhDcFS', 'defaultAvatar.png', 2, 'en');
 
 --
 -- Indexes for dumped tables
