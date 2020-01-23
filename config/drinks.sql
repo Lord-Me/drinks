@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 22, 2020 at 12:51 PM
+-- Generation Time: Jan 23, 2020 at 02:07 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -124,7 +124,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `firstName`, `lastName`, `province`, `username`, `email`, `password`, `avatar`, `role`, `language`) VALUES
-(1, 'admin', 'SR', 'Province', 'admin', 'admin@drinks.com', '$2y$12$K1lggcRKGKv6txa5GfokG.3VydiMlj56tuRp6MOP5CFaBpl8qou7u', 'defaultAvatar.png', 1, 'en'),
+(1, 'admin', 'SR', 'Province', 'admin', 'admin@drinks.com', '$2y$12$K1lggcRKGKv6txa5GfokG.3VydiMlj56tuRp6MOP5CFaBpl8qou7u', 'defaultAvatar.png', 1, 'es'),
 (6, 'Vicent', 'Jorda', 'Pego', 'dwes', 'dwes@drinks.com', '$2y$12$po6HvhxwAxIwHRLuBqeaOOjCGhJrDZhT0KktgCjpX/WHBlDx/Ep9i', 'SmileFace.png', 2, 'en'),
 (9, 'Aidan', 'Pennell', 'Valencia', 'aidPennell', 'ajpennell@gmail.com', '$2y$10$5m2wsf/QzAYd2VG4tE4gUeilunCO11qAqllbaNA0.9VIvfThpqIWa', 'defaultAvatar.png', 2, 'en'),
 (12, 'John', 'Pennell', 'Valencia', 'johnPennell', 'johnPennell@gmail.com', '$2y$10$2XksQzQu8dTpusrWSF3IaeyN7GkNlY9JD.nXT5A79ryQTfsYhDcFS', 'defaultAvatar.png', 2, 'en');

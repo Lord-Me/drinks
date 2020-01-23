@@ -49,7 +49,6 @@ if(isset($_SESSION['sessionAge']) && date_diff($_SESSION['sessionAge'], $now)->i
     session_regenerate_id();
     $_SESSION['sessionAge'] = new DateTime();
 }
-echo session_id();
 
 $request = new Request();
 

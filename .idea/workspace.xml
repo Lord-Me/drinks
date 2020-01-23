@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="66524342-9c04-40c5-908d-633f26a2a9cc" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/UserController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/UserController.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,7 +66,7 @@
       <workItem from="1579258026866" duration="5048000" />
       <workItem from="1579676951860" duration="8236000" />
       <workItem from="1579764225056" duration="1622000" />
-      <workItem from="1579775444987" duration="5558000" />
+      <workItem from="1579775444987" duration="5770000" />
     </task>
     <task id="LOCAL-00001" summary="Language select">
       <created>1579262476606</created>
@@ -98,7 +96,21 @@
       <option name="project" value="LOCAL" />
       <updated>1579783315464</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Session ID reset">
+      <created>1579784766014</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1579784766014</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Finished Session ID reset and added httpOnly cookies">
+      <created>1579784809385</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1579784809385</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -109,25 +121,27 @@
     <MESSAGE value="Errors..." />
     <MESSAGE value="SQL" />
     <MESSAGE value="Got language working" />
-    <option name="LAST_COMMIT_MESSAGE" value="Got language working" />
+    <MESSAGE value="Session ID reset" />
+    <MESSAGE value="Finished Session ID reset and added httpOnly cookies" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finished Session ID reset and added httpOnly cookies" />
   </component>
   <component name="WindowStateProjectService">
     <state x="494" y="169" width="443" height="561" key="#com.intellij.ide.util.MemberChooser" timestamp="1579258464243">
       <screen x="0" y="28" width="1440" height="844" />
     </state>
     <state x="494" y="169" width="443" height="561" key="#com.intellij.ide.util.MemberChooser/0.28.1440.844@0.28.1440.844" timestamp="1579258464243" />
-    <state x="285" y="47" width="862" height="806" key="CommitChangelistDialog2" timestamp="1579784765867">
+    <state x="285" y="47" width="862" height="806" key="CommitChangelistDialog2" timestamp="1579784809146">
       <screen x="0" y="28" width="1440" height="844" />
     </state>
-    <state x="285" y="47" width="862" height="806" key="CommitChangelistDialog2/0.28.1440.844@0.28.1440.844" timestamp="1579784765867" />
+    <state x="285" y="47" width="862" height="806" key="CommitChangelistDialog2/0.28.1440.844@0.28.1440.844" timestamp="1579784809146" />
     <state x="503" y="208" width="426" height="483" key="FileChooserDialogImpl" timestamp="1579764920754">
       <screen x="0" y="28" width="1440" height="844" />
     </state>
     <state x="503" y="208" width="426" height="483" key="FileChooserDialogImpl/0.28.1440.844@0.28.1440.844" timestamp="1579764920754" />
-    <state x="315" y="186" width="802" height="527" key="Vcs.Push.Dialog.v2" timestamp="1579784777630">
+    <state x="315" y="186" width="802" height="527" key="Vcs.Push.Dialog.v2" timestamp="1579784820962">
       <screen x="0" y="28" width="1440" height="844" />
     </state>
-    <state x="315" y="186" width="802" height="527" key="Vcs.Push.Dialog.v2/0.28.1440.844@0.28.1440.844" timestamp="1579784777630" />
+    <state x="315" y="186" width="802" height="527" key="Vcs.Push.Dialog.v2/0.28.1440.844@0.28.1440.844" timestamp="1579784820962" />
     <state x="383" y="193" width="672" height="678" key="search.everywhere.popup" timestamp="1579784348028">
       <screen x="0" y="28" width="1440" height="844" />
     </state>
