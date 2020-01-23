@@ -109,6 +109,7 @@ class UserModel{
         }
         if(!empty($_POST["password"])) {
             $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
+            $password = password_hash($password, PASSWORD_BCRYPT);
         }else{
             $password = $user->getPassword();
         }
@@ -162,10 +163,14 @@ class UserModel{
             $province = $newUser->getProvince();
             $username = $newUser->getUsername();
             $email = $newUser->getEmail();
-            $password = password_hash($newUser->getPassword(), PASSWORD_BCRYPT);
+            $password = $newUser->getPassword();
             $avatar = $newUser->getAvatar();
+            $language = $newUser->getLanguage();
 
-            $stmt = $this->pdo->prepare('UPDATE users SET firstName = :firstName, lastName = :lastName, province = :province, username = :username, email = :email, password = :password, avatar = :avatar where id = :id');
+            $stmt = $this->pdo->prepare('UPDATE users SET firstName = :firstName, lastName = :lastName,
+                                                                    province = :province, username = :username, 
+                                                                    email = :email, password = :password, avatar = :avatar, 
+                                                                    language = :language where id = :id');
             $stmt->bindParam(":firstName", $firstName, PDO::PARAM_STR);
             $stmt->bindParam(":lastName", $lastName, PDO::PARAM_STR);
             $stmt->bindParam(":province", $province, PDO::PARAM_STR);
@@ -174,6 +179,7 @@ class UserModel{
             $stmt->bindParam(':email', $email, PDO::PARAM_STR);
             $stmt->bindParam(':password', $password, PDO::PARAM_STR);
             $stmt->bindParam(':avatar', $avatar, PDO::PARAM_STR);
+            $stmt->bindParam(':language', $language, PDO::PARAM_STR);
             $stmt->execute();
             $stmt = null;
 

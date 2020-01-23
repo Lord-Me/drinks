@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-01-16 07:38-0500\n"
-"PO-Revision-Date: 2020-01-16 07:38-0500\n"
+"POT-Creation-Date: 2020-01-23 07:36-0500\n"
+"PO-Revision-Date: 2020-01-23 07:37-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ca_ES\n"
@@ -18,26 +18,41 @@ msgstr ""
 "X-Poedit-SearchPath-3: partials\n"
 "X-Poedit-SearchPath-4: views\n"
 
-#: templates_php/fe/feffc9d37184e6260b31d05052e0d5279188662292ae0070ecef414ebded82ab.php:81
-msgid "User Management"
-msgstr "Control D'Usuaris"
+#: partials/navigation.partials.php:4
+#: partials/navigationLoggedIn.partials.php:4
+msgid "Home"
+msgstr "Pàgina Principal"
 
+#: partials/navigation.partials.php:8
+#: partials/navigationLoggedIn.partials.php:8
+msgid "Our Drinks"
+msgstr "Les Meues Begudes"
+
+#: partials/navigation.partials.php:15
 #: templates_php/fe/feffc9d37184e6260b31d05052e0d5279188662292ae0070ecef414ebded82ab.php:97
 msgid "Sign Up"
 msgstr "Registrar"
 
+#: partials/navigation.partials.php:18
 #: templates_php/fe/feffc9d37184e6260b31d05052e0d5279188662292ae0070ecef414ebded82ab.php:103
 msgid "Log In"
 msgstr "Iniciar Sesió"
 
+#: partials/navigationLoggedIn.partials.php:14
+#: templates_php/fe/feffc9d37184e6260b31d05052e0d5279188662292ae0070ecef414ebded82ab.php:81
+msgid "User Management"
+msgstr "Control D'Usuaris"
+
+#: partials/navigationLoggedIn.partials.php:20
 #: templates_php/fe/feffc9d37184e6260b31d05052e0d5279188662292ae0070ecef414ebded82ab.php:112
 msgid "My Drinks"
 msgstr "Les Meues Begudes"
 
-#: templates_php/fe/feffc9d37184e6260b31d05052e0d5279188662292ae0070ecef414ebded82ab.php:122
-msgid "%username% profile"
-msgstr "Perfil %username%"
-
+#: partials/navigationLoggedIn.partials.php:30
 #: templates_php/fe/feffc9d37184e6260b31d05052e0d5279188662292ae0070ecef414ebded82ab.php:128
 msgid "Log Out"
 msgstr "Tancar Sesió"
+
+#: templates_php/fe/feffc9d37184e6260b31d05052e0d5279188662292ae0070ecef414ebded82ab.php:122
+msgid "%username% profile"
+msgstr "Perfil %username%"

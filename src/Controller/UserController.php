@@ -98,6 +98,7 @@ class UserController extends AbstractController
                         $_SESSION['id'] = $user->getId();
                         $_SESSION['role'] = $user->getRole();
                         $_SESSION['language'] = $user->getLanguage();
+                        $_SESSION['sessionAge'] = new \DateTime();
                         header('Location: /drinks');
                     } else {
                         array_push($errorText, 'Incorrect password!');
@@ -168,6 +169,8 @@ class UserController extends AbstractController
                                 $_SESSION['name'] = $_POST['username'];
                                 $_SESSION['id'] = $user->getId();
                                 $_SESSION['role'] = $user->getRole();
+                                $_SESSION['language'] = $user->getLanguage();
+                                $_SESSION['sessionAge'] = new \DateTime();
                                 header('Location: /drinks/user/profile');
                             } else {
                                 // Something is wrong with the sql statement, check to make sure accounts table exists with all 3 fields.
@@ -281,22 +284,19 @@ class UserController extends AbstractController
         }
 
         $um = new UserModel($this->db);
-
         $userInfo = $um->getUserById($_SESSION['id']);
 
-        if(isset($_POST['submit'])){ //TODO returns to en after refresh
+        if(isset($_POST['submit'])){
             $language = filter_input(INPUT_POST, "language", FILTER_SANITIZE_STRING);
             $userInfo->setLanguage($language);
 
-            if(!$um->update($userInfo, $_SESSION['id'])){
-                echo "error";
-            }
+            $um->update($userInfo, $_SESSION['id']);
 
-            echo $um->getUserById($_SESSION["id"])->getLanguage();
+            //echo $um->getUserById($_SESSION["id"])->getLanguage();
 
-            //$_SESSION["language"] = $userInfo->getLanguage();
+            $_SESSION['language'] = $userInfo->getLanguage();
 
-            //header("Location: /drinks/user/profile");
+            header("Location: /drinks/user/profile");
         }
 
         require("views/profile.view.php");

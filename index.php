@@ -47,6 +47,12 @@ bind_textdomain_codeset('main', 'UTF-8');
 textdomain('main');
 
 
+//REFRESH SESSION
+if(isset($_SESSION['sessionAge']) && $_SESSION['sessionAge'] > $_SESSION['sessionAge']->modify('+1 minute')){
+    session_regenerate_id();
+}
+echo session_id();
+
 $request = new Request();
 
 //var_dump($request);
