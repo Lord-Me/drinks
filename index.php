@@ -1,9 +1,4 @@
 <?php
-//TODO my drinks page shows pagination even when the user has no drinks
-//TODO session regenerate every 15 min
-
-//$2y$12$K1lggcRKGKv6txa5GfokG.3VydiMlj56tuRp6MOP5CFaBpl8qou7u
-//$2y$10$Dx1ISCFDvOsmtc7EKjVV.uU15iPKFmXKU.ZlYs6cFuG/zHeXmTeOC
 
 use App\DBConnect;
 use App\Model\DrinkModel;
@@ -48,8 +43,11 @@ textdomain('main');
 
 
 //REFRESH SESSION
-if(isset($_SESSION['sessionAge']) && $_SESSION['sessionAge'] > $_SESSION['sessionAge']->modify('+1 minute')){
+$now  = new DateTime();
+
+if(isset($_SESSION['sessionAge']) && date_diff($_SESSION['sessionAge'], $now)->i > 15){
     session_regenerate_id();
+    $_SESSION['sessionAge'] = new DateTime();
 }
 echo session_id();
 

@@ -91,7 +91,7 @@ class UserController extends AbstractController
                     // Note: remember to use password_hash in your registration file to store the hashed passwords.
                     if (password_verify($_POST['password'], $user->getPassword())) {
                         // Verification success! User has loggedin!
-                        ini_set( 'session.cookie_httponly', 1 ); //TODO http only coookies
+                        ini_set( 'session.cookie_httponly', 1 );
                         session_regenerate_id();
                         $_SESSION['loggedin'] = TRUE;
                         $_SESSION['name'] = $_POST['username'];
@@ -164,6 +164,7 @@ class UserController extends AbstractController
                             // Username doesnt exists, insert new account
                             if ($um->insert($newUser)) {
                                 $user = $um->getUserByName($_POST['username']);
+                                ini_set( 'session.cookie_httponly', 1 );
                                 session_regenerate_id();
                                 $_SESSION['loggedin'] = TRUE;
                                 $_SESSION['name'] = $_POST['username'];
